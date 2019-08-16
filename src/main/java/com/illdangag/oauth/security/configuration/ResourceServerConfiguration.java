@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
-    private static final String RESOURCE_ID = "rokin-application";
+    private static final String RESOURCE_ID = "oauth-application";
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -19,6 +19,10 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().anyRequest().authenticated();
+//        http.csrf().disable().authorizeRequests().anyRequest().authenticated();
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/clients/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/users/**").hasAnyAuthority("ADMIN");
+
     }
 }

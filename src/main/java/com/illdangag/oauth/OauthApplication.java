@@ -10,9 +10,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @SpringBootApplication
 public class OauthApplication implements CommandLineRunner {
@@ -41,7 +45,10 @@ public class OauthApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		if (this.userRepository.findByUsername(this.adminUsername) == null) {
-			User user = new User("OAuth Admin", this.adminUsername, passwordEncoder.encode(this.adminPassword), Arrays.asList("ADMIN"));
+			List<GrantedAuthority> authorities = new ArrayList<>();
+			authorities.add(new SimpleGrantedAuthority("ADMIN"));
+
+			User user = new User(this.adminUsername, passwordEncoder.encode(this.adminPassword), authorities);
 			this.userRepository.save(user);
 		}
 

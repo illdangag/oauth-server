@@ -1,75 +1,102 @@
 package com.illdangag.oauth.repository.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.illdangag.oauth.repository.model.deserializer.AuthoritiyDeserializer;
+import com.illdangag.oauth.repository.model.deserializer.UserDeserializer;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
+
+@JsonDeserialize(using = UserDeserializer.class)
 @Document(collection = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     private String id;
-    private String name;
     private String username;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    private List<String> roles;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
+    private List<GrantedAuthority> authorities;
 
-    public User() {
-
-    }
-
-    public User(String name, String username, String password, List<String> roles) {
-        this.name = name;
+    public User(String username, String password, List<GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
-        this.roles = roles;
+        this.accountNonExpired = false;
+        this.accountNonLocked = false;
+        this.enabled = true;
+        this.authorities = authorities;
     }
 
-    public String getId() {
-        return id;
+    @Override
+    public List<GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", roles="
-                + roles + "]";
+    public void setAuthorities(List<GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 }
