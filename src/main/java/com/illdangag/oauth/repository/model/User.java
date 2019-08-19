@@ -1,20 +1,13 @@
 package com.illdangag.oauth.repository.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.illdangag.oauth.repository.model.deserializer.AuthorityDeserializer;
-import com.illdangag.oauth.repository.model.deserializer.UserDeserializer;
-import com.illdangag.oauth.repository.model.type.UserAuthority;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-
-@JsonDeserialize(using = UserDeserializer.class)
 @Document(collection = "users")
 public class User implements UserDetails {
     @Id
@@ -25,20 +18,29 @@ public class User implements UserDetails {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
-    private List<GrantedAuthority> authorities;
+    private Set<String> authorities;
 
-    public User(String username, String password) {
+    public User() {}
+
+    public User(String username, String password, String ...authorities) {
         this.username = username;
         this.password = password;
         this.accountNonExpired = false;
         this.accountNonLocked = false;
         this.enabled = true;
-        this.authorities = new ArrayList<>();
+        this.setAuthorities(authorities);
     }
 
     @Override
-    public List<GrantedAuthority> getAuthorities() {
-        return this.authorities;
+    public Set<GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+
+        for (String authorityValue : this.authorities) {
+            SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authorityValue);
+            grantedAuthorities.add(simpleGrantedAuthority);
+        }
+
+        return grantedAuthorities;
     }
 
     @Override
@@ -99,10 +101,13 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    public void setAuthorities(UserAuthority ...authorities) {
-        for(UserAuthority authority : authorities) {
-            String value = authority.getValue();
-            this.authorities.add(new SimpleGrantedAuthority(value));
-        }
+    public void setAuthorities(String ...authorityList) {
+        this.setAuthorities(Arrays.asList(authorityList));
+    }
+    public void setAuthorities(List<String> authorityList) {
+        this.setAuthorities(new HashSet<>(authorityList));
+    }
+    public void setAuthorities(Set<String> authoritySet) {
+        this.authorities = authoritySet;
     }
 }
