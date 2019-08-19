@@ -9,15 +9,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class OauthApplication implements CommandLineRunner {
 
-	@Lazy
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -39,7 +34,7 @@ public class OauthApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		if (this.userService.readByUsername(this.adminUsername) == null) {
-			User user = new User(this.adminUsername, passwordEncoder.encode(this.adminPassword), "ADMIN");
+			User user = new User(this.adminUsername, this.adminPassword, "ADMIN");
 			this.userService.create(user);
 		}
 

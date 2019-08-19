@@ -10,7 +10,6 @@ import java.util.List;
 
 @Service
 public class ClientService {
-
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
