@@ -1,5 +1,6 @@
 package com.illdangag.oauth.repository.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -115,9 +116,11 @@ public class Client implements ClientDetails {
     public void setResourceIds(String ...resourceIdList) {
         this.setRedirectUri(Arrays.asList(resourceIdList));
     }
+    @JsonIgnore
     public void setResourceIds(List<String> resourceIdList) {
         this.setRedirectUri(new HashSet<>(resourceIdList));
     }
+    @JsonIgnore
     public void setResourceIds(Set<String> resourceIdSet) {
         this.resourceIds = resourceIdSet;
     }
@@ -132,9 +135,11 @@ public class Client implements ClientDetails {
     public void setGrantTypes(String ...grantTypeList) {
         this.setGrantTypes(Arrays.asList(grantTypeList));
     }
+    @JsonIgnore
     public void setGrantTypes(List<String> grantTypeList) {
         this.setGrantTypes(new HashSet<>(grantTypeList));
     }
+    @JsonIgnore
     public void setGrantTypes(Set<String> grantTypeList) {
         this.grantTypes = grantTypeList;
     }
@@ -142,9 +147,11 @@ public class Client implements ClientDetails {
     public void setRedirectUri(String ...redirectUriList) {
         this.setRedirectUri(Arrays.asList(redirectUriList));
     }
+    @JsonIgnore
     public void setRedirectUri(List<String> redirectUriList) {
         this.setRedirectUri(new HashSet<>(redirectUriList));
     }
+    @JsonIgnore
     public void setRedirectUri(Set<String> redirectUriList) {
         this.redirectUri = redirectUriList;
     }
@@ -152,9 +159,11 @@ public class Client implements ClientDetails {
     public void setAuthorities(String ...authorityList) {
         this.setAuthorities(Arrays.asList(authorityList));
     }
+    @JsonIgnore
     public void setAuthorities(List<String> authorityList) {
         this.setAuthorities(new HashSet<>(authorityList));
     }
+    @JsonIgnore
     public void setAuthorities(Set<String> authorityList) {
         this.authorities = authorityList;
     }

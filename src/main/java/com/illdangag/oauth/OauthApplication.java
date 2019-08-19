@@ -39,6 +39,7 @@ public class OauthApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		if (this.userService.readByUsername(this.adminUsername) == null) {
 			User user = new User(this.adminUsername, this.adminPassword, "ADMIN");
+			user.setEnabled(true);
 			this.userService.create(user);
 		}
 

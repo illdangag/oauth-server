@@ -1,5 +1,7 @@
 package com.illdangag.oauth.repository.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +15,7 @@ public class User implements UserDetails {
     @Id
     private String id;
     private String username;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String password;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
@@ -27,7 +30,7 @@ public class User implements UserDetails {
         this.password = password;
         this.accountNonExpired = false;
         this.accountNonLocked = false;
-        this.enabled = true;
+        this.enabled = false;
         this.setAuthorities(authorities);
     }
 
@@ -104,9 +107,11 @@ public class User implements UserDetails {
     public void setAuthorities(String ...authorityList) {
         this.setAuthorities(Arrays.asList(authorityList));
     }
+    @JsonIgnore
     public void setAuthorities(List<String> authorityList) {
         this.setAuthorities(new HashSet<>(authorityList));
     }
+    @JsonIgnore
     public void setAuthorities(Set<String> authoritySet) {
         this.authorities = authoritySet;
     }
