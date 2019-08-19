@@ -1,0 +1,17 @@
+#MongoDB
+spring:
+  data:
+    mongodb:
+      database: oauth
+      host: ds263307.mlab.com
+      port: 63307
+      username: ybchoi
+      password: dudqja12!
+
+#auth
+oauth:
+  admin:
+    username: oauthAdmin
+    password: password
+    clientId: oauth-client
+    clientSecret: oauth-secret
