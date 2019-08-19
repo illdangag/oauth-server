@@ -2,16 +2,23 @@ package com.illdangag.oauth.repository.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.*;
 
 @Document(collection = "users")
 public class User implements UserDetails {
+    @Lazy
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Id
     private String id;
     private String username;
@@ -25,13 +32,11 @@ public class User implements UserDetails {
 
     public User() {}
 
-    public User(String username, String password, String ...authorities) {
+    public User(String username) {
         this.username = username;
-        this.password = password;
         this.accountNonExpired = false;
         this.accountNonLocked = false;
         this.enabled = false;
-        this.setAuthorities(authorities);
     }
 
     @Override
@@ -76,8 +81,8 @@ public class User implements UserDetails {
         return this.enabled;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getId() {
+        return this.id;
     }
 
     public void setUsername(String username) {
@@ -86,6 +91,7 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+
     }
 
     public void setAccountNonExpired(boolean accountNonExpired) {
@@ -114,5 +120,9 @@ public class User implements UserDetails {
     @JsonIgnore
     public void setAuthorities(Set<String> authoritySet) {
         this.authorities = authoritySet;
+    }
+
+    public void passwordEncode() {
+        this.password = this.passwordEncoder.encode(this.password);
     }
 }

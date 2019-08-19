@@ -17,18 +17,25 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = "application/json;charset=utf-8")
+    public ResponseEntity createUser(@RequestBody User user) {
+        ResponseEntity responseEntity = null;
+
+        try {
+            this.userService.create(user);
+            responseEntity = new ResponseEntity(HttpStatus.CREATED);
+        } catch (Exception e) {
+            responseEntity = new ResponseEntity(HttpStatus.CONFLICT);
+        }
+
+        return responseEntity;
+    }
+
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public ResponseEntity getUsers() {
+    public ResponseEntity readUsers() {
         List<User> userList = this.userService.read();
 
         UsersResponse usersResponse = new UsersResponse(userList);
         return new ResponseEntity<>(usersResponse, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = "application/json;charset=utf-8")
-    public ResponseEntity addUser(@RequestBody User user) {
-        this.userService.create(user);
-
-        return new ResponseEntity(HttpStatus.CREATED);
     }
 }

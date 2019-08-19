@@ -1,16 +1,23 @@
 package com.illdangag.oauth.repository.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
 import java.util.*;
 
 @Document(collection = "clients")
 public class Client implements ClientDetails {
+    @Lazy
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Id
     private String id;
 
@@ -110,7 +117,7 @@ public class Client implements ClientDetails {
     }
 
     public void setClientSecret(String clientSecret) {
-        this.clientSecret = clientSecret;
+        this.clientSecret = this.passwordEncoder.encode(clientSecret);
     }
 
     public void setResourceIds(String ...resourceIdList) {
