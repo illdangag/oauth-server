@@ -15,21 +15,25 @@ public class OauthApplication implements CommandLineRunner {
 
 	@Autowired
 	private UserService userService;
+
 	@Autowired
 	private ClientService clientService;
+
+	@Value("${oauth.admin.username}")
+	private String adminUsername;
+
+	@Value("${oauth.admin.password}")
+	private String adminPassword;
+
+	@Value("${oauth.admin.clientId}")
+	private String adminClientId;
+
+	@Value("${oauth.admin.clientSecret}")
+	private String adminClientSecret;
 
 	public static void main(String[] args) {
 		SpringApplication.run(OauthApplication.class, args);
 	}
-
-	@Value("${oauth.admin.username}")
-	private String adminUsername;
-	@Value("${oauth.admin.password}")
-	private String adminPassword;
-	@Value("${oauth.admin.clientId}")
-	private String adminClientId;
-	@Value("${oauth.admin.clientSecret}")
-	private String adminClientSecret;
 
 	@Override
 	public void run(String... args) throws Exception {

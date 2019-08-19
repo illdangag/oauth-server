@@ -1,4 +1,4 @@
-#MongoDB
+# MongoDB
 spring:
   data:
     mongodb:
@@ -8,7 +8,15 @@ spring:
       username: ybchoi
       password: dudqja12!
 
-#auth
+# key
+# keytool -genkeypair -alias LHWM5OtDCo -keyalg RSA -dname "CN=Web Server,OU=Unit,O=Organization,L=City,S=State,C=US" -keypass dRuW9QELa5 -keystore server.jks -storepass TYDoDcuEz6
+key:
+  alias: LHWM5OtDCo
+  keypass: dRuW9QELa5
+  keystore: server.jks
+  storepass: TYDoDcuEz6
+
+# oauth client
 oauth:
   admin:
     username: oauthAdmin

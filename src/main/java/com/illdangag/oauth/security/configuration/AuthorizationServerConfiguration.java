@@ -3,6 +3,7 @@ package com.illdangag.oauth.security.configuration;
 import com.illdangag.oauth.security.detail.CustomClientDetailsService;
 import com.illdangag.oauth.security.detail.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -32,6 +33,18 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     private CustomClientDetailsService clientDetailsService;
 
+    @Value("${key.alias}")
+    private String JWT_ALIAS;
+
+    @Value("${key.keypass}")
+    private String JWT_KEYPASS;
+
+    @Value("${key.keystore}")
+    private String JWT_KEYSTORE;
+
+    @Value("${key.storepass}")
+    private String JWT_STOREPASS;
+
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.allowFormAuthenticationForClients(); //For authenticating client using the form parameters instead of basic auth
@@ -56,14 +69,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
-
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
-
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         KeyPair keyPair = new KeyStoreKeyFactory(
-                new ClassPathResource("server.jks"), "qweqwe".toCharArray())
-                .getKeyPair("hello", "zaqwsx".toCharArray());
+                new ClassPathResource(JWT_KEYSTORE), JWT_STOREPASS.toCharArray())
+                .getKeyPair(JWT_ALIAS, JWT_KEYPASS.toCharArray());
         converter.setKeyPair(keyPair);
         return converter;
     }
