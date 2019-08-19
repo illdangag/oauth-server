@@ -1,9 +1,10 @@
 package com.illdangag.oauth;
 
-import com.illdangag.oauth.repository.ClientRepository;
-import com.illdangag.oauth.repository.UserRepository;
 import com.illdangag.oauth.repository.model.Client;
 import com.illdangag.oauth.repository.model.User;
+import com.illdangag.oauth.repository.model.type.UserAuthority;
+import com.illdangag.oauth.service.ClientService;
+import com.illdangag.oauth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -15,19 +16,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
 public class OauthApplication implements CommandLineRunner {
 
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private ClientRepository clientRepository;
 	@Lazy
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private ClientService clientService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(OauthApplication.class, args);
@@ -44,15 +44,13 @@ public class OauthApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		if (this.userRepository.findByUsername(this.adminUsername) == null) {
-			List<GrantedAuthority> authorities = new ArrayList<>();
-			authorities.add(new SimpleGrantedAuthority("ADMIN"));
-
-			User user = new User(this.adminUsername, passwordEncoder.encode(this.adminPassword), authorities);
-			this.userRepository.save(user);
+		if (this.userService.readByUsername(this.adminUsername) == null) {
+			User user = new User(this.adminUsername, passwordEncoder.encode(this.adminPassword));
+			user.setAuthorities(UserAuthority.ADMIN);
+			this.userService.create(user);
 		}
 
-		if (this.clientRepository.findByClientId(this.adminClientId) == null) {
+		if (this.clientService.readByClientId(this.adminClientId) == null) {
 			Client client = new Client();
 			client.setIdx(0);
 			client.setAuthorities("CLIENT");
@@ -65,7 +63,7 @@ public class OauthApplication implements CommandLineRunner {
 			client.setAccessTokenValiditySeconds(3600);
 			client.setRefreshTokenValiditySeconds(86400);
 
-			this.clientRepository.save(client);
+			this.clientService.create(client);
 		}
 	}
 }

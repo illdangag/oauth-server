@@ -24,4 +24,8 @@ public class ClientService {
     public List<Client> read() {
         return this.clientRepository.findAll();
     }
+
+    public Client readByClientId(String clientId) {
+        return this.clientRepository.findByClientId(clientId);
+    }
 }

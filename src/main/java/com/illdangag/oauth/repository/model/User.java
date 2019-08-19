@@ -1,13 +1,16 @@
 package com.illdangag.oauth.repository.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.illdangag.oauth.repository.model.deserializer.AuthoritiyDeserializer;
+import com.illdangag.oauth.repository.model.deserializer.AuthorityDeserializer;
 import com.illdangag.oauth.repository.model.deserializer.UserDeserializer;
+import com.illdangag.oauth.repository.model.type.UserAuthority;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,13 +27,13 @@ public class User implements UserDetails {
     private boolean enabled;
     private List<GrantedAuthority> authorities;
 
-    public User(String username, String password, List<GrantedAuthority> authorities) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.accountNonExpired = false;
         this.accountNonLocked = false;
         this.enabled = true;
-        this.authorities = authorities;
+        this.authorities = new ArrayList<>();
     }
 
     @Override
@@ -96,7 +99,10 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    public void setAuthorities(List<GrantedAuthority> authorities) {
-        this.authorities = authorities;
+    public void setAuthorities(UserAuthority ...authorities) {
+        for(UserAuthority authority : authorities) {
+            String value = authority.getValue();
+            this.authorities.add(new SimpleGrantedAuthority(value));
+        }
     }
 }
