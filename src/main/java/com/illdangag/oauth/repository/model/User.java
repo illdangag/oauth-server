@@ -1,7 +1,6 @@
 package com.illdangag.oauth.repository.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.annotation.Id;
@@ -15,14 +14,9 @@ import java.util.*;
 
 @Document(collection = "users")
 public class User implements UserDetails {
-    @Lazy
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Id
     private String id;
     private String username;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String password;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
@@ -120,9 +114,5 @@ public class User implements UserDetails {
     @JsonIgnore
     public void setAuthorities(Set<String> authoritySet) {
         this.authorities = authoritySet;
-    }
-
-    public void passwordEncode() {
-        this.password = this.passwordEncoder.encode(this.password);
     }
 }

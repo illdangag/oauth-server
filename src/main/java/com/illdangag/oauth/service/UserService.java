@@ -3,12 +3,17 @@ package com.illdangag.oauth.service;
 import com.illdangag.oauth.repository.UserRepository;
 import com.illdangag.oauth.repository.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class UserService {
+    @Lazy
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
 
@@ -19,7 +24,7 @@ public class UserService {
         if (this.userRepository.findByUsername(user.getUsername()) != null) {
             throw new Exception();
         } else {
-            user.passwordEncode();
+            user.setPassword(this.passwordEncoder.encode(user.getPassword()));
             resultUser = this.userRepository.save(user);
         }
 
