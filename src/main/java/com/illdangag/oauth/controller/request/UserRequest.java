@@ -29,6 +29,22 @@ public class UserRequest {
         this.password = password;
     }
 
+    public Boolean getAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    public Boolean getAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public Boolean getCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
     public Set<String> getAuthorities() {
         return authorities;
     }
