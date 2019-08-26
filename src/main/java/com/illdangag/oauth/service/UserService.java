@@ -8,11 +8,8 @@ import com.illdangag.oauth.service.exception.NotFoundException;
 import com.illdangag.oauth.service.exception.PropertyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
 import java.util.List;
 
 @Service
@@ -83,11 +80,11 @@ public class UserService {
     }
 
     public void delete(String username) throws NotFoundException, InvalidPropertyException {
-        User user = this.readByUsername(username);
-
-        if (user.getUsername().equals(this.adminUsername)) {
+        if (username.equals(this.adminUsername)) {
             throw new InvalidPropertyException();
         }
+
+        User user = this.readByUsername(username);
 
         if (user == null) {
             throw new NotFoundException();
