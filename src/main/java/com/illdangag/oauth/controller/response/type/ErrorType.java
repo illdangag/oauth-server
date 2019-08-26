@@ -30,6 +30,6 @@ public enum ErrorType {
 }
 
 class ErrorMessage {
-    public final static String INVALID_PROPERTY = "invalid property";
+    public static final String INVALID_PROPERTY = "invalid property";
     public static final String NOT_EXIST_USER = "not exist user";
 }

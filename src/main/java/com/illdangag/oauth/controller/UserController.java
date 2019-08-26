@@ -129,7 +129,7 @@ public class UserController {
 
         User dbUser = null;
         try {
-            this.userService.readByUsername(username);
+            dbUser = this.userService.readByUsername(username);
         } catch (NotFoundException e) {
             ErrorResponse errorResponse = new ErrorResponse(ErrorType.USER_UPDATE_NOT_EXIST_USER);
             return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
