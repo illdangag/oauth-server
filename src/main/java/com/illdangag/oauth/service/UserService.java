@@ -7,6 +7,7 @@ import com.illdangag.oauth.service.exception.InvalidPropertyException;
 import com.illdangag.oauth.service.exception.NotFoundException;
 import com.illdangag.oauth.service.exception.PropertyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ import java.util.List;
 
 @Service
 public class UserService {
+    @Value("${oauth.admin.username}")
+    private String adminUsername;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -51,14 +55,21 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public User readByUsername(String username) {
-        return this.userRepository.findByUsername(username);
+    public User readByUsername(String username) throws NotFoundException {
+        User user = this.userRepository.findByUsername(username);
+
+        if (user == null) {
+            throw new NotFoundException();
+        }
+
+        return user;
     }
 
     public User update(User user) throws NotFoundException, InvalidPropertyException {
         if (user == null) {
             throw new NullPointerException();
         }
+
         if (this.userRepository.findByUsername(user.getUsername()) == null) {
             throw new NotFoundException();
         }
@@ -69,5 +80,19 @@ public class UserService {
         }
 
         return this.userRepository.save(user);
+    }
+
+    public void delete(String username) throws NotFoundException, InvalidPropertyException {
+        User user = this.readByUsername(username);
+
+        if (user.getUsername().equals(this.adminUsername)) {
+            throw new InvalidPropertyException();
+        }
+
+        if (user == null) {
+            throw new NotFoundException();
+        }
+
+        this.userRepository.delete(user);
     }
 }

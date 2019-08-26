@@ -90,8 +90,24 @@ public class UserController {
      */
     @RequestMapping(value = "/{username}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     public ResponseEntity readUser(@PathVariable String username) {
-        User user = this.userService.readByUsername(username);
-        return  new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
+        if (username == null || username.equals("")) {
+            ErrorType errorType = ErrorType.USER_READ_INVALID_PROPERTY;
+            String errorMessage = errorType.getMessage() + " - username";
+            ErrorResponse errorResponse = new ErrorResponse(errorType.getCode(), errorMessage);
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+
+        ResponseEntity responseEntity = null;
+        try {
+            User user = this.userService.readByUsername(username);
+            responseEntity = new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
+        } catch (NotFoundException e) {
+            ErrorResponse errorResponse = new ErrorResponse(ErrorType.USER_READ_NOT_EXIST_USER);
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+
+
+        return responseEntity;
     }
 
     /**
@@ -111,9 +127,10 @@ public class UserController {
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
 
-        User dbUser = this.userService.readByUsername(username);
-
-        if (dbUser == null) {
+        User dbUser = null;
+        try {
+            this.userService.readByUsername(username);
+        } catch (NotFoundException e) {
             ErrorResponse errorResponse = new ErrorResponse(ErrorType.USER_UPDATE_NOT_EXIST_USER);
             return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
         }
@@ -161,5 +178,26 @@ public class UserController {
         return responseEntity;
     }
 
-    // TODO: 사용자 석제 API
+    @RequestMapping(value = "/{username}", method = RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    public ResponseEntity deleteUser(@PathVariable String username) {
+        if (username == null || username.equals("")) {
+            ErrorType errorType = ErrorType.USER_DELETE_INVALID_PROPERTY;
+            String errorMessage = errorType.getMessage() + " - username";
+            ErrorResponse errorResponse = new ErrorResponse(errorType.getCode(), errorMessage);
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+
+        ResponseEntity responseEntity = null;
+        try {
+            this.userService.delete(username);
+            responseEntity = new ResponseEntity(HttpStatus.OK);
+        } catch (NullPointerException | NotFoundException e) {
+            ErrorResponse errorResponse = new ErrorResponse(ErrorType.USER_DELETE_NOT_EXIST_USER);
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        } catch (InvalidPropertyException e) {
+            ErrorResponse errorResponse = new ErrorResponse(ErrorType.USER_DELETE_NO_PERMISSION);
+            return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+        }
+        return responseEntity;
+    }
 }

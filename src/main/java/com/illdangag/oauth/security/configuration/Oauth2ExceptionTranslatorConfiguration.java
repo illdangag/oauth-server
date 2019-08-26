@@ -32,7 +32,7 @@ public class Oauth2ExceptionTranslatorConfiguration {
 
                 HttpHeaders headers = new HttpHeaders();
                 headers.setAll(responseEntity.getHeaders().toSingleValueMap());
-                
+
                 // do something with header or response
                 return new ResponseEntity<>(body, headers, statusCode);
             }

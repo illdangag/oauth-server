@@ -1,12 +1,15 @@
 package com.illdangag.oauth.controller.response.type;
 
 public enum ErrorType {
-    OAUTH_INVALID_GRANT             ("0000", "invalid grant"),
-    OAUTH_INVALID_TOKEN             ("0001", "expired token"),
-    USER_CREATE_INVALID_PROPERTY    ("1000", "invalid property"),
-    USER_CREATE_DUPLICATED_USERNAME ("1001", "duplicated username"),
-    USER_UPDATE_NOT_EXIST_USER      ("1002", "not exist user"),
-    USER_UPDATE_INVALID_PROPERTY    ("1003", "invalid property"),
+    USER_CREATE_INVALID_PROPERTY    ("1000", ErrorMessage.INVALID_PROPERTY),
+    USER_CREATE_DUPLICATED_USERNAME ("1000", "duplicated username"),
+    USER_READ_INVALID_PROPERTY      ("1000", ErrorMessage.INVALID_PROPERTY),
+    USER_READ_NOT_EXIST_USER        ("1000", ErrorMessage.NOT_EXIST_USER),
+    USER_UPDATE_NOT_EXIST_USER      ("1000", ErrorMessage.NOT_EXIST_USER),
+    USER_UPDATE_INVALID_PROPERTY    ("1000", ErrorMessage.INVALID_PROPERTY),
+    USER_DELETE_INVALID_PROPERTY    ("1000", ErrorMessage.INVALID_PROPERTY),
+    USER_DELETE_NOT_EXIST_USER      ("1000", ErrorMessage.NOT_EXIST_USER),
+    USER_DELETE_NO_PERMISSION       ("1000", "no permission"),
     UNKNOWN_ERROR                   ("9999", "unknown error");
 
     private String code;
@@ -24,4 +27,9 @@ public enum ErrorType {
     public String getMessage() {
         return message;
     }
+}
+
+class ErrorMessage {
+    public final static String INVALID_PROPERTY = "invalid property";
+    public static final String NOT_EXIST_USER = "not exist user";
 }
