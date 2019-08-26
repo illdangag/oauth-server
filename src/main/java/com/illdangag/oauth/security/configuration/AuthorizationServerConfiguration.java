@@ -58,7 +58,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-
         clients.withClientDetails(clientDetailsService);
     }
 

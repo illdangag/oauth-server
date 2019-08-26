@@ -24,14 +24,15 @@ public class Oauth2ExceptionTranslatorConfiguration {
                 OAuth2Exception body = responseEntity.getBody();
                 HttpStatus statusCode = responseEntity.getStatusCode();
 
-                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                body.addAdditionalInformation("timestamp", timestamp.toString());
-                body.addAdditionalInformation("status", "" + body.getHttpErrorCode());
-                body.addAdditionalInformation("message", body.getMessage());
-                body.addAdditionalInformation("code", body.getOAuth2ErrorCode().toUpperCase());
+//                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//                body.addAdditionalInformation("timestamp", timestamp.toString());
+//                body.addAdditionalInformation("status", "" + body.getHttpErrorCode());
+//                body.addAdditionalInformation("message", body.getMessage());
+//                body.addAdditionalInformation("code", body.getOAuth2ErrorCode().toUpperCase());
 
                 HttpHeaders headers = new HttpHeaders();
                 headers.setAll(responseEntity.getHeaders().toSingleValueMap());
+                
                 // do something with header or response
                 return new ResponseEntity<>(body, headers, statusCode);
             }
