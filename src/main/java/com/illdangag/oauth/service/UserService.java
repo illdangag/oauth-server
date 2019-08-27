@@ -79,8 +79,8 @@ public class UserService {
         return this.userRepository.save(user);
     }
 
-    public void delete(String username) throws NotFoundException, InvalidPropertyException {
-        if (username.equals(this.adminUsername)) {
+    public User delete(String username) throws NotFoundException, InvalidPropertyException {
+        if (username != null && username.equals(this.adminUsername)) {
             throw new InvalidPropertyException();
         }
 
@@ -91,5 +91,6 @@ public class UserService {
         }
 
         this.userRepository.delete(user);
+        return user;
     }
 }

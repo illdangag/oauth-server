@@ -37,7 +37,7 @@ public class UserController {
      * @return 결과
      */
     @RequestMapping(value = "", method = RequestMethod.POST, consumes = "application/json;charset=utf-8")
-    public ResponseEntity createUser(@RequestBody UserRequest userRequest) {
+    public ResponseEntity create(@RequestBody UserRequest userRequest) {
         User user = userRequest.toUser();
 
         if (userRequest.getPassword() == null || userRequest.getPassword().equals("")) {
@@ -71,7 +71,7 @@ public class UserController {
      * @return 결과
      */
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public ResponseEntity readUsers() {
+    public ResponseEntity read() {
         List<User> userList = this.userService.read();
         List<UserResponse> userResponseList = new ArrayList<>();
 
@@ -89,7 +89,7 @@ public class UserController {
      * @return 결과
      */
     @RequestMapping(value = "/{username}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public ResponseEntity readUser(@PathVariable String username) {
+    public ResponseEntity read(@PathVariable String username) {
         if (username == null || username.equals("")) {
             ErrorType errorType = ErrorType.USER_READ_INVALID_PROPERTY;
             String errorMessage = errorType.getMessage() + " - username";
@@ -117,7 +117,7 @@ public class UserController {
      * @return 결과
      */
     @RequestMapping(value = "", method = RequestMethod.PATCH, produces = "application/json;charset=utf-8")
-    public ResponseEntity updateUser(@RequestBody UserRequest userRequest) {
+    public ResponseEntity update(@RequestBody UserRequest userRequest) {
         String username = userRequest.getUsername();
 
         if (username == null || username.equals("")) {
@@ -179,7 +179,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{username}", method = RequestMethod.DELETE, produces = "application/json;charset=utf-8")
-    public ResponseEntity deleteUser(@PathVariable String username) {
+    public ResponseEntity delete(@PathVariable String username) {
         if (username == null || username.equals("")) {
             ErrorType errorType = ErrorType.USER_DELETE_INVALID_PROPERTY;
             String errorMessage = errorType.getMessage() + " - username";
@@ -198,6 +198,7 @@ public class UserController {
             ErrorResponse errorResponse = new ErrorResponse(ErrorType.USER_DELETE_NO_PERMISSION);
             return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
         }
+
         return responseEntity;
     }
 }

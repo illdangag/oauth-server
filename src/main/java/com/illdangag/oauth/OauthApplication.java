@@ -46,20 +46,11 @@ public class OauthApplication implements CommandLineRunner {
 		}
 
 		if (this.clientService.readByClientId(this.adminClientId) == null) {
-			Client client = new Client();
-
-			client.setClientId(this.adminClientId);
-			client.setClientSecret(this.adminClientSecret);
+			Client client = new Client(this.adminClientId, this.adminClientSecret);
 
 			client.setAuthorities("CLIENT");
 			client.setScope("all");
 			client.setGrantTypes("password", "client_credentials", "refresh_token");
-			client.setRedirectUri("");
-
-			client.setAccessTokenValiditySeconds(3600);
-			client.setRefreshTokenValiditySeconds(86400);
-
-			client.setAutoApprove(false);
 
 			this.clientService.create(client);
 		}

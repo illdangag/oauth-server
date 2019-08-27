@@ -1,23 +1,16 @@
 package com.illdangag.oauth.repository.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
 import java.util.*;
 
 @Document(collection = "clients")
 public class Client implements ClientDetails {
-    @Lazy
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Id
     private String id;
 
@@ -32,12 +25,20 @@ public class Client implements ClientDetails {
     private Integer refreshTokenValiditySeconds;
     private Boolean autoApprove;
 
-    public Client() {
+    public Client(String clientId, String clientSecret) {
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+
         this.resourceIds = new HashSet<>();
         this.scope = new HashSet<>();
         this.grantTypes = new HashSet<>();
         this.redirectUri = new HashSet<>();
         this.authorities = new HashSet<>();
+
+        this.accessTokenValiditySeconds = 3600;
+        this.refreshTokenValiditySeconds = 86400;
+
+        this.autoApprove = false;
     }
 
     @Override
@@ -117,7 +118,7 @@ public class Client implements ClientDetails {
     }
 
     public void setClientSecret(String clientSecret) {
-        this.clientSecret = this.passwordEncoder.encode(clientSecret);
+        this.clientSecret = clientSecret;
     }
 
     public void setResourceIds(String ...resourceIdList) {
@@ -135,8 +136,13 @@ public class Client implements ClientDetails {
     public void setScope(String ...scopeList) {
         this.setScope(Arrays.asList(scopeList));
     }
+    @JsonIgnore
     public void setScope(List<String> scopeList) {
-        this.scope = new HashSet<>(scopeList);
+        this.setScope(new HashSet<>(scopeList));
+    }
+    @JsonIgnore
+    public void setScope(Set<String> scopeList) {
+        this.scope = scopeList;
     }
 
     public void setGrantTypes(String ...grantTypeList) {
