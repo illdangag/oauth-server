@@ -1,35 +1,14 @@
 buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.7.RELEASE")
-	}
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+    }
 }
 
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
-
-group = 'com.illdangag'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-
-repositories {
-	mavenCentral()
-}
-
-dependencies {
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
-
-	// Spring boot
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.7.RELEASE'
-
-	//Spring Security Oauth2
-	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.4.RELEASE'
-	compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.10.RELEASE'
-
-	//Spring Data Mongo
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.1.7.RELEASE'
-}
+apply plugin: "com.moowork.node"
+apply plugin: 'war'

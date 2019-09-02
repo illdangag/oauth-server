@@ -1,0 +1,63 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.7.RELEASE")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'war'
+apply plugin: "com.moowork.node"
+
+
+group = 'com.illdangag'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+	// Spring boot
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.7.RELEASE'
+
+	//Spring Security Oauth2
+	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.4.RELEASE'
+	compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.10.RELEASE'
+
+	//Spring Data Mongo
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.1.7.RELEASE'
+}
+
+task frontendBuild (type: NpmTask) {
+	workingDir = file("../frontend")
+	args = ['run', 'build']
+}
+
+task frontendExport (type: NpmTask) {
+	workingDir = file("../frontend")
+	args = ['run', 'export']
+}
+
+task frontendDelete (type: Delete) {
+	def dirName = "../backend/src/main/resources/static"
+	file(dirName).list().each {
+		f -> delete "${dirName}/${f}"
+	}
+}
+
+task frontendCopy (type: Copy) {
+	from '../frontend/out'
+	into '../backend/src/main/resources/static'
+}
+processResources.dependsOn frontendBuild
+processResources.dependsOn frontendExport
+processResources.dependsOn frontendDelete
+processResources.dependsOn frontendCopy

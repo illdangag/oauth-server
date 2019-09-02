@@ -1,0 +1,57 @@
+{
+  "extends": "tslint-config-standard",
+  "rules": {
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
+    "semicolon": [
+      true,
+      "never"
+    ],
+    "no-console": [
+      true
+    ],
+    "trailing-comma": [
+      true,
+      {
+        "multiline": {
+          "arrays": "always",
+          "exports": "always",
+          "functions": "always",
+          "imports": "always",
+          "objects": "always",
+          "typeLiterals": "always"
+        },
+        "singleline":{
+          "arrays": "always",
+          "exports": "always",
+          "functions": "never",
+          "imports": "always",
+          "objects": "always",
+          "typeLiterals": "always"
+        },
+        "esSpecCompliant": true
+      }
+    ],
+    "space-before-function-paren": [
+      true,
+      "never"
+    ],
+    "no-trailing-whitespace": false,
+    "typedef-whitespace": [
+      false,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace"
+      }
+    ],
+    "await-promise": [
+      true
+    ],
+    "deprecation": true,
+    "no-floating-promises": true
+  }
+}

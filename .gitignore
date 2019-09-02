@@ -85,7 +85,7 @@ fabric.properties
 
 ### Gradle ###
 .gradle
-build/
+backend/build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -103,3 +103,5 @@ gradle-app.setting
 **/build/
 
 # End of https://www.gitignore.io/api/gradle,intellij
+
+backend/src/main/resources/static/

@@ -63,7 +63,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore())
+        endpoints.pathMapping("/oauth/token", "/api/oauth/token")
+                .tokenStore(tokenStore())
                 .authenticationManager(authenticationManager).userDetailsService(userDetailsService)
                 .exceptionTranslator(oauth2ResponseExceptionTranslator);
         endpoints.accessTokenConverter(jwtAccessTokenConverter()).authenticationManager(this.authenticationManager);
