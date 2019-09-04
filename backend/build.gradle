@@ -13,7 +13,6 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
 apply plugin: "com.moowork.node"
 
-
 group = 'com.illdangag'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
@@ -36,16 +35,6 @@ dependencies {
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.1.7.RELEASE'
 }
 
-task frontendBuild (type: NpmTask) {
-	workingDir = file("../frontend")
-	args = ['run', 'build']
-}
-
-task frontendExport (type: NpmTask) {
-	workingDir = file("../frontend")
-	args = ['run', 'export']
-}
-
 task frontendDelete (type: Delete) {
 	def dirName = "../backend/src/main/resources/static"
 	file(dirName).list().each {
@@ -53,11 +42,28 @@ task frontendDelete (type: Delete) {
 	}
 }
 
-task frontendCopy (type: Copy) {
+task frontendClean (type: Delete, dependsOn: ['frontendDelete']) {
+	def dirName = "../frontend/.next"
+	file(dirName).list().each {
+		f -> delete "${dirName}/${f}"
+	}
+}
+
+task frontendBuild (type: NpmTask, dependsOn: ['frontendClean']) {
+	workingDir = file("../frontend")
+	args = ['run', 'build']
+}
+
+task frontendExport (type: NpmTask, dependsOn: ['frontendBuild']) {
+	workingDir = file("../frontend")
+	args = ['run', 'export']
+}
+
+task frontendCopy (type: Copy, dependsOn: ['frontendExport']) {
 	from '../frontend/out'
 	into '../backend/src/main/resources/static'
 }
-processResources.dependsOn frontendBuild
-processResources.dependsOn frontendExport
-processResources.dependsOn frontendDelete
-processResources.dependsOn frontendCopy
+
+task buildAll(dependsOn: ['frontendCopy']) {
+	finalizedBy build
+}
