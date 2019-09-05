@@ -13,7 +13,7 @@ const Input: FunctionComponent<Props> = ({
 }) => {
   return (
     <>
-      <input className={cx({ [styles.fullWidth]: fullWidth, })} disabled={disabled}></input>
+      <input className={cx(styles.input, { [styles.fullWidth]: fullWidth, })} disabled={disabled}></input>
     </>
   )
 }

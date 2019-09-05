@@ -1,4 +1,4 @@
-input {
+.input {
   background-color: #FFFFFF;
   color: #495057;
   height: 28px;
@@ -11,7 +11,7 @@ input {
   font-weight: normal;
   font-size: 12px;
   line-height: 14px;
-}
-.fullWidth {
-  width: 100%;
+  &.fullWidth {
+    width: 100%;
+  }  
 }
