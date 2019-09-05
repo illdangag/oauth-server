@@ -5,14 +5,23 @@ import cx from 'classnames/bind'
 type Props = {
   disabled?: boolean,
   fullWidth?: boolean,
+  icon?: React.ReactNode,
 }
 
 const Input: FunctionComponent<Props> = ({
   disabled = false,
   fullWidth = false,
+  icon = null,
 }) => {
   return (
-    <input className={cx(styles.input, { [styles.fullWidth]: fullWidth, })} disabled={disabled}></input>
+    <>
+      <span className={cx({ [styles.icon]: icon !== null, })}>
+        {icon}
+      </span>
+      <input className={cx(styles.input, { [styles.fullWidth]: fullWidth, [styles.leftIcon]: icon !== null, })}
+          disabled={disabled}>
+      </input>
+    </>
   )
 }
 

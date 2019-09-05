@@ -2,7 +2,7 @@ import React, { MouseEvent, } from 'react'
 
 import Button from '../components/Button'
 import Input from '../components/Input'
-import UserAuth from '../components/Icon/UserAuth'
+import UserAuthIcon from '../components/Icon/UserAuthIcon'
 
 interface Props {
 
@@ -23,7 +23,7 @@ class SamplePage extends React.Component<Props, State> {
 
   handleClick = (event: MouseEvent): void => {
     event.preventDefault()
-    
+
     this.setState({
       buttonDisabled: !this.state.buttonDisabled,
     })
@@ -39,10 +39,8 @@ class SamplePage extends React.Component<Props, State> {
           <Button fullWidth={false} disabled={this.state.buttonDisabled}>button</Button>
         </div>
         <div>
-          <Input fullWidth={false}/>
-        </div>
-        <div>
-          <UserAuth/>
+          <Input fullWidth={false} icon={<UserAuthIcon size='small'/>}/>
+          {/* <Input fullWidth={false}/> */}
         </div>
       </div>
     )

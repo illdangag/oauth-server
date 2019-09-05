@@ -28,6 +28,10 @@ $text-color: #F1F3F5;
 
   transition: .1s ease-in-out;
   
+  &:focus {
+    outline: none;
+  }
+  
   &:hover {
     background-color: $dark-color;
   }

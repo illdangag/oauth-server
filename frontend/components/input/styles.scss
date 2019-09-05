@@ -18,5 +18,16 @@
 
   &.fullWidth {
     width: 100%;
-  }  
+  }
+
+  &.leftIcon {
+    padding-left: 30px;
+  }
+}
+
+.icon {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  padding: 6px;
 }
