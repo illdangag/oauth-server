@@ -10,8 +10,13 @@
     "lint": "tslint -c ./tslint.json -p ./tsconfig.json ./**/*.ts ./**/*.tsx -e ./node_modules/**/* -e ./out/**/*"
   },
   "dependencies": {
+    "@types/classnames": "^2.2.9",
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
+    "classnames": "^2.2.6",
     "immutable": "^4.0.0-rc.12",
     "next": "^9.0.0",
+    "node-sass": "^4.12.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-redux": "^7.0.3",

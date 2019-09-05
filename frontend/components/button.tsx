@@ -11,6 +11,9 @@ const defaultStyle = {
   padding: 4,
 
   textAlign: 'center',
+  ':hover': {
+    backgroundColor: '#FFFFFF',
+  },
 } as CSSProperties
 
 const fullWidthStyle = {
@@ -18,14 +21,13 @@ const fullWidthStyle = {
 } as CSSProperties
 
 type Props = {
-  text?: string,
   disabled?: boolean,
   fullWidth?: boolean,
   onClick?: MouseEventHandler,
 }
 
 const Button: FunctionComponent<Props> = ({
-  text = 'button',
+  children,
   disabled = false,
   fullWidth = false,
   onClick = (event: MouseEvent) => {
@@ -39,7 +41,7 @@ const Button: FunctionComponent<Props> = ({
   }
 
   return (
-    <button style={mergedStyle} disabled={disabled} onClick={onClick} >{text}</button>
+    <button style={mergedStyle} disabled={disabled} onClick={onClick} >{children}</button>
   )
 }
 

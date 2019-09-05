@@ -1,6 +1,7 @@
 import React, { MouseEvent, } from 'react'
 
 import Button from '../components/button'
+import Input from '../components/input'
 
 interface Props {
 
@@ -17,7 +18,14 @@ class SamplePage extends React.Component<Props, State> {
 
   render() {
     return (
-      <Button text='BUTTON' fullWidth={false} onClick={this.handleClick}></Button>
+      <div>
+        <div>
+          <Button fullWidth={false} onClick={this.handleClick}>button</Button>
+        </div>
+        <div>
+          <Input fullWidth={false}/>
+        </div>
+      </div>
     )
   }
 }
