@@ -1,7 +1,8 @@
 import React, { MouseEvent, } from 'react'
 
-import Button from '../components/button'
-import Input from '../components/input'
+import Button from '../components/Button'
+import Input from '../components/Input'
+import UserAuth from '../components/Icon/UserAuth'
 
 interface Props {
 
@@ -24,6 +25,9 @@ class SamplePage extends React.Component<Props, State> {
         </div>
         <div>
           <Input fullWidth={false}/>
+        </div>
+        <div>
+          <UserAuth/>
         </div>
       </div>
     )
