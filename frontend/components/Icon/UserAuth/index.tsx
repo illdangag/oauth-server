@@ -7,7 +7,7 @@ type Props = {
 const UserAuth: FunctionComponent<Props> = ({
 }) => {
   return (
-    <span className={styles.icon} data-color={'#DEE2E6'}></span>
+    <span className={styles.icon}></span>
   )
 }
 

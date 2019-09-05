@@ -2,7 +2,10 @@ $color: #3B5BDB;
 $dark-color: darken($color, 10%);
 $darker-color: darken($color, 20%);
 
+$disabled-color: #CED4DA;
+
 $text-color: #F1F3F5;
+
 .button {
   background-color: $color;
   color: $text-color;
@@ -15,18 +18,27 @@ $text-color: #F1F3F5;
 
   text-align: center;
 
+  cursor: pointer;
+
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
   line-height: 14px;
 
+  transition: .1s ease-in-out;
+  
   &:hover {
     background-color: $dark-color;
   }
 
   &:active {
     background-color: $darker-color;
+  }
+  
+  &:disabled, &[disabled] {
+    background-color: $disabled-color;
+    cursor: default;
   }
 
   &.fullWidth {

@@ -9,12 +9,24 @@ interface Props {
 }
 
 interface State {
-
+  buttonDisabled?: boolean,
 }
 
 class SamplePage extends React.Component<Props, State> {
-  handleClick(event: MouseEvent) {
+  constructor(props: Props) {
+    super(props)
+
+    this.state = {
+      buttonDisabled: false,
+    }
+  }
+
+  handleClick = (event: MouseEvent): void => {
     event.preventDefault()
+    
+    this.setState({
+      buttonDisabled: !this.state.buttonDisabled,
+    })
   }
 
   render() {
@@ -22,6 +34,9 @@ class SamplePage extends React.Component<Props, State> {
       <div>
         <div>
           <Button fullWidth={false} onClick={this.handleClick}>button</Button>
+        </div>
+        <div>
+          <Button fullWidth={false} disabled={this.state.buttonDisabled}>button</Button>
         </div>
         <div>
           <Input fullWidth={false}/>
