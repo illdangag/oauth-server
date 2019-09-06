@@ -1,0 +1,54 @@
+$border-color: #DEE2E6;
+$backgroud-color: #FFFFFF;
+$disabled-background-color: #CED4DA;
+
+@function svgIcon($background, $border, $line) {
+  $background: rgba($background, 0.999);
+  $border: rgba($border, 0.999);
+  $line: rgba($line, 0.999);
+  $icon: "data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0.5' y='0.5' width='17' height='17' fill='#{$background}' stroke='#{$border}'/%3E%3Cpath d='M4 9C5.98431 11.1647 7.27124 12.5686 7.66667 13L15 5' stroke='#{$line}'/%3E%3C/svg%3E%0A";
+  @return url($icon)
+}
+
+.checkbox[type="checkbox"] {
+  display:none;
+
+  &+label {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    color: #495057;
+  }
+
+  &+label::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    margin: -2px 4px 0 0;
+    text-align: center;
+    vertical-align: middle;
+    box-sizing: border-box;
+
+    background-image: svgIcon($backgroud-color, $border-color, $backgroud-color);
+  }
+
+  &:checked+label::before {
+    background-image: svgIcon($backgroud-color, $border-color, #868E96);
+  }
+
+  &:disabled+label::before {
+    background-image: svgIcon($disabled-background-color, $border-color, $disabled-background-color);
+  }
+
+  &:disabled:checked+label::before {
+    background-image: svgIcon($disabled-background-color, $border-color, #F1F3F5);
+  }
+}
