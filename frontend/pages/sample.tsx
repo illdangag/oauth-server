@@ -6,6 +6,7 @@ import UserAuthIcon from '../components/Icon/UserAuthIcon'
 import CrossIcon from '../components/Icon/CrossIcon'
 import Checkbox from '../components/Checkbox'
 import MultipleInput, { MultipleInputChangeEvent, } from '../components/MultipleInput'
+import Switch from '../components/Switch'
 
 interface Props {
 
@@ -13,6 +14,7 @@ interface Props {
 
 interface State {
   buttonDisabled?: boolean,
+  switchChecked: boolean,
 }
 
 class SamplePage extends React.Component<Props, State> {
@@ -21,6 +23,7 @@ class SamplePage extends React.Component<Props, State> {
 
     this.state = {
       buttonDisabled: false,
+      switchChecked: false,
     }
   }
 
@@ -46,6 +49,13 @@ class SamplePage extends React.Component<Props, State> {
 
   onChangeMultipleInput = (evnet: MultipleInputChangeEvent): void => {
     console.log(evnet.values)
+  }
+
+  onChangeSwitch = (event: ChangeEvent<HTMLInputElement>): void => {
+    this.setState({
+      ...this.state,
+      switchChecked: event.target.checked,
+    })
   }
 
   render() {
@@ -79,6 +89,9 @@ class SamplePage extends React.Component<Props, State> {
         </div>
         <div>
           <MultipleInput onChange={this.onChangeMultipleInput}/>
+        </div>
+        <div>
+          <Switch id='switch1' checked={this.state.switchChecked} onChange={this.onChangeSwitch}/>
         </div>
       </div>
     )
