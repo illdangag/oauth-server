@@ -1,4 +1,4 @@
-import React, { Component, KeyboardEvent, ChangeEvent, } from 'react'
+import React, { Component, KeyboardEvent, ChangeEvent, MouseEvent, } from 'react'
 import styles from './styles.scss'
 
 import { List } from 'immutable'
@@ -47,42 +47,72 @@ class MultipleInput extends Component<Props, State> {
         return
       }
 
-      const addedInputValue = values.push(inputValue)
+      const addedValues = values.push(inputValue)
 
       this.setState({
         ...this.state,
         inputValue: '',
-        values: addedInputValue,
+        values: addedValues,
       })
 
       if (this.input !== null) {
         this.input.value = ''
       }
 
-      if (this.props.onChange !== undefined) {
-        const results: string[] = []
-        for (const value of addedInputValue) {
-          results.push(value)
-        }
-        const result: MultipleInputChangeEvent = {
-          values: results,
-        }
+      this.callChangeEvent(addedValues)
+    }
+  }
+  
+  onClickDelete = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    const { values, } = this.state
 
-        this.props.onChange(result)
+    const deleteIndex: number = Number(event.currentTarget.dataset.index)
+    const deletedValues: List<string> = values.remove(deleteIndex)
+    this.setState({
+      ...this.state,
+      values: deletedValues,
+    })
+    
+    if (this.input !== null) {
+      this.input.focus()
+    }
+    
+    this.callChangeEvent(deletedValues)
+  }
+
+  callChangeEvent = (values: List<string>) => {
+    if (this.props.onChange !== undefined) {
+      const results: string[] = []
+      for (const value of values) {
+        results.push(value)
       }
+      const result: MultipleInputChangeEvent = {
+        values: results,
+      }
+
+      this.props.onChange(result)
     }
   }
 
   render() {
     return (
       <div className={styles.background}>
-        {this.state.values.map((value, key) => (<span className={styles.value} key={key}>{value}</span>))}
         <input
           className={styles.input}
           ref={input => { this.input = input}}
           onChange={this.onChange}
           onKeyUp={this.onKeyUp}
         />
+        <div>
+          {this.state.values.map((value, key) => (
+            <span className={styles.value} key={key}>{value}
+              <button className={styles.delete}
+                onClick={this.onClickDelete}
+                data-index={key}></button>
+            </span>
+          ))}
+        </div>
       </div>
     )
   }
