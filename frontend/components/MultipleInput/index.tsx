@@ -1,4 +1,6 @@
 import React, { Component, KeyboardEvent, ChangeEvent, } from 'react'
+import styles from './styles.scss'
+
 import { List } from 'immutable'
 
 interface MultipleInputChangeEventHandler {
@@ -40,6 +42,11 @@ class MultipleInput extends Component<Props, State> {
   onKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       const { inputValue, values, } = this.state
+
+      if (inputValue === '') {
+        return
+      }
+
       const addedInputValue = values.push(inputValue)
 
       this.setState({
@@ -68,9 +75,10 @@ class MultipleInput extends Component<Props, State> {
 
   render() {
     return (
-      <div>
-        {this.state.values.map((value, key) => (<span key={key}>{value}</span>))}
+      <div className={styles.background}>
+        {this.state.values.map((value, key) => (<span className={styles.value} key={key}>{value}</span>))}
         <input
+          className={styles.input}
           ref={input => { this.input = input}}
           onChange={this.onChange}
           onKeyUp={this.onKeyUp}

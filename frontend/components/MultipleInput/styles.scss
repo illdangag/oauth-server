@@ -1,0 +1,57 @@
+.background {
+  display: inline-block;
+
+  background-color: #FFFFFF;
+  color: #495057;
+  // height: 24px;
+  margin: 0px;
+  border: 1px solid #DEE2E6;
+  padding: 0px 5px 6px 5px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 14px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.fullWidth {
+    width: 100%;
+  }
+
+  & .value {
+    display: inline-block;
+    height: 22px;
+
+    margin: 6px 4px 0px 4px;
+    border: 1px solid #DEE2E6;
+    border-radius: 11px;
+    padding: 0px 10px;
+
+    line-height: 24px;
+  }
+
+  & .input {
+    background-color: cadetblue;
+
+    width: auto;
+    height: 26px;
+
+    margin: 6px 0px 0px 0px;
+    border: 0px;
+    padding: 0px;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 14px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
