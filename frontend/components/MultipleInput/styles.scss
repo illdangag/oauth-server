@@ -4,7 +4,7 @@
   @return url($icon)
 }
 
-.background {
+.wrapper {
   display: inline-block;
 
   background-color: #FFFFFF;
@@ -38,9 +38,10 @@
     border-radius: 11px;
     padding: 0px 16px 0px 10px;
 
-    line-height: 24px;
+    line-height: 20px;
 
     & .delete {
+      background-color: #FFFFFF;
       background-image: svgIcon(#DEE2E6, 8px, 8px);
 
       width: 8px;

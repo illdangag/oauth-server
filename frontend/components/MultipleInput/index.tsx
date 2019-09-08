@@ -1,7 +1,7 @@
 import React, { Component, KeyboardEvent, ChangeEvent, MouseEvent, } from 'react'
 import styles from './styles.scss'
 
-import { List } from 'immutable'
+import { List, } from 'immutable'
 
 interface MultipleInputChangeEventHandler {
   (event: MultipleInputChangeEvent): void,
@@ -97,10 +97,10 @@ class MultipleInput extends Component<Props, State> {
 
   render() {
     return (
-      <div className={styles.background}>
+      <div className={styles.wrapper}>
         <input
           className={styles.input}
-          ref={input => { this.input = input}}
+          ref={input => { this.input = input }}
           onChange={this.onChange}
           onKeyUp={this.onKeyUp}
         />
