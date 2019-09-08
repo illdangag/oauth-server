@@ -4,6 +4,7 @@ import Button from '../components/Button'
 import Input from '../components/Input'
 import UserAuthIcon from '../components/Icon/UserAuthIcon'
 import Checkbox from '../components/Checkbox'
+import MultipleInput, { MultipleInputChangeEvent, } from '../components/MultipleInput'
 
 interface Props {
 
@@ -42,6 +43,10 @@ class SamplePage extends React.Component<Props, State> {
     console.log(event.target.checked)
   }
 
+  onChangeMultipleInput = (evnet: MultipleInputChangeEvent): void => {
+    console.log(evnet.values)
+  }
+
   render() {
     return (
       <div>
@@ -66,6 +71,9 @@ class SamplePage extends React.Component<Props, State> {
         </div>
         <div>
           <Checkbox label='한글레이블'id='checkbox2' disabled={true} checked/>
+        </div>
+        <div>
+          <MultipleInput onChange={this.onChangeMultipleInput}/>
         </div>
       </div>
     )
