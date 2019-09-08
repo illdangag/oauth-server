@@ -6,7 +6,7 @@ type Props = {
   id: string,
   disabled?: boolean
   checked?: boolean
-  onChnage?: ChangeEventHandler,
+  onChange?: ChangeEventHandler,
 }
 
 const Checkbox: FunctionComponent<Props> = ({
@@ -14,7 +14,7 @@ const Checkbox: FunctionComponent<Props> = ({
   id,
   disabled = false,
   checked,
-  onChnage = () => {
+  onChange = () => {
     // emply block
   },
 }) => {
@@ -26,7 +26,7 @@ const Checkbox: FunctionComponent<Props> = ({
           className={styles.checkbox}
           disabled={disabled}
           checked={checked}
-          onChange={onChnage}
+          onChange={onChange}
       />
       <label htmlFor={id}>
       {label}

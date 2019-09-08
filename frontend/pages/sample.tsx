@@ -72,7 +72,7 @@ class SamplePage extends React.Component<Props, State> {
           <Input fullWidth={false} onKeyup={this.handleKeyup}/>
         </div>
         <div>
-          <Checkbox label='test label1' id='checkbox1' onChnage={this.onChangeCheckbox}/>
+          <Checkbox label='test label1' id='checkbox1' onChange={this.onChangeCheckbox}/>
         </div>
         <div>
           <Checkbox label='한글레이블'id='checkbox2' disabled={true} checked/>
