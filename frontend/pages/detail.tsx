@@ -12,7 +12,6 @@ type Props = {
 
 class InitialPropsDetail extends React.Component<Props> {
   static getInitialProps = async({ query, }: NextPageContext) => {
-    console.log('init')
     try {
       const { id, } = query
       const item = await findData(Array.isArray(id) ? id[0] : id)
