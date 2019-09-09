@@ -7,6 +7,10 @@ import styles from './styles.scss'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 
+import { connect, } from 'react-redux'
+import { Dispatchable, mapDispatchToProps, } from '../../lib/with-redux-store'
+import { setToken, } from '../../store'
+
 interface Props {
   accessToken?: string,
   refreshToken?: string,
@@ -18,7 +22,7 @@ interface State {
   disabled: boolean,
 }
 
-class LoginPage extends Component<Props, State> {
+class LoginPage extends Component<Dispatchable<Props>, State> {
   // static getInitialProps = async() => {
   //   try {
   //     const response: Token = await login('oauthAdmin', 'password')
@@ -34,7 +38,7 @@ class LoginPage extends Component<Props, State> {
   //   }
   // }
 
-  constructor(props: Props) {
+  constructor(props: Dispatchable<Props>) {
     super(props)
     this.state = {
       username: 'oauthAdmin',
@@ -58,20 +62,21 @@ class LoginPage extends Component<Props, State> {
   }
 
   onClickButton = () => {
+    const { dispatch, } = this.props
     const { username, password, } = this.state
     
     this.setState({
       ...this.state,
       disabled: true,
     })
+
     login(username, password)
         .then((token: Token) => {
-          console.log(token)
-
           this.setState({
             ...this.state,
             disabled: false,
           })
+          setToken(token.access_token, token.refresh_token)(dispatch)
         })
         .catch((error) => {
           console.log(error)
@@ -116,4 +121,4 @@ class LoginPage extends Component<Props, State> {
   }
 }
 
-export default LoginPage
+export default connect(null, mapDispatchToProps)(LoginPage)

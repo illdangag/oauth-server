@@ -6,12 +6,18 @@ export const exampleInitialState = {
   lastUpdate: 0,
   light: false,
   count: 0,
+
+  accessToken: '',
+  refreshToken: '',
 }
 
 export type State = {
   lastUpdate: number,
   light: boolean,
   count: number,
+
+  accessToken: string,
+  refreshToken: string,
 }
 
 export const actionTypes = {
@@ -19,6 +25,8 @@ export const actionTypes = {
   INCREMENT: 'INCREMENT',
   DECREMENT: 'DECREMENT',
   RESET: 'RESET',
+
+  SET_TOKEN: 'SET_TOKEN',
 }
 
 // REDUCERS
@@ -41,6 +49,13 @@ export const reducer = (state = exampleInitialState, action: any) => {
       return Object.assign({}, state, {
         count: exampleInitialState.count,
       })
+    
+    //
+    case actionTypes.SET_TOKEN:
+      return Object.assign({}, state, {
+        accessToken: action.accessToken,
+        refreshToken: action.refreshToken,
+      })
     default: return state
   }
 }
@@ -55,6 +70,15 @@ export const startClock = (dispatch: Dispatch) => {
     // Dispatch `TICK` every 1 second
     dispatch({ type: actionTypes.TICK, light: true, ts: Date.now(), })
   }, 1000)
+}
+
+//
+export const setToken = (accessToken: string, refreshToken: string) => (dispatch: Dispatch) => {
+  return dispatch({
+    type: actionTypes.SET_TOKEN,
+    accessToken,
+    refreshToken,
+  })
 }
 
 export function initializeStore(initialState = exampleInitialState) {
