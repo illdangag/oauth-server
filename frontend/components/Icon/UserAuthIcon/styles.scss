@@ -5,6 +5,7 @@ $small-width: 18;
 $small-height: 18;
 
 $color: #ADB5BD;
+$disabled-color: #F1F3F5;
 
 @function svgIcon($color, $width, $height) {
   $color: rgba($color, 0.999);
@@ -19,9 +20,14 @@ $color: #ADB5BD;
   width: #{$width}px;
   height: #{$height}px;
   display: inline-block;
+
   &.small {
     background-image: svgIcon($color, $small-width, $small-height);
     width: #{$small-width}px;
     height: #{$small-height}px;
+  }
+
+  &.disabled {
+    background-image: svgIcon($disabled-color, $small-width, $small-height);
   }
 }

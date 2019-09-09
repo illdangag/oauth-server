@@ -1,16 +1,23 @@
-import React, { FunctionComponent, useState, ReactNode, ChangeEvent, ChangeEventHandler, KeyboardEvent, KeyboardEventHandler,} from 'react'
+import React, { FunctionComponent, useState, ChangeEvent, ChangeEventHandler, KeyboardEvent, KeyboardEventHandler, } from 'react'
 import styles from './styles.scss'
 import cx from 'classnames/bind'
 
+import UserAuthIcon from '../Icon/UserAuthIcon'
+import LockIcon from '../Icon/LockIcon'
+
 type Props = {
+  type?: 'text' | 'password',
+  value?: string,
   disabled?: boolean,
   fullWidth?: boolean,
-  icon?: ReactNode,
+  icon?: 'userAuth' | 'lock',
   onChange?: ChangeEventHandler,
   onKeyup?: KeyboardEventHandler,
 }
 
 const Input: FunctionComponent<Props> = ({
+  type = 'text',
+  value,
   disabled = false,
   fullWidth = false,
   icon = undefined,
@@ -28,18 +35,31 @@ const Input: FunctionComponent<Props> = ({
       input.focus()
     }
   }
+
   const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event)
   }
+
   const onKeyupInput = (event: KeyboardEvent<HTMLInputElement>) => {
     onKeyup(event)
   }
+
+  const getIcon = () => {
+    if (icon === 'userAuth') {
+      return <UserAuthIcon size='small' disabled={disabled}/>
+    } else if (icon === 'lock') {
+      return <LockIcon size='small' disabled={disabled}/>
+    }
+  }
+
   return (
     <>
       <span className={cx({ [styles.icon]: icon !== undefined, })} onClick={onClickIcon}>
-        {icon}
+        {getIcon()}
       </span>
       <input className={cx(styles.input, { [styles.fullWidth]: fullWidth, [styles.leftIcon]: icon !== undefined, })}
+        type={type}
+        value={value}
         disabled={disabled}
         ref={(input) => { setInput(input) }}
         onChange={onChangeInput}

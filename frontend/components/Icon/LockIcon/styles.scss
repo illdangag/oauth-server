@@ -1,0 +1,33 @@
+$width: 32;
+$height: 32;
+
+$small-width: 18;
+$small-height: 18;
+
+$color: #ADB5BD;
+$disabled-color: #F1F3F5;
+
+@function svgIcon($color, $width, $height) {
+  $color: rgba($color, 0.999);
+  $icon: "data:image/svg+xml,%3Csvg width='#{$width}' height='#{$height}' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 32H7C5.34668 32 4 30.6548 4 29V15C4 13.3452 5.34668 12 7 12H25C26.6533 12 28 13.3452 28 15V29C28 30.6548 26.6533 32 25 32ZM7 14C6.44922 14 6 14.448 6 15V29C6 29.552 6.44922 30 7 30H25C25.5508 30 26 29.552 26 29V15C26 14.448 25.5508 14 25 14H7Z' fill='#{$color}'/%3E%3Cpath d='M23 14C22.448 14 22 13.552 22 13V8C22 4.69189 19.3081 2 16 2C12.6919 2 10 4.69189 10 8V13C10 13.552 9.552 14 9 14C8.448 14 8 13.552 8 13V8C8 3.58789 11.5879 0 16 0C20.4121 0 24 3.58789 24 8V13C24 13.552 23.552 14 23 14Z' fill='#{$color}'/%3E%3C/svg%3E%0A";
+  @return url($icon)
+}
+
+.icon {
+  background-image: svgIcon($color, $width, $height);
+  background-repeat: no-repeat;
+
+  width: #{$width}px;
+  height: #{$height}px;
+  display: inline-block;
+
+  &.small {
+    background-image: svgIcon($color, $small-width, $small-height);
+    width: #{$small-width}px;
+    height: #{$small-height}px;
+  }
+
+  &.disabled {
+    background-image: svgIcon($disabled-color, $small-width, $small-height);
+  }
+}

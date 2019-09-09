@@ -3,7 +3,6 @@ import React, { MouseEvent, ChangeEvent, KeyboardEvent, } from 'react'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import UserAuthIcon from '../components/Icon/UserAuthIcon'
-import CrossIcon from '../components/Icon/CrossIcon'
 import Checkbox from '../components/Checkbox'
 import MultipleInput, { MultipleInputChangeEvent, } from '../components/MultipleInput'
 import Switch from '../components/Switch'
@@ -81,7 +80,6 @@ class SamplePage extends React.Component<Props, State> {
       <div>
         <div>
           <UserAuthIcon/>
-          <CrossIcon/>
         </div>
         <div>
           <Button fullWidth={false} onClick={this.handleClick} size='large'>BUTTON</Button>
@@ -90,7 +88,7 @@ class SamplePage extends React.Component<Props, State> {
           <Button fullWidth={false} disabled={this.state.buttonDisabled}>button</Button>
         </div>
         <div>
-          <Input fullWidth={false} icon={<UserAuthIcon size='small'/>} onChange={this.handleChangeInputValue}/>
+          <Input fullWidth={false} icon='userAuth' onChange={this.handleChangeInputValue}/>
         </div>
         <div>
           <Input fullWidth={false} onKeyup={this.handleKeyup}/>

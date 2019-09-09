@@ -7,7 +7,7 @@ type Props = {
   disabled?: boolean,
 }
 
-const UserAuthIcon: FunctionComponent<Props> = ({
+const LockIcon: FunctionComponent<Props> = ({
   size = '',
   disabled = false,
 }) => {
@@ -16,4 +16,4 @@ const UserAuthIcon: FunctionComponent<Props> = ({
   )
 }
 
-export default UserAuthIcon
+export default LockIcon

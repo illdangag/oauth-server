@@ -1,0 +1,21 @@
+ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 0px;
+}
+.wrapper {
+  // background-color: blanchedalmond;
+
+  display: inline-block;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 300px;
+
+  & .password {
+    margin: 6px 0px 20px 0px;
+  }
+}

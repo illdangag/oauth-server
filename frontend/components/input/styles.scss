@@ -13,6 +13,12 @@
 
   background-color: #FFFFFF;
   color: #495057;
+  transition: .1s ease-in-out;
+  
+  &:disabled {
+    background-color: #CED4DA;
+    color: #F1F3F5;
+  }
 
   &:focus {
     outline: none;
@@ -20,6 +26,9 @@
 
   &.fullWidth {
     width: 100%;
+    &.leftIcon {
+      width: calc(100% - 37px);
+    }
   }
 
   &.leftIcon {
@@ -33,5 +42,6 @@
   width: 18px;
   height: 18px;
   
+  margin-top: 1px;
   padding: 9px;
 }
