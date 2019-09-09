@@ -3,6 +3,7 @@ import styles from './styles.scss'
 
 type Props = {
   id: string,
+  label?: string
   disabled?: boolean,
   checked?: boolean,
   onChange?: ChangeEventHandler,
@@ -10,11 +11,12 @@ type Props = {
 
 const Switch: FunctionComponent<Props> = ({
   id,
+  label = '',
   disabled,
   checked,
   onChange = () => {
     // emply block
-  }
+  },
 }) => {
   return(
     <>
@@ -26,9 +28,7 @@ const Switch: FunctionComponent<Props> = ({
         checked={checked}
         onChange={onChange}
       />
-      <label
-        htmlFor={id}
-      ></label>
+      <label htmlFor={id}>{label}</label>
     </>
   )
 }

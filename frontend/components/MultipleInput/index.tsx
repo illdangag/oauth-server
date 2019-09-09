@@ -8,16 +8,16 @@ interface MultipleInputChangeEventHandler {
 }
 
 export interface MultipleInputChangeEvent {
-  values: string[],
+  values: List<string>,
 }
 
 interface Props {
+  values: List<string>,
   onChange?: MultipleInputChangeEventHandler,
 }
 
 interface State {
   inputValue: string,
-  values: List<string>,
 }
 
 class MultipleInput extends Component<Props, State> {
@@ -27,7 +27,6 @@ class MultipleInput extends Component<Props, State> {
     super(props)
     this.state = {
       inputValue: '',
-      values : List(),
     }
     this.input = null
   }
@@ -41,7 +40,8 @@ class MultipleInput extends Component<Props, State> {
 
   onKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      const { inputValue, values, } = this.state
+      const { inputValue, } = this.state
+      const { values, } = this.props
 
       if (inputValue === '') {
         return
@@ -52,7 +52,6 @@ class MultipleInput extends Component<Props, State> {
       this.setState({
         ...this.state,
         inputValue: '',
-        values: addedValues,
       })
 
       if (this.input !== null) {
@@ -65,13 +64,12 @@ class MultipleInput extends Component<Props, State> {
   
   onClickDelete = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    const { values, } = this.state
+    const { values, } = this.props
 
     const deleteIndex: number = Number(event.currentTarget.dataset.index)
     const deletedValues: List<string> = values.remove(deleteIndex)
     this.setState({
       ...this.state,
-      values: deletedValues,
     })
     
     if (this.input !== null) {
@@ -83,12 +81,8 @@ class MultipleInput extends Component<Props, State> {
 
   callChangeEvent = (values: List<string>) => {
     if (this.props.onChange !== undefined) {
-      const results: string[] = []
-      for (const value of values) {
-        results.push(value)
-      }
       const result: MultipleInputChangeEvent = {
-        values: results,
+        values: values,
       }
 
       this.props.onChange(result)
@@ -105,7 +99,7 @@ class MultipleInput extends Component<Props, State> {
           onKeyUp={this.onKeyUp}
         />
         <div>
-          {this.state.values.map((value, key) => (
+          {this.props.values.map((value, key) => (
             <span className={styles.value} key={key}>{value}
               <button className={styles.delete}
                 onClick={this.onClickDelete}

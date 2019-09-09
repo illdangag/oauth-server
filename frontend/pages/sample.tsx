@@ -8,6 +8,8 @@ import Checkbox from '../components/Checkbox'
 import MultipleInput, { MultipleInputChangeEvent, } from '../components/MultipleInput'
 import Switch from '../components/Switch'
 
+import { List, } from 'immutable'
+
 interface Props {
 
 }
@@ -15,6 +17,7 @@ interface Props {
 interface State {
   buttonDisabled?: boolean,
   switchChecked: boolean,
+  values: List<string>,
 }
 
 class SamplePage extends React.Component<Props, State> {
@@ -24,6 +27,7 @@ class SamplePage extends React.Component<Props, State> {
     this.state = {
       buttonDisabled: false,
       switchChecked: false,
+      values: List(),
     }
   }
 
@@ -48,7 +52,10 @@ class SamplePage extends React.Component<Props, State> {
   }
 
   onChangeMultipleInput = (evnet: MultipleInputChangeEvent): void => {
-    console.log(evnet.values)
+    this.setState({
+      ...this.state,
+      values: evnet.values,
+    })
   }
 
   onChangeSwitch = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -85,13 +92,13 @@ class SamplePage extends React.Component<Props, State> {
           <Checkbox label='test label1' id='checkbox1' onChange={this.onChangeCheckbox}/>
         </div>
         <div>
-          <Checkbox label='한글레이블'id='checkbox2' disabled={true} checked/>
+          <Checkbox label='한글레이블'id='checkbox2' disabled={true} checked/> TEXT
         </div>
         <div>
-          <MultipleInput onChange={this.onChangeMultipleInput}/>
+          <MultipleInput values={this.state.values} onChange={this.onChangeMultipleInput}/>
         </div>
         <div>
-          <Switch id='switch1' checked={this.state.switchChecked} onChange={this.onChangeSwitch}/>
+          <Switch id='switch1' checked={this.state.switchChecked} onChange={this.onChangeSwitch} label={'swtich'}/>
         </div>
       </div>
     )
