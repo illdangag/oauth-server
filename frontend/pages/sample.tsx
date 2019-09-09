@@ -15,8 +15,11 @@ interface Props {
 }
 
 interface State {
-  buttonDisabled?: boolean,
-  switchChecked: boolean,
+  buttonDisabled: boolean,
+  checkbox1Checked: boolean,
+  checkbox2Disabled: boolean,
+  switch1Checked: boolean,
+  switch2Disabled: boolean,
   values: List<string>,
 }
 
@@ -26,7 +29,10 @@ class SamplePage extends React.Component<Props, State> {
 
     this.state = {
       buttonDisabled: false,
-      switchChecked: false,
+      checkbox1Checked: false,
+      checkbox2Disabled: false,
+      switch1Checked: false,
+      switch2Disabled: false,
       values: List(),
     }
   }
@@ -47,8 +53,12 @@ class SamplePage extends React.Component<Props, State> {
     console.log(event.key)
   }
 
-  onChangeCheckbox = (event: ChangeEvent<HTMLInputElement>): void => {
-    console.log(event.target.checked)
+  onChangeCheckbox1 = (event: ChangeEvent<HTMLInputElement>): void => {
+    this.setState({
+      ...this.state,
+      checkbox1Checked: event.target.checked,
+      checkbox2Disabled: event.target.checked,
+    })
   }
 
   onChangeMultipleInput = (evnet: MultipleInputChangeEvent): void => {
@@ -58,10 +68,11 @@ class SamplePage extends React.Component<Props, State> {
     })
   }
 
-  onChangeSwitch = (event: ChangeEvent<HTMLInputElement>): void => {
+  onChangeSwitch1 = (event: ChangeEvent<HTMLInputElement>): void => {
     this.setState({
       ...this.state,
-      switchChecked: event.target.checked,
+      switch1Checked: event.target.checked,
+      switch2Disabled: event.target.checked,
     })
   }
 
@@ -79,26 +90,25 @@ class SamplePage extends React.Component<Props, State> {
           <Button fullWidth={false} disabled={this.state.buttonDisabled}>button</Button>
         </div>
         <div>
-          <Input
-              fullWidth={false}
-              icon={<UserAuthIcon size='small'/>}
-              onChange={this.handleChangeInputValue}
-          />
+          <Input fullWidth={false} icon={<UserAuthIcon size='small'/>} onChange={this.handleChangeInputValue}/>
         </div>
         <div>
           <Input fullWidth={false} onKeyup={this.handleKeyup}/>
         </div>
         <div>
-          <Checkbox label='test label1' id='checkbox1' onChange={this.onChangeCheckbox}/>
+          <Checkbox id='checkbox1' label='test label1' checked={this.state.checkbox1Checked} onChange={this.onChangeCheckbox1}/>
         </div>
         <div>
-          <Checkbox label='한글레이블'id='checkbox2' disabled={true} checked/> TEXT
+          <Checkbox id='checkbox2' label='한글레이블' disabled={this.state.checkbox2Disabled}/> TEXT
         </div>
         <div>
           <MultipleInput values={this.state.values} onChange={this.onChangeMultipleInput}/>
         </div>
         <div>
-          <Switch id='switch1' checked={this.state.switchChecked} onChange={this.onChangeSwitch} label={'swtich'}/>
+          <Switch id='switch1' checked={this.state.switch1Checked} onChange={this.onChangeSwitch1} label={'swtich'}/>
+        </div>
+        <div>
+          <Switch id='switch2' disabled={this.state.switch2Disabled} label={'swtich'}/>
         </div>
       </div>
     )

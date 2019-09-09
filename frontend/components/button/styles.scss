@@ -1,32 +1,27 @@
 $color: #3B5BDB;
 $dark-color: darken($color, 10%);
 $darker-color: darken($color, 20%);
-
 $disabled-color: #CED4DA;
-
 $text-color: #F1F3F5;
 
 .button {
-  background-color: $color;
-  color: $text-color;
-
   height: 36px;
 
   margin: 0px;
   border: none;
   padding: 0px 8px;
 
-  text-align: center;
-
-  cursor: pointer;
-
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
+  text-align: center;
   line-height: 36px;
 
+  cursor: pointer;
   transition: .1s ease-in-out;
+  background-color: $color;
+  color: $text-color;
   
   &:focus {
     outline: none;
@@ -47,8 +42,9 @@ $text-color: #F1F3F5;
 
   &.large {
     height: 54px;
-    font-size: 18px;
     line-height: 54px;
+
+    font-size: 18px;
   }
 
   &.fullWidth {

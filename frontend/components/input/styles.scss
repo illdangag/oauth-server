@@ -1,7 +1,6 @@
 .input {
-  background-color: #FFFFFF;
-  color: #495057;
   height: 36px;
+
   margin: 0px;
   border: 1px solid #DEE2E6;
   padding: 0px 5px;
@@ -11,6 +10,9 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 14px;
+
+  background-color: #FFFFFF;
+  color: #495057;
 
   &:focus {
     outline: none;
@@ -27,7 +29,9 @@
 
 .icon {
   position: absolute;
+
   width: 18px;
   height: 18px;
+  
   padding: 9px;
 }

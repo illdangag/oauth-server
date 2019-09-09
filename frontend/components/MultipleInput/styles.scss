@@ -7,9 +7,6 @@
 .wrapper {
   display: inline-block;
 
-  background-color: #FFFFFF;
-  color: #495057;
-
   margin: 0px;
   border: 1px solid #DEE2E6;
   padding: 0px 0px 6px 0px;
@@ -19,6 +16,9 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 14px;
+
+  background-color: #FFFFFF;
+  color: #495057;
 
   &:focus {
     outline: none;
@@ -30,7 +30,9 @@
 
   & .value {
     display: inline-block;
+
     position: relative;
+
     height: 22px;
 
     margin: 6px 4px 0px 4px;
@@ -41,21 +43,20 @@
     line-height: 20px;
 
     & .delete {
-      background-color: #FFFFFF;
-      background-image: svgIcon(#DEE2E6, 8px, 8px);
-
       width: 8px;
       height: 8px;
 
+      position: absolute;
+      top: 7px;
+      right: 4px;
+      
       margin: 0;
       border: 0;
       padding: 0;
-
-      position: absolute;
-      right: 4px;
-      top: 7px;
-
+      
       cursor: pointer;
+      background-color: #FFFFFF;
+      background-image: svgIcon(#DEE2E6, 8px, 8px);
 
       &:focus {
         outline: none;
