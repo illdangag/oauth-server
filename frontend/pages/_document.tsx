@@ -6,6 +6,7 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <style>{`body { margin: 0 } /* custom! */`}</style>
+          <link rel='icon' type='image/x-icon' href='/static/favicon.ico' />
         </Head>
         <body className='custom_class'>
           <Main />
