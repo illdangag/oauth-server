@@ -6,6 +6,8 @@ $underline-color: #CED4DA;
 
   position: relative;
 
+  min-width: 320px;
+
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
@@ -19,15 +21,15 @@ $underline-color: #CED4DA;
       display: inline-block;
       height: 36px;
 
+      margin: 0px 10px;
+      padding: 0px 10px;
+
       vertical-align: top;
       line-height: 36px;
     }
 
     & .active {
-      margin: 0px 10px;
       border-bottom: 2px solid $underline-color;
-      padding: 0px 10px;
-
       font-weight: bold;
     }
   }

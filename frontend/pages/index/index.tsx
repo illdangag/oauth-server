@@ -45,7 +45,7 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
         isLogin: true,
       })
 
-      Router.push('/sample')
+      Router.push('/user')
       .catch(() => {
         // emply block
       })
@@ -89,7 +89,7 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
           })
           setToken(token.accessToken, token.refreshToken)(dispatch)
           setLocalToken(token)
-          Router.push('/sample')
+          Router.push('/user')
           .catch(() => {
             // emply block
           })

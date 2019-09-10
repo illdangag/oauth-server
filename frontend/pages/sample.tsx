@@ -1,12 +1,15 @@
 import React, { MouseEvent, ChangeEvent, KeyboardEvent, } from 'react'
 
+import Layout from '../container/Layout'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import UserAuthIcon from '../components/Icon/UserAuthIcon'
+import PlusIcon from '../components/Icon/PlusIcon'
+import TrashIcon from '../components/Icon/TrashIcon'
+import FindIcon from '../components/Icon/FindIcon'
 import Checkbox from '../components/Checkbox'
 import MultipleInput, { MultipleInputChangeEvent, } from '../components/MultipleInput'
 import Switch from '../components/Switch'
-import Layout from '../components/Layout'
 
 import { List, } from 'immutable'
 
@@ -81,7 +84,7 @@ class SamplePage extends React.Component<Props, State> {
       <Layout active={'client'}>
         <div>
           <div>
-            <UserAuthIcon/>
+            <UserAuthIcon/><PlusIcon/><TrashIcon/><FindIcon/>
           </div>
           <div>
             <Button fullWidth={false} onClick={this.handleClick} size='large'>BUTTON</Button>

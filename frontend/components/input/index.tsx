@@ -4,13 +4,14 @@ import cx from 'classnames/bind'
 
 import UserAuthIcon from '../Icon/UserAuthIcon'
 import LockIcon from '../Icon/LockIcon'
+import FindIcon from '../Icon/FindIcon'
 
 type Props = {
   type?: 'text' | 'password',
   value?: string,
   disabled?: boolean,
   fullWidth?: boolean,
-  icon?: 'userAuth' | 'lock',
+  icon?: 'userAuth' | 'lock' | 'find',
   onChange?: ChangeEventHandler,
   onKeyup?: KeyboardEventHandler,
 }
@@ -49,6 +50,8 @@ const Input: FunctionComponent<Props> = ({
       return <UserAuthIcon size='small' disabled={disabled}/>
     } else if (icon === 'lock') {
       return <LockIcon size='small' disabled={disabled}/>
+    } else if (icon === 'find') {
+      return <FindIcon size='small' disabled={disabled}/>
     }
   }
 

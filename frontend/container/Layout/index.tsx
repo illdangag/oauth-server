@@ -8,7 +8,7 @@ import cx from 'classnames/bind'
 
 import { clearLocalToken, } from '../../utils/tokenAPI'
 
-import Button from '../Button'
+import Button from '../../components/Button'
 
 type Props = {
   title?: string,
@@ -37,10 +37,10 @@ const Layout: FunctionComponent<Props> = ({
       <nav className={styles.menu}>
         <div className={styles.linkList}>
           <span className={cx(styles.link, { [styles.active]: active === 'user', })}>
-            <Link href='/'>USER</Link>
+            <Link href='/'><a>USER</a></Link>
           </span>
           <span className={cx(styles.link, { [styles.active]: active === 'client', })}>
-            <Link href='/sample'>CLIENT</Link>
+            <Link href='/sample'><a>CLIENT</a></Link>
           </span>
         </div>
         <span className={styles.logout}>

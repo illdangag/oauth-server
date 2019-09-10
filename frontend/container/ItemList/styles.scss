@@ -1,0 +1,36 @@
+.header {
+  position: relative;
+
+  margin: auto;
+  border-bottom: 2px solid #DEE2E6;
+
+  min-width: 320px;
+  max-width: 560px;
+  height: 80px;
+
+  & .find {
+    position: absolute;
+    right: 0px;
+
+    width: 300px;
+  }
+
+  & .icons {
+    position: absolute;
+    right: 10px;
+    bottom: 4px;
+
+    & .iconButton {
+      margin-left: 10px;
+      border: 0;
+      padding: 0;
+  
+      background-color: rgba(0, 0, 0, 0);
+      cursor: pointer;
+  
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
