@@ -44,3 +44,7 @@ export function getLocalToken(): Token {
 
   return JSON.parse(serializedToken)
 }
+
+export function clearLocalToken(): void {
+  localStorage.removeItem('token')
+}

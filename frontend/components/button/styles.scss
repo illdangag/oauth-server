@@ -4,6 +4,11 @@ $darker-color: darken($color, 20%);
 $disabled-color: #CED4DA;
 $text-color: #F1F3F5;
 
+$outline-color: #FFFFFF;
+$outline-disabled-color: #E9ECEF;
+$outline-text-color: #495057;
+$outline-disabled-text-color: #495057;
+
 .button {
   height: 36px;
 
@@ -16,13 +21,13 @@ $text-color: #F1F3F5;
   font-weight: normal;
   font-size: 14px;
   text-align: center;
-  line-height: 36px;
 
   cursor: pointer;
-  transition: .1s ease-in-out;
   background-color: $color;
   color: $text-color;
-  
+
+  display: table-cell;
+
   &:focus {
     outline: none;
   }
@@ -35,7 +40,12 @@ $text-color: #F1F3F5;
     background-color: $darker-color;
   }
   
+  &:enabled, &[enabled] {
+    transition: .05s ease-in-out;
+  }
+
   &:disabled, &[disabled] {
+    transition: .05s ease-in-out;
     background-color: $disabled-color;
     cursor: default;
   }
@@ -49,5 +59,22 @@ $text-color: #F1F3F5;
 
   &.fullWidth {
     width: 100%;
+  }
+
+  &.outline {
+    border: 2px solid #DEE2E6;
+
+    background-color: $outline-color;
+    color: $outline-text-color;
+
+    &:active {
+      border: 2px solid darken(#DEE2E6, 10%);
+      background-color: darken($outline-color, 10%);
+    }
+
+    &:disabled, &[disabled] {
+      background-color: $outline-disabled-color;
+      color: $outline-disabled-text-color;
+    }
   }
 }

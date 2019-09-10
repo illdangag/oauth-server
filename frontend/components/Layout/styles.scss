@@ -1,0 +1,52 @@
+$text-color: #495057;
+$underline-color: #CED4DA;
+
+.menu {
+  margin-top: 62px;
+
+  position: relative;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  color: $text-color;
+
+  & .linkList {
+    text-align: center;
+
+    & .link {
+      display: inline-block;
+      height: 36px;
+
+      vertical-align: top;
+      line-height: 36px;
+    }
+
+    & .active {
+      margin: 0px 10px;
+      border-bottom: 2px solid $underline-color;
+      padding: 0px 10px;
+
+      font-weight: bold;
+    }
+  }
+
+  & .logout {
+    display: inline-block;
+
+    position: absolute;
+    top: 0px;
+    right: 10px;
+  }
+
+  & a {
+    text-decoration: none;
+    outline: none;
+
+    &:hover, &:visited, &:active {
+      text-decoration: none;
+      color: $text-color;
+    }
+  }
+}

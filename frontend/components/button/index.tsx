@@ -4,7 +4,8 @@ import cx from 'classnames/bind'
 
 type Props = {
   disabled?: boolean,
-  size?: string,
+  size?: 'large',
+  style?: 'nomal' | 'outline',
   fullWidth?: boolean,
   onClick?: MouseEventHandler,
 }
@@ -13,6 +14,7 @@ const Button: FunctionComponent<Props> = ({
   children,
   disabled = false,
   size = null,
+  style = 'nomal',
   fullWidth = false,
   onClick = () => {
     // emply block
@@ -20,7 +22,11 @@ const Button: FunctionComponent<Props> = ({
 }) => {
   return (
     <button
-      className={cx(styles.button, { [styles.fullWidth]: fullWidth, [styles.large]: size === 'large', })}
+      className={cx(styles.button, {
+        [styles.fullWidth]: fullWidth,
+        [styles.large]: size === 'large',
+        [styles[style]]: style,
+      })}
       disabled={disabled}
       onClick={onClick}>
         {children}

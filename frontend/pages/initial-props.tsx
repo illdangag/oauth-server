@@ -1,6 +1,6 @@
 import { NextPage, } from 'next'
 import Link from 'next/link'
-import Layout from '../components/Layout'
+import Layout from '../components/sample-layout'
 import List from '../components/List'
 import { User, } from '../interfaces'
 import { findAll, } from '../utils/sample-api'

@@ -6,6 +6,7 @@ import UserAuthIcon from '../components/Icon/UserAuthIcon'
 import Checkbox from '../components/Checkbox'
 import MultipleInput, { MultipleInputChangeEvent, } from '../components/MultipleInput'
 import Switch from '../components/Switch'
+import Layout from '../components/Layout'
 
 import { List, } from 'immutable'
 
@@ -77,38 +78,43 @@ class SamplePage extends React.Component<Props, State> {
 
   render() {
     return (
-      <div>
+      <Layout active={'client'}>
         <div>
-          <UserAuthIcon/>
+          <div>
+            <UserAuthIcon/>
+          </div>
+          <div>
+            <Button fullWidth={false} onClick={this.handleClick} size='large'>BUTTON</Button>
+          </div>
+          <div>
+            <Button fullWidth={false} disabled={this.state.buttonDisabled}>button</Button>
+          </div>
+          <div>
+            <Button fullWidth={false} style={'outline'} disabled={this.state.buttonDisabled}>outline</Button>
+          </div>
+          <div>
+            <Input fullWidth={false} icon='userAuth' onChange={this.handleChangeInputValue}/>
+          </div>
+          <div>
+            <Input fullWidth={false} onKeyup={this.handleKeyup}/>
+          </div>
+          <div>
+            <Checkbox id='checkbox1' label='test label1' checked={this.state.checkbox1Checked} onChange={this.onChangeCheckbox1}/>
+          </div>
+          <div>
+            <Checkbox id='checkbox2' label='한글레이블' disabled={this.state.checkbox2Disabled}/> TEXT
+          </div>
+          <div>
+            <MultipleInput values={this.state.values} onChange={this.onChangeMultipleInput}/>
+          </div>
+          <div>
+            <Switch id='switch1' checked={this.state.switch1Checked} onChange={this.onChangeSwitch1} label={'swtich'}/>
+          </div>
+          <div>
+            <Switch id='switch2' disabled={this.state.switch2Disabled} label={'swtich'}/>
+          </div>
         </div>
-        <div>
-          <Button fullWidth={false} onClick={this.handleClick} size='large'>BUTTON</Button>
-        </div>
-        <div>
-          <Button fullWidth={false} disabled={this.state.buttonDisabled}>button</Button>
-        </div>
-        <div>
-          <Input fullWidth={false} icon='userAuth' onChange={this.handleChangeInputValue}/>
-        </div>
-        <div>
-          <Input fullWidth={false} onKeyup={this.handleKeyup}/>
-        </div>
-        <div>
-          <Checkbox id='checkbox1' label='test label1' checked={this.state.checkbox1Checked} onChange={this.onChangeCheckbox1}/>
-        </div>
-        <div>
-          <Checkbox id='checkbox2' label='한글레이블' disabled={this.state.checkbox2Disabled}/> TEXT
-        </div>
-        <div>
-          <MultipleInput values={this.state.values} onChange={this.onChangeMultipleInput}/>
-        </div>
-        <div>
-          <Switch id='switch1' checked={this.state.switch1Checked} onChange={this.onChangeSwitch1} label={'swtich'}/>
-        </div>
-        <div>
-          <Switch id='switch2' disabled={this.state.switch2Disabled} label={'swtich'}/>
-        </div>
-      </div>
+      </Layout>
     )
   }
 }

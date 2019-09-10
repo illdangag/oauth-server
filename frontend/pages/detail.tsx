@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { NextPageContext, } from 'next'
-import Layout from '../components/Layout'
+import Layout from '../components/sample-layout'
 import { User, } from '../interfaces'
 import { findData, } from '../utils/sample-api'
 import ListDetail from '../components/ListDetail'
