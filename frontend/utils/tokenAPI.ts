@@ -20,12 +20,27 @@ export async function login(username: string, password: string): Promise<Token> 
   const response: AxiosResponse = await axios.request(config)
 
   const token: Token = {
-    access_token: response.data.access_token,
-    refresh_token: response.data.refresh_token,
-    token_type: response.data.token_type,
-    expires_in: response.data.expireds_in,
+    accessToken: response.data.access_token,
+    refreshToken: response.data.refresh_token,
+    tokenType: response.data.token_type,
+    expiresIn: response.data.expireds_in,
     scope: response.data.scope,
     jti: response.data.jti,
   }
   return token
+}
+
+export function setLocalToken(token: Token): void {
+  const serializedToken: string = JSON.stringify(token)
+  localStorage.setItem('token', serializedToken)
+}
+
+export function getLocalToken(): Token {
+  const serializedToken: string | null = localStorage.getItem('token')
+
+  if (serializedToken === null) {
+    throw Error()
+  }
+
+  return JSON.parse(serializedToken)
 }

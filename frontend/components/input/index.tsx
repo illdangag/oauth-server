@@ -59,6 +59,7 @@ const Input: FunctionComponent<Props> = ({
       </span>
       <input className={cx(styles.input, { [styles.fullWidth]: fullWidth, [styles.leftIcon]: icon !== undefined, })}
         type={type}
+        autoComplete={type === 'password' ? 'on' : undefined}
         value={value}
         disabled={disabled}
         ref={(input) => { setInput(input) }}
