@@ -23,7 +23,7 @@ export async function login(username: string, password: string): Promise<Token> 
     accessToken: response.data.access_token,
     refreshToken: response.data.refresh_token,
     tokenType: response.data.token_type,
-    expiresIn: response.data.expireds_in,
+    expiresIn: response.data.expires_in,
     scope: response.data.scope,
     jti: response.data.jti,
   }
