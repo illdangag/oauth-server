@@ -1,4 +1,5 @@
 import { Component, ChangeEvent, } from 'react'
+import Head from 'next/head'
 import Router from 'next/router'
 
 import { login, getLocalToken, setLocalToken, } from '../../utils/tokenAPI'
@@ -88,17 +89,16 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
           })
           setToken(token.accessToken, token.refreshToken)(dispatch)
           setLocalToken(token)
+          Router.push('/sample')
+          .catch(() => {
+            // emply block
+          })
         })
         .catch(() => {
           this.setState({
             ...this.state,
             disabled: false,
           })
-
-          Router.push('/')
-            .catch(() => {
-              // emply block
-            })
         })
   }
 
@@ -106,6 +106,11 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
     const { isLogin, } = this.state
     return (
       <>
+        <Head>
+          <title>Login</title>
+          <meta charSet='utf-8' />
+          <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+        </Head>
         {!isLogin && (
           <form className={styles.wrapper}>
             <div>
