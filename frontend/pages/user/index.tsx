@@ -1,4 +1,8 @@
 import { Component, } from 'react'
+import Router from 'next/router'
+
+import { getLocalToken, } from '../../utils/tokenAPI'
+
 import styles from './styles.scss'
 
 import Layout from '../../container/Layout'
@@ -9,10 +13,31 @@ interface Props {
 }
 
 interface State {
-
+  isLogin: boolean,
 }
 
 class UserPage extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props)
+    this.state = {
+      isLogin: false,
+    }
+  }
+
+  componentDidMount() {
+    try {
+      getLocalToken()
+      this.setState({
+        ...this.state,
+        isLogin: true,
+      })
+    } catch {
+      Router.push('/')
+      .catch(() => {
+        // emply block
+      })
+    }
+  }
 
   render() {
     const items: Item[] = []
@@ -27,11 +52,15 @@ class UserPage extends Component<Props, State> {
     })
 
     return(
-      <Layout title='USER | OAUTH' active='user'>
-        <div className={styles.content}>
-          <ItemList items={items}/>
-        </div>
-      </Layout>
+      <>
+        {this.state.isLogin && (
+          <Layout title='USER | OAUTH' active='user'>
+          <div className={styles.content}>
+            <ItemList items={items}/>
+          </div>
+          </Layout>
+        )}
+      </>
     )
   }
 }
