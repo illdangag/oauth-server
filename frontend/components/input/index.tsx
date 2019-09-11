@@ -14,6 +14,7 @@ type Props = {
   icon?: 'userAuth' | 'lock' | 'find',
   onChange?: ChangeEventHandler,
   onKeyup?: KeyboardEventHandler,
+  inputRef?: ((instance: HTMLInputElement | null) => void) | null | undefined,
 }
 
 const Input: FunctionComponent<Props> = ({
@@ -28,6 +29,7 @@ const Input: FunctionComponent<Props> = ({
   onKeyup = () => {
     // emply block
   },
+  inputRef,
 }) => {
   const [input, setInput,] = useState<HTMLInputElement | null>(null)
 
@@ -65,7 +67,12 @@ const Input: FunctionComponent<Props> = ({
         autoComplete={type === 'password' ? 'on' : undefined}
         value={value}
         disabled={disabled}
-        ref={(input) => { setInput(input) }}
+        ref={(input) => {
+          setInput(input)
+          if (inputRef !== null && inputRef !== undefined) {
+            inputRef(input)
+          }
+        }}
         onChange={onChangeInput}
         onKeyUp={onKeyupInput}
       >

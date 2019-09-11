@@ -1,4 +1,4 @@
-import { Component, ChangeEvent, } from 'react'
+import { Component, ChangeEvent, KeyboardEvent, } from 'react'
 import Head from 'next/head'
 import Router from 'next/router'
 
@@ -27,6 +27,8 @@ interface State {
 }
 
 class LoginPage extends Component<Dispatchable<Props>, State> {
+  private passwordElement: HTMLInputElement | null = null
+
   constructor(props: Dispatchable<Props>) {
     super(props)
     this.state = {
@@ -64,6 +66,13 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
     })
   }
 
+  onKeyupUsername = (event: KeyboardEvent<HTMLInputElement>) => {
+    const { username, } = this.state
+    if (event.key === 'Enter' && username.length > 0 && this.passwordElement !== null) {
+      this.passwordElement.focus()
+    }
+  }
+
   onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({
       ...this.state,
@@ -71,35 +80,50 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
     })
   }
 
+  onKeyupPassword = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      this.setState({
+        ...this.state,
+        disabled: true,
+      })
+  
+      this.startLogin()
+    }
+  }
+
   onClickButton = () => {
-    const { dispatch, } = this.props
-    const { username, password, } = this.state
-    
     this.setState({
       ...this.state,
       disabled: true,
     })
 
+    this.startLogin()
+  }
+
+  startLogin = () => {
+    const { dispatch, } = this.props
+    const { username, password, } = this.state
+
     login(username, password)
-        .then((token: Token) => {
-          this.setState({
-            ...this.state,
-            disabled: false,
-            isLogin: true,
-          })
-          setToken(token.accessToken, token.refreshToken)(dispatch)
-          setLocalToken(token)
-          Router.push('/user')
-          .catch(() => {
-            // emply block
-          })
-        })
-        .catch(() => {
-          this.setState({
-            ...this.state,
-            disabled: false,
-          })
-        })
+    .then((token: Token) => {
+      this.setState({
+        ...this.state,
+        disabled: false,
+        isLogin: true,
+      })
+      setToken(token.accessToken, token.refreshToken)(dispatch)
+      setLocalToken(token)
+      Router.push('/user')
+      .catch(() => {
+        // emply block
+      })
+    })
+    .catch(() => {
+      this.setState({
+        ...this.state,
+        disabled: false,
+      })
+    })
   }
 
   render() {
@@ -120,6 +144,7 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
                   value={this.state.username}
                   disabled={this.state.disabled}
                   onChange={this.onChangeUsername}
+                  onKeyup={this.onKeyupUsername}
               />
             </div>
             <div className={styles.password}>
@@ -130,6 +155,8 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
                   value={this.state.password}
                   disabled={this.state.disabled}
                   onChange={this.onChangePassword}
+                  onKeyup={this.onKeyupPassword}
+                  inputRef={(instance) => { this.passwordElement = instance }}
               />
             </div>
             <div>

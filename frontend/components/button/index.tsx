@@ -17,6 +17,7 @@ const Button: FunctionComponent<Props> = ({
   style = 'nomal',
   fullWidth = false,
   onClick = () => {
+    console.log('TEST')
     // emply block
   },
 }) => {
@@ -28,8 +29,9 @@ const Button: FunctionComponent<Props> = ({
         [styles[style]]: style,
       })}
       disabled={disabled}
+      type='button'
       onClick={onClick}>
-        {children}
+        <span>{children}</span>
     </button>
   )
 }

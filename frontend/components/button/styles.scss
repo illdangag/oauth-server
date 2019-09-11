@@ -10,14 +10,15 @@ $outline-text-color: #495057;
 $outline-disabled-text-color: #495057;
 
 .button {
+  // display: inline-block;
+
   height: 36px;
 
   margin: 0px;
   border: none;
   padding: 0px 8px;
 
-  font-family: Roboto;
-  font-style: normal;
+  font-family: "Nanum Gothic";
   font-weight: normal;
   font-size: 14px;
   text-align: center;
@@ -26,7 +27,9 @@ $outline-disabled-text-color: #495057;
   background-color: $color;
   color: $text-color;
 
-  display: table-cell;
+  & span {
+    position: relative;
+  }
 
   &:focus {
     outline: none;
