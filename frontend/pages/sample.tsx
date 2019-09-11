@@ -11,8 +11,6 @@ import Checkbox from '../components/Checkbox'
 import MultipleInput, { MultipleInputChangeEvent, } from '../components/MultipleInput'
 import Switch from '../components/Switch'
 
-import { List, } from 'immutable'
-
 interface Props {
 
 }
@@ -23,7 +21,7 @@ interface State {
   checkbox2Disabled: boolean,
   switch1Checked: boolean,
   switch2Disabled: boolean,
-  values: List<string>,
+  values: string[],
 }
 
 class SamplePage extends React.Component<Props, State> {
@@ -36,7 +34,7 @@ class SamplePage extends React.Component<Props, State> {
       checkbox2Disabled: false,
       switch1Checked: false,
       switch2Disabled: false,
-      values: List(),
+      values: [],
     }
   }
 
@@ -64,10 +62,10 @@ class SamplePage extends React.Component<Props, State> {
     })
   }
 
-  onChangeMultipleInput = (evnet: MultipleInputChangeEvent): void => {
+  onChangeMultipleInput = (event: MultipleInputChangeEvent): void => {
     this.setState({
       ...this.state,
-      values: evnet.values,
+      values: event.values,
     })
   }
 

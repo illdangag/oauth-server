@@ -1,18 +1,18 @@
 import React, { Component, KeyboardEvent, ChangeEvent, MouseEvent, } from 'react'
 import styles from './styles.scss'
 
-import { List, } from 'immutable'
+import { set, remove, } from 'immutable'
 
 interface MultipleInputChangeEventHandler {
   (event: MultipleInputChangeEvent): void,
 }
 
 export interface MultipleInputChangeEvent {
-  values: List<string>,
+  values: string[],
 }
 
 interface Props {
-  values: List<string>,
+  values: string[],
   onChange?: MultipleInputChangeEventHandler,
 }
 
@@ -47,7 +47,8 @@ class MultipleInput extends Component<Props, State> {
         return
       }
 
-      const addedValues = values.push(inputValue)
+      // const addedValues = values.push(inputValue)
+      const addedValues: string[] = set(values, values.length, inputValue)
 
       this.setState({
         ...this.state,
@@ -67,7 +68,8 @@ class MultipleInput extends Component<Props, State> {
     const { values, } = this.props
 
     const deleteIndex: number = Number(event.currentTarget.dataset.index)
-    const deletedValues: List<string> = values.remove(deleteIndex)
+    const deletedValues: string[] = remove(values, deleteIndex)
+
     this.setState({
       ...this.state,
     })
@@ -79,7 +81,7 @@ class MultipleInput extends Component<Props, State> {
     this.callChangeEvent(deletedValues)
   }
 
-  callChangeEvent = (values: List<string>) => {
+  callChangeEvent = (values: string[]) => {
     if (this.props.onChange !== undefined) {
       const result: MultipleInputChangeEvent = {
         values: values,
