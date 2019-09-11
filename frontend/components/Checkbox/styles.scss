@@ -44,7 +44,6 @@ $disabled-background-color: #CED4DA;
       box-sizing: border-box;
   
       background-image: svgIcon($backgroud-color, $border-color, $backgroud-color);
-      transition: .1s ease-in-out;
     }
   }
 

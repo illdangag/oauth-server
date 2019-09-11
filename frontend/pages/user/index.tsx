@@ -6,7 +6,7 @@ import { getLocalToken, } from '../../utils/tokenAPI'
 import styles from './styles.scss'
 
 import Layout from '../../container/Layout'
-import ItemList, { Item, } from '../../container/ItemList'
+import ItemList, { ItemInfo, } from '../../container/ItemList'
 
 interface Props {
 
@@ -40,7 +40,7 @@ class UserPage extends Component<Props, State> {
   }
 
   render() {
-    const items: Item[] = []
+    const items: ItemInfo[] = []
     items.push({
       id: 'id1',
       name: 'name1',

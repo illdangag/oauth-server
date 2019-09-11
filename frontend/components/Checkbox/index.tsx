@@ -2,7 +2,7 @@ import React, { FunctionComponent, ChangeEventHandler, } from 'react'
 import styles from './styles.scss'
 
 type Props = {
-  label: string,
+  label?: string,
   id: string,
   disabled?: boolean
   checked?: boolean

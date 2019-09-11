@@ -46,8 +46,7 @@ class MultipleInput extends Component<Props, State> {
       if (inputValue === '') {
         return
       }
-
-      // const addedValues = values.push(inputValue)
+      
       const addedValues: string[] = set(values, values.length, inputValue)
 
       this.setState({
