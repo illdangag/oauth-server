@@ -1,16 +1,38 @@
-import { FunctionComponent, } from 'react'
+import { FunctionComponent, ChangeEventHandler, } from 'react'
+import styles from './item.scss'
+
+import Link from 'next/link'
+
+import Checkbox from '../../components/Checkbox'
+import EditIcon from '../../components/Icon/EditIcon'
 
 type Props = {
   id: string,
   name: string,
+  checked: boolean,
+  onChange?: ChangeEventHandler,
 }
 
 const Item: FunctionComponent<Props> = ({
-  // id,
+  id,
   name,
+  checked,
+  onChange = () => {
+    // emply block
+  }
 }) => {
   return (
-    <div>{name}</div>
+    <div className={styles.item}>
+      <span className={styles.checkbox}>
+        <Checkbox id={id + '-check'} checked={checked} onChange={onChange}/>
+      </span>
+      {name}
+      <span className={styles.edit}>
+        <Link href='/sample'>
+          <a><EditIcon size='small'/></a>
+        </Link>
+      </span>
+      </div>
   )
 }
 

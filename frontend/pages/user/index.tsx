@@ -48,7 +48,7 @@ class UserPage extends Component<Props, State> {
 
     items.push({
       id: 'id2',
-      name: 'name2',
+      name: 'NAME',
     })
 
     return(

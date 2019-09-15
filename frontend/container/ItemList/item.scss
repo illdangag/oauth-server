@@ -1,0 +1,20 @@
+.item {
+  position: relative;
+
+  margin: 6px 10px;
+  padding: 0px 32px;
+  height: 22px;
+
+  line-height: 28px;
+  & .checkbox {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+
+  & .edit {
+    position: absolute;
+    top: 2px;
+    right: 0px;
+  }
+}
