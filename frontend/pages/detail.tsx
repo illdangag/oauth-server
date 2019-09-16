@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { NextPageContext, } from 'next'
 import Layout from '../components/sample-layout'
-import { User, } from '../interfaces'
+import { UserSample, } from '../interfaces'
 import { findData, } from '../utils/sample-api'
 import ListDetail from '../components/ListDetail'
 
 type Props = {
-  item?: User,
+  item?: UserSample,
   errors?: string,
 }
 

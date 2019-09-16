@@ -1,5 +1,6 @@
-import { Token, } from '../interfaces'
+import { API_HOST, } from './config'
 import axios, { AxiosRequestConfig, AxiosBasicCredentials, AxiosResponse, } from 'axios'
+import { Token, } from '../interfaces'
 
 export async function login(username: string, password: string): Promise<Token> {
   const credentials: AxiosBasicCredentials = {
@@ -8,7 +9,7 @@ export async function login(username: string, password: string): Promise<Token> 
   }
 
   const config: AxiosRequestConfig = {
-    baseURL: 'http://localhost:8080',
+    baseURL: API_HOST,
     url: '/api/oauth/token',
     method: 'POST',
     auth: credentials,

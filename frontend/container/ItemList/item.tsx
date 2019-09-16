@@ -9,17 +9,17 @@ import EditIcon from '../../components/Icon/EditIcon'
 type Props = {
   id: string,
   name: string,
-  checked: boolean,
+  checked?: boolean,
   onChange?: ChangeEventHandler,
 }
 
 const Item: FunctionComponent<Props> = ({
   id,
   name,
-  checked,
+  checked = false,
   onChange = () => {
     // emply block
-  }
+  },
 }) => {
   return (
     <div className={styles.item}>

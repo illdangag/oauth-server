@@ -4,9 +4,18 @@
 //
 // import User from 'path/to/interfaces';
 
-export type User = {
+export type UserSample = {
   id: number,
   name: string,
+}
+
+export type User = {
+  username: string,
+  accountNonExpired: boolean,
+  accountNonLocked: boolean,
+  credentialsNonExpired: boolean,
+  enabled: boolean,
+  authorities: string[],
 }
 
 export type Token = {

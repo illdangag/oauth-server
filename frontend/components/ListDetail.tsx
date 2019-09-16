@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-import { User, } from '../interfaces'
+import { UserSample, } from '../interfaces'
 
 type ListDetailProps = {
-  item: User,
+  item: UserSample,
 }
 
 const ListDetail: React.FunctionComponent<ListDetailProps> = ({

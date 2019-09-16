@@ -1,7 +1,9 @@
 import { Component, } from 'react'
 import Router from 'next/router'
 
+import { User, } from '../../interfaces'
 import { getLocalToken, } from '../../utils/tokenAPI'
+import { getUsers, } from '../../utils/userAPI'
 
 import styles from './styles.scss'
 
@@ -14,6 +16,7 @@ interface Props {
 
 interface State {
   isLogin: boolean,
+  users: User[],
 }
 
 class UserPage extends Component<Props, State> {
@@ -21,6 +24,7 @@ class UserPage extends Component<Props, State> {
     super(props)
     this.state = {
       isLogin: false,
+      users: [],
     }
   }
 
@@ -31,6 +35,16 @@ class UserPage extends Component<Props, State> {
         ...this.state,
         isLogin: true,
       })
+      getUsers()
+        .then(users => {
+          this.setState({
+            ...this.state,
+            users: users,
+          })
+        })
+        .catch(() => {
+          // emply block
+        })
     } catch {
       Router.push('/')
       .catch(() => {
@@ -41,15 +55,13 @@ class UserPage extends Component<Props, State> {
 
   render() {
     const items: ItemInfo[] = []
-    items.push({
-      id: 'id1',
-      name: 'name1',
-    })
-
-    items.push({
-      id: 'id2',
-      name: 'NAME',
-    })
+    
+    for (let user of this.state.users) {
+      items.push({
+        id: user.username,
+        name: user.username,
+      })
+    }
 
     return(
       <>

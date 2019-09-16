@@ -105,25 +105,25 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
     const { username, password, } = this.state
 
     login(username, password)
-    .then((token: Token) => {
-      this.setState({
-        ...this.state,
-        disabled: false,
-        isLogin: true,
+      .then((token: Token) => {
+        this.setState({
+          ...this.state,
+          disabled: false,
+          isLogin: true,
+        })
+        setToken(token.accessToken, token.refreshToken)(dispatch)
+        setLocalToken(token)
+        Router.push('/user')
+        .catch(() => {
+          // emply block
+        })
       })
-      setToken(token.accessToken, token.refreshToken)(dispatch)
-      setLocalToken(token)
-      Router.push('/user')
       .catch(() => {
-        // emply block
+        this.setState({
+          ...this.state,
+          disabled: false,
+        })
       })
-    })
-    .catch(() => {
-      this.setState({
-        ...this.state,
-        disabled: false,
-      })
-    })
   }
 
   render() {
