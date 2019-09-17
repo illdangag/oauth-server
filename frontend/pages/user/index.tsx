@@ -62,7 +62,7 @@ class UserPage extends Component<Props, State> {
         name: user.username,
       })
     }
-
+    
     return(
       <>
         {this.state.isLogin && (
