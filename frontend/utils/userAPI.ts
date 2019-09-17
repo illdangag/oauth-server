@@ -14,7 +14,7 @@ export async function getUsers(): Promise<User[]> {
     },
   }
   const response: AxiosResponse = await axios.request(config)
-
+  
   const users: User[] = []
 
   for (let userData of response.data) {

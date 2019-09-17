@@ -1,8 +1,8 @@
 import { Component, } from 'react'
 import Router from 'next/router'
 
-import { User, } from '../../interfaces'
-import { getLocalToken, } from '../../utils/tokenAPI'
+import { User, Token, } from '../../interfaces'
+import { getLocalToken, refreshToken, setLocalToken, clearLocalToken, } from '../../utils/tokenAPI'
 import { getUsers, } from '../../utils/userAPI'
 
 import styles from './styles.scss'
@@ -30,7 +30,7 @@ class UserPage extends Component<Props, State> {
 
   componentDidMount() {
     try {
-      getLocalToken()
+      const token: Token = getLocalToken()
       this.setState({
         ...this.state,
         isLogin: true,
@@ -43,7 +43,25 @@ class UserPage extends Component<Props, State> {
           })
         })
         .catch(() => {
-          // emply block
+          refreshToken(token.refreshToken)
+            .then(newToken => {
+              setLocalToken(newToken)
+              getUsers()
+                .then(users => {
+                  this.setState({
+                    ...this.state,
+                    users: users,
+                  })
+                })
+            })
+            .catch(() => {
+              clearLocalToken()
+              Router.push('/')
+                .catch(() => {
+                  // emply block
+                })
+            })
+          
         })
     } catch {
       Router.push('/')

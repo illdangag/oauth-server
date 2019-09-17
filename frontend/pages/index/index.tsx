@@ -2,7 +2,7 @@ import { Component, ChangeEvent, KeyboardEvent, } from 'react'
 import Head from 'next/head'
 import Router from 'next/router'
 
-import { login, getLocalToken, setLocalToken, } from '../../utils/tokenAPI'
+import { createToken, getLocalToken, setLocalToken, } from '../../utils/tokenAPI'
 import { Token, } from '../../interfaces'
 
 import styles from './styles.scss'
@@ -104,7 +104,7 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
     const { dispatch, } = this.props
     const { username, password, } = this.state
 
-    login(username, password)
+    createToken(username, password)
       .then((token: Token) => {
         this.setState({
           ...this.state,
