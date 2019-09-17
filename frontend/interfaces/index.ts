@@ -26,3 +26,13 @@ export type Token = {
   scope: string,
   jti: string,
 }
+
+export type AccessTokenInfo = {
+  username: string,
+  scope: string[],
+  active: boolean,
+  exp: number,
+  authorities: string[],
+  jti: string,
+  clientId: string,
+}

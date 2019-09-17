@@ -1,6 +1,6 @@
 import { API_HOST, } from './config'
 import axios, { AxiosRequestConfig, AxiosBasicCredentials, AxiosResponse, } from 'axios'
-import { Token, } from '../interfaces'
+import { Token, AccessTokenInfo, } from '../interfaces'
 
 export async function createToken(username: string, password: string): Promise<Token> {
   const credentials: AxiosBasicCredentials = {
@@ -18,6 +18,7 @@ export async function createToken(username: string, password: string): Promise<T
     },
     data: 'grant_type=password&username=' + username + '&password=' + password,
   }
+
   const response: AxiosResponse = await axios.request(config)
 
   const token: Token = {
@@ -47,6 +48,7 @@ export async function refreshToken(refreshToken: string): Promise<Token> {
     },
     data: 'grant_type=refresh_token&refresh_token=' + refreshToken,
   }
+
   const response: AxiosResponse = await axios.request(config)
 
   const token: Token = {
@@ -58,6 +60,38 @@ export async function refreshToken(refreshToken: string): Promise<Token> {
     jti: response.data.jti,
   }
   return token
+}
+
+export async function checkToken(): Promise<AccessTokenInfo> {
+  const credentials: AxiosBasicCredentials = {
+    username: 'oauth-client',
+    password: 'oauth-secret',
+  }
+
+  const config: AxiosRequestConfig = {
+    baseURL: API_HOST,
+    url: '/api/oauth/check_token',
+    method: 'POST',
+    auth: credentials,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    data: 'token=' + getLocalToken().accessToken,
+  }
+
+  const response: AxiosResponse = await axios.request(config)
+
+  const accessTokenInfo: AccessTokenInfo = {
+    username: response.data.user_name,
+    scope: response.data.scope,
+    active: response.data.active,
+    exp: response.data.exp,
+    authorities: response.data.authorities,
+    jti: response.data.jti,
+    clientId: response.data.client_id,
+  }
+
+  return accessTokenInfo
 }
 
 export function setLocalToken(token: Token): void {

@@ -63,6 +63,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         config.applyPermitDefaultValues();
 
         source.registerCorsConfiguration("/api/oauth/token", config);
+        source.registerCorsConfiguration("/api/oauth/check_token", config);
         CorsFilter filter = new CorsFilter(source);
         security.addTokenEndpointAuthenticationFilter(filter);
     }

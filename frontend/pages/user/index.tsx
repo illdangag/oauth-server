@@ -2,7 +2,7 @@ import { Component, } from 'react'
 import Router from 'next/router'
 
 import { User, Token, } from '../../interfaces'
-import { getLocalToken, refreshToken, setLocalToken, clearLocalToken, } from '../../utils/tokenAPI'
+import { checkToken, refreshToken, setLocalToken, getLocalToken, clearLocalToken, } from '../../utils/tokenAPI'
 import { getUsers, } from '../../utils/userAPI'
 
 import styles from './styles.scss'
@@ -27,48 +27,42 @@ class UserPage extends Component<Props, State> {
       users: [],
     }
   }
-
-  componentDidMount() {
+  async componentDidMount() {
     try {
-      const token: Token = getLocalToken()
+      await checkToken()      
+      const users: User[] = await getUsers()
       this.setState({
         ...this.state,
         isLogin: true,
+        users: users,
       })
-      getUsers()
-        .then(users => {
-          this.setState({
-            ...this.state,
-            users: users,
-          })
-        })
-        .catch(() => {
-          refreshToken(token.refreshToken)
-            .then(newToken => {
-              setLocalToken(newToken)
-              getUsers()
-                .then(users => {
-                  this.setState({
-                    ...this.state,
-                    users: users,
-                  })
-                })
-            })
-            .catch(() => {
-              clearLocalToken()
-              Router.push('/')
-                .catch(() => {
-                  // emply block
-                })
-            })
-          
-        })
     } catch {
-      Router.push('/')
-      .catch(() => {
-        // emply block
-      })
+      try {
+        const token: Token = getLocalToken()
+        const newToken: Token = await refreshToken(token.refreshToken)
+        setLocalToken(newToken)
+  
+        const users: User[] = await getUsers()
+        this.setState({
+          ...this.state,
+          isLogin: true,
+          users: users,
+        })
+      } catch {
+        clearLocalToken()
+        Router.push('/')
+          .catch(() => {
+            // emply block
+          })
+      }
     }
+  }
+
+  onClickCreate = () => {
+    Router.push('/user/create')
+      .catch(() => {
+        // empty block
+      })
   }
 
   render() {
@@ -86,7 +80,7 @@ class UserPage extends Component<Props, State> {
         {this.state.isLogin && (
           <Layout title='USER | OAUTH' active='user'>
           <div className={styles.content}>
-            <ItemList items={items}/>
+            <ItemList items={items} onClickCreate={this.onClickCreate}/>
           </div>
           </Layout>
         )}

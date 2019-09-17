@@ -1,4 +1,4 @@
-import { Component, ChangeEvent, } from 'react'
+import { Component, ChangeEvent, MouseEventHandler, } from 'react'
 
 import styles from './index.scss'
 
@@ -18,6 +18,7 @@ export interface ItemInfo {
 
 interface Props {
   items: ItemInfo[],
+  onClickCreate?: MouseEventHandler,
 }
 
 interface State {
@@ -86,6 +87,7 @@ class ItemList extends Component<Props, State> {
   }
 
   render() {
+    const { onClickCreate, } = this.props
     const { items, checkedItems, checkedAll, } = this.state
 
     return(
@@ -98,7 +100,7 @@ class ItemList extends Component<Props, State> {
             <Checkbox id='checkAll' checked={checkedAll} onChange={this.onChangeAllItemCheckbox}/>
           </span>
           <span className={styles.icons}>
-            <button className={styles.iconButton}>
+            <button className={styles.iconButton} onClick={onClickCreate}>
               <PlusIcon size='small'/>
             </button>
             <button className={styles.iconButton}>

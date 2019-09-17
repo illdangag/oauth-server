@@ -37,7 +37,7 @@ const Layout: FunctionComponent<Props> = ({
       <nav className={styles.menu}>
         <div className={styles.linkList}>
           <span className={cx(styles.link, { [styles.active]: active === 'user', })}>
-            <Link href='/'><a>USER</a></Link>
+            <Link href='/user'><a>USER</a></Link>
           </span>
           <span className={cx(styles.link, { [styles.active]: active === 'client', })}>
             <Link href='/sample'><a>CLIENT</a></Link>
