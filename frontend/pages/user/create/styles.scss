@@ -1,0 +1,34 @@
+.createUser {
+  margin: auto;
+  padding: 0px 10px;
+
+  min-width: 300px;
+  max-width: 540px;
+
+  & .header {
+    position: relative;
+
+    border-bottom: 2px #DEE2E6 solid;
+
+    height: 38px;
+
+    & .back {
+      display: inline-block;
+      position: absolute;
+      top: 10px;
+
+      height: 100%;
+
+      & > a {
+        display: inline-block;
+
+        height: 18px;
+      }
+    }
+
+    & .save {
+      position: absolute;
+      right: 0px;
+    }
+  }
+}

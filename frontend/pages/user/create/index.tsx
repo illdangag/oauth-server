@@ -1,9 +1,13 @@
 import { Component, } from 'react'
+import styles from './styles.scss'
+
+import Layout from '../../../container/Layout'
+import Button from '../../../components/Button'
+import LeftIcon from '../../../components/Icon/LeftIcon'
 
 import { checkToken, clearLocalToken, } from '../../../utils/tokenAPI';
 import Router from 'next/router'
-
-import Layout from '../../../container/Layout'
+import Link from 'next/link'
 
 interface Props {
 
@@ -39,7 +43,18 @@ class UserCreate extends Component<Props, State> {
     return(
       <>
         {isLogin && (
-          <Layout title='USER CREATE | OAUTH' active='user'></Layout>
+          <Layout title='USER CREATE | OAUTH' active='user'>
+            <div className={styles.createUser}>
+              <div className={styles.header}>
+                <span className={styles.back}>
+                  <Link href='/user'>
+                    <a><LeftIcon size='small'/></a>
+                  </Link>
+                </span>
+                <span className={styles.save}><Button>SAVE</Button></span>
+              </div>
+            </div>
+          </Layout>
         )}
       </>
     )
