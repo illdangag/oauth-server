@@ -3,6 +3,7 @@ import styles from './styles.scss'
 import cx from 'classnames/bind'
 
 import UserAuthIcon from '../Icon/UserAuthIcon'
+import UserEditIcon from '../Icon/UserEditIcon'
 import LockIcon from '../Icon/LockIcon'
 import FindIcon from '../Icon/FindIcon'
 
@@ -11,7 +12,7 @@ type Props = {
   value?: string,
   disabled?: boolean,
   fullWidth?: boolean,
-  icon?: 'userAuth' | 'lock' | 'find',
+  icon?: 'userAuth' | 'userEdit' | 'lock' | 'find',
   onChange?: ChangeEventHandler,
   onKeyup?: KeyboardEventHandler,
   inputRef?: ((instance: HTMLInputElement | null) => void) | null | undefined,
@@ -50,6 +51,8 @@ const Input: FunctionComponent<Props> = ({
   const getIcon = () => {
     if (icon === 'userAuth') {
       return <UserAuthIcon size='small' disabled={disabled}/>
+    } else if (icon === 'userEdit') {
+      return <UserEditIcon size='small' disabled={disabled}/>
     } else if (icon === 'lock') {
       return <LockIcon size='small' disabled={disabled}/>
     } else if (icon === 'find') {

@@ -31,4 +31,27 @@
       right: 0px;
     }
   }
+
+  & .items {
+    padding: 0px 10px;
+
+    & .item {
+      margin: 10px 0px 0px 0px;
+
+      & .title {
+        margin: 0px;
+      }
+  
+      & .discription {
+        margin: 4px 0px 0px 0px;
+  
+        color: #868E96;
+        font-size: 12px;
+      }
+  
+      & .input {
+        margin: 0px 0px 0px 0px;
+      }
+    }
+  }
 }

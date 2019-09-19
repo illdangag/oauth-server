@@ -9,6 +9,7 @@ import TrashIcon from '../components/Icon/TrashIcon'
 import FindIcon from '../components/Icon/FindIcon'
 import EditIcon from '../components/Icon/EditIcon'
 import LeftIcon from '../components/Icon/LeftIcon'
+import UserEditIcon from '../components/Icon/UserEditIcon'
 import Checkbox from '../components/Checkbox'
 import MultipleInput, { MultipleInputChangeEvent, } from '../components/MultipleInput'
 import Switch from '../components/Switch'
@@ -84,7 +85,7 @@ class SamplePage extends React.Component<Props, State> {
       <Layout active={'client'}>
         <div>
           <div>
-            <UserAuthIcon/><PlusIcon/><TrashIcon/><FindIcon/><EditIcon/><LeftIcon/>
+            <UserAuthIcon/><PlusIcon/><TrashIcon/><FindIcon/><EditIcon/><LeftIcon/><UserEditIcon/>
           </div>
           <div>
             <Button fullWidth={false} onClick={this.handleClick} size='large'>BUTTON</Button>
