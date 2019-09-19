@@ -11,6 +11,7 @@ export type UserSample = {
 
 export type User = {
   username: string,
+  password?: string,
   accountNonExpired: boolean,
   accountNonLocked: boolean,
   credentialsNonExpired: boolean,

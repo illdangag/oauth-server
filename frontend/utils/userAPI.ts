@@ -31,3 +31,17 @@ export async function getUsers(): Promise<User[]> {
 
   return users
 }
+
+export async function createUser(user: User): Promise<void> {
+  const config: AxiosRequestConfig = {
+    baseURL: API_HOST,
+    url: '/api/v1/users',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + getLocalToken().accessToken,
+    },
+    data: user,
+  }
+  await axios.request(config)
+}
