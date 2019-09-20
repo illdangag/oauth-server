@@ -13,6 +13,7 @@ import UserEditIcon from '../components/Icon/UserEditIcon'
 import Checkbox from '../components/Checkbox'
 import MultipleInput, { MultipleInputChangeEvent, } from '../components/MultipleInput'
 import Switch from '../components/Switch'
+import Alert from '../components/Alert'
 
 interface Props {
 
@@ -25,6 +26,7 @@ interface State {
   switch1Checked: boolean,
   switch2Disabled: boolean,
   values: string[],
+  isShowAlert: boolean,
 }
 
 class SamplePage extends React.Component<Props, State> {
@@ -38,6 +40,7 @@ class SamplePage extends React.Component<Props, State> {
       switch1Checked: false,
       switch2Disabled: false,
       values: [],
+      isShowAlert: false,
     }
   }
 
@@ -80,6 +83,19 @@ class SamplePage extends React.Component<Props, State> {
     })
   }
 
+  onClickShowAlert = (): void => {
+    this.setState({
+      ...this.state,
+      isShowAlert: true,
+    })
+  }
+
+  onClickAlertClose = (): void => {
+    this.setState({
+      ...this.state,
+      isShowAlert: false,
+    })
+  }
   render() {
     return (
       <Layout active={'client'}>
@@ -117,7 +133,13 @@ class SamplePage extends React.Component<Props, State> {
           <div>
             <Switch id='switch2' disabled={this.state.switch2Disabled} label={'swtich'}/>
           </div>
+          <div>
+            <Button onClick={this.onClickShowAlert}>Show Alert</Button>
+          </div>
         </div>
+        {this.state.isShowAlert && 
+          <Alert title='TITLE' message='content message' buttons={[{text: 'CLOSE', onClick: this.onClickAlertClose}]}/>
+        }
       </Layout>
     )
   }

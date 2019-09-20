@@ -6,6 +6,7 @@ import Button from '../../../components/Button'
 import LeftIcon from '../../../components/Icon/LeftIcon'
 import Input from '../../../components/Input'
 import Switch from '../../../components/Switch'
+import Alert from '../../../components/Alert'
 
 import { checkToken, clearLocalToken, refreshToken, getLocalToken, setLocalToken, } from '../../../utils/tokenAPI';
 import { createUser, } from '../../../utils/userAPI'
@@ -27,6 +28,9 @@ interface State {
   accountNonLocked: boolean,
   credentialsNonExpired: boolean,
   saveDisabled: boolean,
+  isShowErrorAlert: boolean,
+  errorTitle: string,
+  errorMessage: string,
 }
 
 class UserCreate extends Component<Props, State> {
@@ -42,6 +46,9 @@ class UserCreate extends Component<Props, State> {
       accountNonLocked: true,
       credentialsNonExpired: true,
       saveDisabled: true,
+      isShowErrorAlert: false,
+      errorTitle: '',
+      errorMessage: '',
     }
   }
 
@@ -136,6 +143,11 @@ class UserCreate extends Component<Props, State> {
   onClickSave = () => {
     const { username, password, enabled, accountNonExpired, accountNonLocked, credentialsNonExpired, } = this.state
 
+    this.setState({
+      ...this.state,
+      saveDisabled: true,
+    })
+
     const user: User = {
       username,
       password,
@@ -146,18 +158,45 @@ class UserCreate extends Component<Props, State> {
       authorities: ['USER'],
     }
 
-    
     createUser(user)
       .then(() => {
-        console.log('CREATED!')
+        Router.push('/user')
+          .catch(() => {
+            // emply block
+          })
       })
-      .catch(() => {
-        console.log('ERROR')
+      .catch((error) => {
+        const statusCode: number = error.response.status
+ 
+        if (statusCode === 409) { // Duplicate
+          this.setState({
+            ...this.state,
+            errorTitle: 'Duplicate User',
+            errorMessage: 'Username is a duplicate.',
+            isShowErrorAlert: true,
+          })
+        } else { // Unknown
+          this.setState({
+            ...this.state,
+            errorTitle: 'Unknown Error',
+            errorMessage: 'An unknown error has occurred.',
+            isShowErrorAlert: true,
+          })
+        }
       })
   }
 
+  onClickErrorAlertClose = (): void => {
+    this.setState({
+      ...this.state,
+      isShowErrorAlert: false,
+    })
+  }
+
   render() {
-    const { isLogin, username, password, confirmPassword, enabled, accountNonExpired, accountNonLocked, credentialsNonExpired, saveDisabled, } = this.state
+    const { isLogin,
+      username, password, confirmPassword, enabled, accountNonExpired, accountNonLocked, credentialsNonExpired,
+      saveDisabled, isShowErrorAlert, errorTitle, errorMessage, } = this.state
     return(
       <>
         {isLogin && (
@@ -221,6 +260,12 @@ class UserCreate extends Component<Props, State> {
                 </div>
               </div>
             </div>
+            {isShowErrorAlert && 
+              <Alert title={errorTitle} message={errorMessage} buttons={[{
+                text: 'CLOSE',
+                onClick: this.onClickErrorAlertClose,
+              }]}/>
+            }
           </Layout>
         )}
       </>
