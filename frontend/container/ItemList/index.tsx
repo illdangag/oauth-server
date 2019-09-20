@@ -25,6 +25,7 @@ interface State {
   items: ItemInfo[],
   checkedItems: boolean[],
   checkedAll: boolean,
+  searchKeyword: string,
 }
 
 class ItemList extends Component<Props, State> {
@@ -34,6 +35,7 @@ class ItemList extends Component<Props, State> {
       items: [],
       checkedItems: [],
       checkedAll: false,
+      searchKeyword: '',
     }
   }
 
@@ -86,15 +88,27 @@ class ItemList extends Component<Props, State> {
     })
   }
 
+
+  onChangeSearch = (event: ChangeEvent<HTMLInputElement>): void => {
+    const value: string = event.target.value
+    this.setState({
+      ...this.state,
+      searchKeyword: value,
+    })
+  }
+
   render() {
     const { onClickCreate, } = this.props
-    const { items, checkedItems, checkedAll, } = this.state
+    const { items, checkedItems, checkedAll, searchKeyword, } = this.state
+
+    const sortedItems: ItemInfo[] = items.filter((value) => (searchKeyword === '' || value.name.toLowerCase().indexOf(searchKeyword) > -1))
+      .sort((a, b) => (a.name < b.name ? -1 : 1))
 
     return(
       <div className={styles.warpper}>
         <div className={styles.header}>
           <div className={styles.find}>
-            <Input icon='find' fullWidth={true}/>
+            <Input icon='find' fullWidth={true} value={searchKeyword} onChange={this.onChangeSearch}/>
           </div>
           <span className={styles.checkAll}>
             <Checkbox id='checkAll' checked={checkedAll} onChange={this.onChangeAllItemCheckbox}/>
@@ -109,7 +123,7 @@ class ItemList extends Component<Props, State> {
           </span>
         </div>
         <div>
-          {items && items.map((value, key) => (
+          {sortedItems && sortedItems.map((value, key) => (
             <div key={key}>
               <Item
                 id={value.id}

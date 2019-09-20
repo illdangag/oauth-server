@@ -27,6 +27,7 @@ class UserPage extends Component<Props, State> {
       users: [],
     }
   }
+
   async componentDidMount() {
     try {
       await checkToken()      
