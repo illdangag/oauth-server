@@ -9,21 +9,31 @@ import Item from './item'
 import PlusIcon from '../../components/Icon/PlusIcon'
 import TrashIcon from '../../components/Icon/TrashIcon'
 
-import { set, } from 'immutable'
+// import { set, } from 'immutable'
 
 export interface ItemInfo {
   id: string,
   name: string,
+  checked?: boolean,
+}
+
+interface ItemDeleteMouseEventHandler {
+  (event: ItemDeleteMouseEvent): void,
+}
+
+export interface ItemDeleteMouseEvent {
+  ids: string[],
 }
 
 interface Props {
   items: ItemInfo[],
   onClickCreate?: MouseEventHandler,
+  onClickDelete?: ItemDeleteMouseEventHandler,
 }
 
 interface State {
   items: ItemInfo[],
-  checkedItems: boolean[],
+  sortedItems: ItemInfo[],
   checkedAll: boolean,
   searchKeyword: string,
 }
@@ -33,7 +43,7 @@ class ItemList extends Component<Props, State> {
     super(props)
     this.state = {
       items: [],
-      checkedItems: [],
+      sortedItems: [],
       checkedAll: false,
       searchKeyword: '',
     }
@@ -50,6 +60,7 @@ class ItemList extends Component<Props, State> {
       return {
         ...prevState,
         items: nextProps.items,
+        sortedItems: ItemList.sortItems(nextProps.items, prevState.searchKeyword),
         checkedItems,
         checkedAll: false,
       }
@@ -59,50 +70,66 @@ class ItemList extends Component<Props, State> {
   }
 
   onChangeAllItemCheckbox = (event: ChangeEvent<HTMLInputElement>) => {
-    const { checkedItems, } = this.state
-    const checkedAll: boolean = event.target.checked
+    console.log(event)
+    // const { checkedItems, } = this.state
+    // const checkedAll: boolean = event.target.checked
 
-    const updatedCheckedItems = checkedItems.map(() => {
-      return checkedAll
+    // const updatedCheckedItems = checkedItems.map(() => {
+    //   return checkedAll
+    // })
+
+    // this.setState({
+    //   ...this.state,
+    //   checkedItems: updatedCheckedItems,
+    //   checkedAll,
+    // })
+  }
+
+  onChangeItemCheckbox = (event: ChangeEvent<HTMLInputElement>, index: number) => {
+    const { sortedItems, items, } = this.state
+    const selectedId: string = sortedItems[index].id
+    sortedItems[index].checked = true
+    const updateItems: ItemInfo[] = items.map((value) => {
+      if (value.id === selectedId) {
+        value.checked = event.target.checked
+      }
+      return value
     })
 
     this.setState({
       ...this.state,
-      checkedItems: updatedCheckedItems,
-      checkedAll,
+      items: updateItems,
+      sortedItems,
     })
-  }
 
-  onChangeItemCheckbox = (event: ChangeEvent<HTMLInputElement>, index: number) => {
-    const { checkedItems, } = this.state
-    const updatedCheckedItems = set(checkedItems, index, event.target.checked)
-
-    const checkedAll: boolean = updatedCheckedItems.reduce((previous, current) => {
-      return previous && current
-    }, true)
-
-
-    this.setState({
-      checkedItems: updatedCheckedItems,
-      checkedAll,
-    })
+    // TODO: check all
   }
 
 
   onChangeSearch = (event: ChangeEvent<HTMLInputElement>): void => {
-    const value: string = event.target.value
+    const { items, } = this.state
+    const searchKeyword: string = event.target.value
+    const sortedItems: ItemInfo[] = ItemList.sortItems(items, searchKeyword)
     this.setState({
       ...this.state,
-      searchKeyword: value,
+      sortedItems,
+      searchKeyword,
     })
+  }
+
+  onClickDelete = (): void => {
+    console.log('click')
+
+  }
+
+  private static sortItems(items: ItemInfo[], searchKeyword: string): ItemInfo[] {
+    return items.filter((value) => (searchKeyword === '' || value.name.toLowerCase().indexOf(searchKeyword) > -1))
+    .sort((a, b) => (a.name < b.name ? -1 : 1))
   }
 
   render() {
     const { onClickCreate, } = this.props
-    const { items, checkedItems, checkedAll, searchKeyword, } = this.state
-
-    const sortedItems: ItemInfo[] = items.filter((value) => (searchKeyword === '' || value.name.toLowerCase().indexOf(searchKeyword) > -1))
-      .sort((a, b) => (a.name < b.name ? -1 : 1))
+    const { sortedItems, checkedAll, searchKeyword, } = this.state
 
     return(
       <div className={styles.warpper}>
@@ -117,7 +144,7 @@ class ItemList extends Component<Props, State> {
             <button className={styles.iconButton} onClick={onClickCreate}>
               <PlusIcon size='small'/>
             </button>
-            <button className={styles.iconButton}>
+            <button className={styles.iconButton} onClick={this.onClickDelete}>
               <TrashIcon size='small'/>
             </button>
           </span>
@@ -128,7 +155,7 @@ class ItemList extends Component<Props, State> {
               <Item
                 id={value.id}
                 name={value.name}
-                checked={checkedItems[key]}
+                checked={value.checked}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => (this.onChangeItemCheckbox(event, key))}
               />
             </div>

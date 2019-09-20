@@ -8,7 +8,7 @@ import { getUsers, } from '../../utils/userAPI'
 import styles from './styles.scss'
 
 import Layout from '../../container/Layout'
-import ItemList, { ItemInfo, } from '../../container/ItemList'
+import ItemList, { ItemInfo, ItemDeleteMouseEvent, } from '../../container/ItemList'
 
 interface Props {
 
@@ -66,6 +66,10 @@ class UserPage extends Component<Props, State> {
       })
   }
 
+  onClickDelete = (event: ItemDeleteMouseEvent): void => {
+    console.log(event)
+  }
+
   render() {
     const items: ItemInfo[] = []
     
@@ -81,7 +85,7 @@ class UserPage extends Component<Props, State> {
         {this.state.isLogin && (
           <Layout title='USER | OAUTH' active='user'>
           <div className={styles.content}>
-            <ItemList items={items} onClickCreate={this.onClickCreate}/>
+            <ItemList items={items} onClickCreate={this.onClickCreate} onClickDelete={this.onClickDelete}/>
           </div>
           </Layout>
         )}
