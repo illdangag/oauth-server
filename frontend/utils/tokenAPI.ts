@@ -1,11 +1,11 @@
-import { API_HOST, } from './config'
+import { API_HOST, ADMIN_CLIENT, ADMIN_SECRET, } from './config'
 import axios, { AxiosRequestConfig, AxiosBasicCredentials, AxiosResponse, } from 'axios'
 import { Token, AccessTokenInfo, } from '../interfaces'
 
 export async function createToken(username: string, password: string): Promise<Token> {
   const credentials: AxiosBasicCredentials = {
-    username: 'oauth-client',
-    password: 'oauth-secret',
+    username: ADMIN_CLIENT,
+    password: ADMIN_SECRET,
   }
 
   const config: AxiosRequestConfig = {
@@ -34,8 +34,8 @@ export async function createToken(username: string, password: string): Promise<T
 
 export async function refreshToken(refreshToken: string): Promise<Token> {
   const credentials: AxiosBasicCredentials = {
-    username: 'oauth-client',
-    password: 'oauth-secret',
+    username: ADMIN_CLIENT,
+    password: ADMIN_SECRET,
   }
 
   const config: AxiosRequestConfig = {
@@ -64,8 +64,8 @@ export async function refreshToken(refreshToken: string): Promise<Token> {
 
 export async function checkToken(): Promise<AccessTokenInfo> {
   const credentials: AxiosBasicCredentials = {
-    username: 'oauth-client',
-    password: 'oauth-secret',
+    username: ADMIN_CLIENT,
+    password: ADMIN_SECRET,
   }
 
   const config: AxiosRequestConfig = {

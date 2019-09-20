@@ -11,6 +11,7 @@ import com.illdangag.oauth.service.exception.InvalidPropertyException;
 import com.illdangag.oauth.service.exception.NotFoundException;
 import com.illdangag.oauth.service.exception.PropertyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Value("${oauth.admin.username}")
+    private String adminUsername;
 
     /**
      * 사용자 생성
@@ -71,13 +75,17 @@ public class UserController {
      * @return 결과
      */
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public ResponseEntity read() {
+    public ResponseEntity readList(@RequestParam(required = false, defaultValue = "false") String includedAdmin) {
         List<User> userList = this.userService.read();
         List<UserResponse> userResponseList = new ArrayList<>();
 
         for (User user : userList) {
-            userResponseList.add(new UserResponse(user));
+            if (!user.getUsername().equals(adminUsername) ||
+                    includedAdmin.equalsIgnoreCase("true")) {
+                userResponseList.add(new UserResponse(user));
+            }
         }
+
 
         return new ResponseEntity<>(userResponseList, HttpStatus.OK);
     }
