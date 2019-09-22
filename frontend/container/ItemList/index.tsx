@@ -62,7 +62,7 @@ class ItemList extends Component<Props, State> {
         items: nextProps.items,
         sortedItems: ItemList.sortItems(nextProps.items, prevState.searchKeyword),
         checkedItems,
-        checkedAll: false,
+        checkedAll: prevState.checkedAll,
       }
     } else {
       return null
@@ -70,19 +70,21 @@ class ItemList extends Component<Props, State> {
   }
 
   onChangeAllItemCheckbox = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event)
-    // const { checkedItems, } = this.state
-    // const checkedAll: boolean = event.target.checked
+    const { items, searchKeyword, } = this.state
+    const checked = event.target.checked
 
-    // const updatedCheckedItems = checkedItems.map(() => {
-    //   return checkedAll
-    // })
-
-    // this.setState({
-    //   ...this.state,
-    //   checkedItems: updatedCheckedItems,
-    //   checkedAll,
-    // })
+    const updateItems: ItemInfo[] = items.map((value) => {
+      value.checked = checked
+      return value
+    })
+    const updateSortedItems: ItemInfo[] = ItemList.sortItems(updateItems, searchKeyword)
+    
+    this.setState({
+      ...this.state,
+      items: updateItems,
+      sortedItems: updateSortedItems,
+      checkedAll: checked,
+    })
   }
 
   onChangeItemCheckbox = (event: ChangeEvent<HTMLInputElement>, index: number) => {
@@ -96,24 +98,32 @@ class ItemList extends Component<Props, State> {
       return value
     })
 
+    const checkedAll: boolean = !sortedItems.some((value) => (
+      !value.checked
+    ))
+
     this.setState({
       ...this.state,
       items: updateItems,
       sortedItems,
+      checkedAll,
     })
-
-    // TODO: check all
   }
-
-
+  
   onChangeSearch = (event: ChangeEvent<HTMLInputElement>): void => {
     const { items, } = this.state
     const searchKeyword: string = event.target.value
-    const sortedItems: ItemInfo[] = ItemList.sortItems(items, searchKeyword)
+    const updateItems: ItemInfo[] = items.map((value) => {
+      value.checked = false
+      return value
+    })
+    const sortedItems: ItemInfo[] = ItemList.sortItems(updateItems, searchKeyword)
     this.setState({
       ...this.state,
+      items: updateItems,
       sortedItems,
       searchKeyword,
+      checkedAll: false,
     })
   }
 
