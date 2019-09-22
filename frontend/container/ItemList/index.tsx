@@ -9,8 +9,6 @@ import Item from './item'
 import PlusIcon from '../../components/Icon/PlusIcon'
 import TrashIcon from '../../components/Icon/TrashIcon'
 
-// import { set, } from 'immutable'
-
 export interface ItemInfo {
   id: string,
   name: string,
@@ -22,7 +20,7 @@ interface ItemDeleteMouseEventHandler {
 }
 
 export interface ItemDeleteMouseEvent {
-  ids: string[],
+  items: ItemInfo[],
 }
 
 interface Props {
@@ -91,6 +89,7 @@ class ItemList extends Component<Props, State> {
     const { sortedItems, items, } = this.state
     const selectedId: string = sortedItems[index].id
     sortedItems[index].checked = true
+
     const updateItems: ItemInfo[] = items.map((value) => {
       if (value.id === selectedId) {
         value.checked = event.target.checked
@@ -128,8 +127,14 @@ class ItemList extends Component<Props, State> {
   }
 
   onClickDelete = (): void => {
-    console.log('click')
-
+    const { sortedItems, } = this.state
+    
+    if (this.props.onClickDelete) {
+      const checkedItems: ItemInfo[] = sortedItems.filter((value) => (value.checked))
+      this.props.onClickDelete({
+        items: checkedItems,
+      })
+    }
   }
 
   private static sortItems(items: ItemInfo[], searchKeyword: string): ItemInfo[] {
