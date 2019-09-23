@@ -164,8 +164,7 @@ class UserCreate extends Component<Props, State> {
           })
       })
       .catch((error) => {
-        const statusCode: number = error.response.status
- 
+        const statusCode: number = error.response ? error.response.status : -1
         if (statusCode === 409) { // Duplicate
           this.setState({
             ...this.state,

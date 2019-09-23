@@ -8,7 +8,7 @@ import { getUsers, } from '../../utils/userAPI'
 import styles from './styles.scss'
 
 import Layout from '../../container/Layout'
-import ItemList, { ItemInfo, ItemDeleteMouseEvent, } from '../../container/ItemList'
+import ItemList, { ItemInfo, ItemDeleteMouseEvent, ItemEditMouseEvent, } from '../../container/ItemList'
 
 interface Props {
 
@@ -35,12 +35,11 @@ class UserPage extends Component<Props, State> {
         users: users,
       })
     } catch (error) {
-      if (error.response.status === 401) {
-        const token: Token = getLocalToken()
-        const newToken: Token = await refreshToken(token)
-        setLocalToken(newToken)
-
+      if (error.response && error.response.status === 401) {
         try {
+          const token: Token = getLocalToken()
+          const newToken: Token = await refreshToken(token)
+          setLocalToken(newToken)
           const users: User[] = await getUsers(newToken)
           this.setState({
             ...this.state,
@@ -68,6 +67,14 @@ class UserPage extends Component<Props, State> {
     console.log(event)
   }
 
+  onClickEdit = (event: ItemEditMouseEvent): void => {
+    const username: string = event.item.id
+    Router.push('/user/edit?username=' + username)
+      .catch(() => {
+        // empty block
+      })
+  }
+
   render() {
     const items: ItemInfo[] = []
     
@@ -81,7 +88,7 @@ class UserPage extends Component<Props, State> {
     return(
       <Layout title='USER | OAUTH' active='user'>
         <div className={styles.content}>
-          <ItemList items={items} onClickCreate={this.onClickCreate} onClickDelete={this.onClickDelete}/>
+          <ItemList items={items} onClickCreate={this.onClickCreate} onClickDelete={this.onClickDelete} onClickEdit={this.onClickEdit}/>
         </div>
       </Layout>
     )

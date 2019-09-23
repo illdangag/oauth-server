@@ -8,8 +8,6 @@ import Item from './item'
 
 import PlusIcon from '../../components/Icon/PlusIcon'
 import TrashIcon from '../../components/Icon/TrashIcon'
-import Router from 'next/router'
-
 export interface ItemInfo {
   id: string,
   name: string,
@@ -24,10 +22,19 @@ export interface ItemDeleteMouseEvent {
   items: ItemInfo[],
 }
 
+interface ItemEditMouseEventHadnler {
+  (event: ItemEditMouseEvent): void,
+}
+
+export interface ItemEditMouseEvent {
+  item: ItemInfo,
+}
+
 interface Props {
   items: ItemInfo[],
   onClickCreate?: MouseEventHandler,
   onClickDelete?: ItemDeleteMouseEventHandler,
+  onClickEdit?: ItemEditMouseEventHadnler,
 }
 
 interface State {
@@ -111,13 +118,11 @@ class ItemList extends Component<Props, State> {
   }
 
   onClickEdit = (index: number) => {
-    const { sortedItems, } = this.state
-    const editItemId: string = sortedItems[index].id
-    Router.push('/user/' + editItemId)
-      .catch(() => {
-        // empty block
-      })
-    
+    if (this.props.onClickEdit) {
+      const { sortedItems, } = this.state
+      const editItemInfo: ItemInfo = sortedItems[index]
+      this.props.onClickEdit({ item: editItemInfo, })
+    }
   }
   
   onChangeSearch = (event: ChangeEvent<HTMLInputElement>): void => {
