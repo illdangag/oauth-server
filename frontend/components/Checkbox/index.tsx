@@ -15,7 +15,7 @@ const Checkbox: FunctionComponent<Props> = ({
   disabled = false,
   checked,
   onChange = () => {
-    // emply block
+    // empty block
   },
 }) => {
   return (

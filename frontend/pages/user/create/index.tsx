@@ -69,7 +69,7 @@ class UserCreate extends Component<Props, State> {
         clearLocalToken()
         Router.push('/')
           .catch(() => {
-            // emply block
+            // empty block
           })
       }
     }
@@ -163,7 +163,7 @@ class UserCreate extends Component<Props, State> {
       .then(() => {
         Router.push('/user')
           .catch(() => {
-            // emply block
+            // empty block
           })
       })
       .catch((error) => {

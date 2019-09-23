@@ -25,10 +25,10 @@ const Input: FunctionComponent<Props> = ({
   fullWidth = false,
   icon = undefined,
   onChange = () => {
-    // emply block
+    // empty block
   },
   onKeyup = () => {
-    // emply block
+    // empty block
   },
   inputRef,
 }) => {

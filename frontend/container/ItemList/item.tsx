@@ -1,7 +1,5 @@
-import { FunctionComponent, ChangeEventHandler, } from 'react'
+import { FunctionComponent, ChangeEventHandler, MouseEventHandler, } from 'react'
 import styles from './item.scss'
-
-import Link from 'next/link'
 
 import Checkbox from '../../components/Checkbox'
 import EditIcon from '../../components/Icon/EditIcon'
@@ -11,6 +9,7 @@ type Props = {
   name: string,
   checked?: boolean,
   onChange?: ChangeEventHandler,
+  onClickEdit?: MouseEventHandler,
 }
 
 const Item: FunctionComponent<Props> = ({
@@ -18,7 +17,10 @@ const Item: FunctionComponent<Props> = ({
   name,
   checked = false,
   onChange = () => {
-    // emply block
+    // empty block
+  },
+  onClickEdit = () => {
+    // empty block
   },
 }) => {
   return (
@@ -27,10 +29,8 @@ const Item: FunctionComponent<Props> = ({
         <Checkbox id={id + '-check'} checked={checked} onChange={onChange}/>
       </span>
       {name}
-      <span className={styles.edit}>
-        <Link href='/sample'>
-          <a><EditIcon size='small'/></a>
-        </Link>
+      <span className={styles.edit} onClick={onClickEdit}>
+        <EditIcon size='small'/>
       </span>
       </div>
   )

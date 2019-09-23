@@ -17,7 +17,7 @@ const Button: FunctionComponent<Props> = ({
   style = 'nomal',
   fullWidth = false,
   onClick = () => {
-    // emply block
+    // empty block
   },
 }) => {
   return (

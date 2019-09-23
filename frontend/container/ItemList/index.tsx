@@ -8,6 +8,7 @@ import Item from './item'
 
 import PlusIcon from '../../components/Icon/PlusIcon'
 import TrashIcon from '../../components/Icon/TrashIcon'
+import Router from 'next/router'
 
 export interface ItemInfo {
   id: string,
@@ -108,6 +109,16 @@ class ItemList extends Component<Props, State> {
       checkedAll,
     })
   }
+
+  onClickEdit = (index: number) => {
+    const { sortedItems, } = this.state
+    const editItemId: string = sortedItems[index].id
+    Router.push('/user/' + editItemId)
+      .catch(() => {
+        // empty block
+      })
+    
+  }
   
   onChangeSearch = (event: ChangeEvent<HTMLInputElement>): void => {
     const { items, } = this.state
@@ -172,6 +183,7 @@ class ItemList extends Component<Props, State> {
                 name={value.name}
                 checked={value.checked}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => (this.onChangeItemCheckbox(event, key))}
+                onClickEdit={() => (this.onClickEdit(key))}
               />
             </div>
           ))}

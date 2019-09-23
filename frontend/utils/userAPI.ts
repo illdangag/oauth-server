@@ -44,3 +44,28 @@ export async function createUser(token: Token, user: User): Promise<void> {
   }
   await axios.request(config)
 }
+
+export async function getUser(token: Token, username: string): Promise<User> {
+  const config: AxiosRequestConfig = {
+    baseURL: API_HOST,
+    url: '/api/v1/users/' + username,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + token.accessToken,
+    },
+  }
+  const response: AxiosResponse = await axios.request(config)
+
+  const user: User = {
+    username: response.data.username,
+    accountNonExpired: response.data.accountNonExpired,
+    accountNonLocked: response.data.accountNonLocked,
+    credentialsNonExpired: response.data.credentialsNonExpired,
+    enabled: response.data.enabled,
+    authorities: response.data.authorities,
+  }
+
+  return user
+
+}

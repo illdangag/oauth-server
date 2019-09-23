@@ -15,7 +15,7 @@ const Switch: FunctionComponent<Props> = ({
   disabled,
   checked,
   onChange = () => {
-    // emply block
+    // empty block
   },
 }) => {
   return(

@@ -50,14 +50,14 @@ class UserPage extends Component<Props, State> {
           clearLocalToken()
           Router.push('/')
             .catch(() => {
-              // emply block
+              // empty block
             })
         }
       } else {
         clearLocalToken()
         Router.push('/')
           .catch(() => {
-            // emply block
+            // empty block
           })
       }
     }

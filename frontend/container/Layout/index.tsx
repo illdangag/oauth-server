@@ -24,7 +24,7 @@ const Layout: FunctionComponent<Props> = ({
     clearLocalToken()
     Router.push('/')
       .catch(() => {
-        // emply block
+        // empty block
       })
   }
 

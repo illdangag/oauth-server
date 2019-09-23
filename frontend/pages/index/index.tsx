@@ -49,7 +49,7 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
 
       Router.push('/user')
       .catch(() => {
-        // emply block
+        // empty block
       })
     } catch {
       this.setState({
@@ -115,7 +115,7 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
         setLocalToken(token)
         Router.push('/user')
         .catch(() => {
-          // emply block
+          // empty block
         })
       })
       .catch(() => {
