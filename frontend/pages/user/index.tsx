@@ -30,7 +30,8 @@ class UserPage extends Component<Props, State> {
 
   async componentDidMount() {
     try {
-      await checkToken()      
+      const token: Token = getLocalToken()
+      await checkToken(token)
       const users: User[] = await getUsers()
       this.setState({
         ...this.state,
@@ -40,7 +41,7 @@ class UserPage extends Component<Props, State> {
     } catch {
       try {
         const token: Token = getLocalToken()
-        const newToken: Token = await refreshToken(token.refreshToken)
+        const newToken: Token = await refreshToken(token)
         setLocalToken(newToken)
   
         const users: User[] = await getUsers()
@@ -84,9 +85,9 @@ class UserPage extends Component<Props, State> {
       <>
         {this.state.isLogin && (
           <Layout title='USER | OAUTH' active='user'>
-          <div className={styles.content}>
-            <ItemList items={items} onClickCreate={this.onClickCreate} onClickDelete={this.onClickDelete}/>
-          </div>
+            <div className={styles.content}>
+              <ItemList items={items} onClickCreate={this.onClickCreate} onClickDelete={this.onClickDelete}/>
+            </div>
           </Layout>
         )}
       </>

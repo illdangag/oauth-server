@@ -26,6 +26,7 @@ export type Token = {
   expiresIn: number,
   scope: string,
   jti: string,
+  expiredTime?: number,
 }
 
 export type AccessTokenInfo = {

@@ -12,7 +12,7 @@ import { checkToken, clearLocalToken, refreshToken, getLocalToken, setLocalToken
 import { createUser, } from '../../../utils/userAPI'
 import Router from 'next/router'
 import Link from 'next/link'
-import { User, Token } from '../../../interfaces'
+import { User, Token, } from '../../../interfaces'
 
 interface Props {
 
@@ -54,7 +54,8 @@ class UserCreate extends Component<Props, State> {
 
   async componentDidMount() {
     try {
-      await checkToken()
+      const token: Token = getLocalToken()
+      await checkToken(token)
       this.setState({
         ...this.state,
         isLogin: true,
@@ -62,7 +63,7 @@ class UserCreate extends Component<Props, State> {
     } catch {
       try {
         const token: Token = getLocalToken()
-        const newToken: Token = await refreshToken(token.refreshToken)
+        const newToken: Token = await refreshToken(token)
         setLocalToken(newToken)
         this.setState({
           ...this.state,
@@ -155,7 +156,7 @@ class UserCreate extends Component<Props, State> {
       accountNonExpired,
       accountNonLocked,
       credentialsNonExpired,
-      authorities: ['USER'],
+      authorities: ['USER',],
     }
 
     createUser(user)
