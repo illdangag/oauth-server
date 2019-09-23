@@ -19,7 +19,6 @@ interface Props {
 }
 
 interface State {
-  isLogin: boolean,
   username: string,
   password: string,
   confirmPassword: string,
@@ -37,7 +36,6 @@ class UserCreate extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      isLogin: false,
       username: '',
       password: '',
       confirmPassword: '',
@@ -58,7 +56,6 @@ class UserCreate extends Component<Props, State> {
       await checkToken(token)
       this.setState({
         ...this.state,
-        isLogin: true,
       })
     } catch {
       try {
@@ -67,11 +64,13 @@ class UserCreate extends Component<Props, State> {
         setLocalToken(newToken)
         this.setState({
           ...this.state,
-          isLogin: true,
         })
       } catch {
         clearLocalToken()
         Router.push('/')
+          .catch(() => {
+            // emply block
+          })
       }
     }
   }
@@ -158,8 +157,9 @@ class UserCreate extends Component<Props, State> {
       credentialsNonExpired,
       authorities: ['USER',],
     }
-
-    createUser(user)
+    
+    const token: Token = getLocalToken()
+    createUser(token, user)
       .then(() => {
         Router.push('/user')
           .catch(() => {
@@ -195,81 +195,76 @@ class UserCreate extends Component<Props, State> {
   }
 
   render() {
-    const { isLogin,
-      username, password, confirmPassword, enabled, accountNonExpired, accountNonLocked, credentialsNonExpired,
+    const { username, password, confirmPassword, enabled, accountNonExpired, accountNonLocked, credentialsNonExpired,
       saveDisabled, isShowErrorAlert, errorTitle, errorMessage, } = this.state
     return(
-      <>
-        {isLogin && (
-          <Layout title='USER CREATE | OAUTH' active='user'>
-            <div className={styles.createUser}>
-              <div className={styles.header}>
-                <span className={styles.back}>
-                  <Link href='/user'>
-                    <a><LeftIcon size='small'/></a>
-                  </Link>
-                </span>
-                <span className={styles.save}><Button disabled={saveDisabled} onClick={this.onClickSave}>SAVE</Button></span>
-              </div>
-              <div className={styles.items}>
-                <div className={styles.item}>
-                  <p className={styles.title}>Username</p>
-                  <p className={styles.discription}>discription</p>
-                  <p className={styles.input}>
-                    <Input fullWidth={true} icon='userEdit' value={username} onChange={this.onChangeUsername}></Input>
-                  </p>
-                </div>
-                <div className={styles.item}>
-                  <p className={styles.title}>Password</p>
-                  <p className={styles.discription}>discription</p>
-                  <div className={styles.input}>
-                    <p className={styles.password}>
-                      <Input fullWidth={true} icon='lock' type='password' value={password} onChange={this.onChangePassword}></Input>
-                    </p>
-                    <p className={styles.confirmPassword}>
-                      <Input fullWidth={true} icon='lock' type='password' value={confirmPassword} onChange={this.onChangeConfirmPassword}></Input>
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.item}>
-                  <p className={styles.title}>Enabled</p>
-                  <p className={styles.discription}>discription</p>
-                  <p className={styles.input}>
-                    <Switch id='enabled' checked={enabled} onChange={this.onChangeEabled}/>
-                  </p>
-                </div>
-                <div className={styles.item}>
-                  <p className={styles.title}>Account Non-Expired</p>
-                  <p className={styles.discription}>discription</p>
-                  <p className={styles.input}>
-                    <Switch id='accountNonExpired' checked={accountNonExpired} onChange={this.onChangeAccountNonExpired}/>
-                  </p>
-                </div>
-                <div className={styles.item}>
-                  <p className={styles.title}>Account Non-Locked</p>
-                  <p className={styles.discription}>discription</p>
-                  <p className={styles.input}>
-                    <Switch id='accountNonLocked'checked={accountNonLocked} onChange={this.onChangeAccountNonLocked}/>
-                  </p>
-                </div>
-                <div className={styles.item}>
-                  <p className={styles.title}>Credentials Non-Expired</p>
-                  <p className={styles.discription}>discription</p>
-                  <p className={styles.input}>
-                    <Switch id='credentialsNonLocked' checked={credentialsNonExpired} onChange={this.onChangeCredentialsNonExpired}/>
-                  </p>
-                </div>
+      <Layout title='USER CREATE | OAUTH' active='user'>
+        <div className={styles.createUser}>
+          <div className={styles.header}>
+            <span className={styles.back}>
+              <Link href='/user'>
+                <a><LeftIcon size='small'/></a>
+              </Link>
+            </span>
+            <span className={styles.save}><Button disabled={saveDisabled} onClick={this.onClickSave}>SAVE</Button></span>
+          </div>
+          <div className={styles.items}>
+            <div className={styles.item}>
+              <p className={styles.title}>Username</p>
+              <p className={styles.discription}>discription</p>
+              <p className={styles.input}>
+                <Input fullWidth={true} icon='userEdit' value={username} onChange={this.onChangeUsername}></Input>
+              </p>
+            </div>
+            <div className={styles.item}>
+              <p className={styles.title}>Password</p>
+              <p className={styles.discription}>discription</p>
+              <div className={styles.input}>
+                <p className={styles.password}>
+                  <Input fullWidth={true} icon='lock' type='password' value={password} onChange={this.onChangePassword}></Input>
+                </p>
+                <p className={styles.confirmPassword}>
+                  <Input fullWidth={true} icon='lock' type='password' value={confirmPassword} onChange={this.onChangeConfirmPassword}></Input>
+                </p>
               </div>
             </div>
-            {isShowErrorAlert && 
-              <Alert title={errorTitle} message={errorMessage} buttons={[{
-                text: 'CLOSE',
-                onClick: this.onClickErrorAlertClose,
-              }]}/>
-            }
-          </Layout>
-        )}
-      </>
+            <div className={styles.item}>
+              <p className={styles.title}>Enabled</p>
+              <p className={styles.discription}>discription</p>
+              <p className={styles.input}>
+                <Switch id='enabled' checked={enabled} onChange={this.onChangeEabled}/>
+              </p>
+            </div>
+            <div className={styles.item}>
+              <p className={styles.title}>Account Non-Expired</p>
+              <p className={styles.discription}>discription</p>
+              <p className={styles.input}>
+                <Switch id='accountNonExpired' checked={accountNonExpired} onChange={this.onChangeAccountNonExpired}/>
+              </p>
+            </div>
+            <div className={styles.item}>
+              <p className={styles.title}>Account Non-Locked</p>
+              <p className={styles.discription}>discription</p>
+              <p className={styles.input}>
+                <Switch id='accountNonLocked'checked={accountNonLocked} onChange={this.onChangeAccountNonLocked}/>
+              </p>
+            </div>
+            <div className={styles.item}>
+              <p className={styles.title}>Credentials Non-Expired</p>
+              <p className={styles.discription}>discription</p>
+              <p className={styles.input}>
+                <Switch id='credentialsNonLocked' checked={credentialsNonExpired} onChange={this.onChangeCredentialsNonExpired}/>
+              </p>
+            </div>
+          </div>
+        </div>
+        {isShowErrorAlert && 
+          <Alert title={errorTitle} message={errorMessage} buttons={[{
+            text: 'CLOSE',
+            onClick: this.onClickErrorAlertClose,
+          }]}/>
+        }
+      </Layout>
     )
   }
 }

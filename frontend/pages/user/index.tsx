@@ -2,7 +2,7 @@ import { Component, } from 'react'
 import Router from 'next/router'
 
 import { User, Token, } from '../../interfaces'
-import { checkToken, refreshToken, setLocalToken, getLocalToken, clearLocalToken, } from '../../utils/tokenAPI'
+import { getLocalToken, refreshToken, setLocalToken, clearLocalToken, } from '../../utils/tokenAPI'
 import { getUsers, } from '../../utils/userAPI'
 
 import styles from './styles.scss'
@@ -15,7 +15,6 @@ interface Props {
 }
 
 interface State {
-  isLogin: boolean,
   users: User[],
 }
 
@@ -23,7 +22,6 @@ class UserPage extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      isLogin: false,
       users: [],
     }
   }
@@ -31,26 +29,31 @@ class UserPage extends Component<Props, State> {
   async componentDidMount() {
     try {
       const token: Token = getLocalToken()
-      await checkToken(token)
-      const users: User[] = await getUsers()
+      const users: User[] = await getUsers(token)
       this.setState({
         ...this.state,
-        isLogin: true,
         users: users,
       })
-    } catch {
-      try {
+    } catch (error) {
+      if (error.response.status === 401) {
         const token: Token = getLocalToken()
         const newToken: Token = await refreshToken(token)
         setLocalToken(newToken)
-  
-        const users: User[] = await getUsers()
-        this.setState({
-          ...this.state,
-          isLogin: true,
-          users: users,
-        })
-      } catch {
+
+        try {
+          const users: User[] = await getUsers(newToken)
+          this.setState({
+            ...this.state,
+            users,
+          })
+        } catch {
+          clearLocalToken()
+          Router.push('/')
+            .catch(() => {
+              // emply block
+            })
+        }
+      } else {
         clearLocalToken()
         Router.push('/')
           .catch(() => {
@@ -82,15 +85,11 @@ class UserPage extends Component<Props, State> {
     }
     
     return(
-      <>
-        {this.state.isLogin && (
-          <Layout title='USER | OAUTH' active='user'>
-            <div className={styles.content}>
-              <ItemList items={items} onClickCreate={this.onClickCreate} onClickDelete={this.onClickDelete}/>
-            </div>
-          </Layout>
-        )}
-      </>
+      <Layout title='USER | OAUTH' active='user'>
+        <div className={styles.content}>
+          <ItemList items={items} onClickCreate={this.onClickCreate} onClickDelete={this.onClickDelete}/>
+        </div>
+      </Layout>
     )
   }
 }

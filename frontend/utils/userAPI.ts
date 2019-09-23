@@ -1,16 +1,15 @@
 import { API_HOST, } from './config'
 import axios, { AxiosRequestConfig, AxiosResponse, } from 'axios'
-import { User, } from '../interfaces'
-import { getLocalToken, } from './tokenAPI'
+import { User, Token, } from '../interfaces'
 
-export async function getUsers(): Promise<User[]> {
+export async function getUsers(token: Token): Promise<User[]> {
   const config: AxiosRequestConfig = {
     baseURL: API_HOST,
     url: '/api/v1/users',
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'bearer ' + getLocalToken().accessToken,
+      'Authorization': 'bearer ' + token.accessToken,
     },
   }
   const response: AxiosResponse = await axios.request(config)
@@ -32,14 +31,14 @@ export async function getUsers(): Promise<User[]> {
   return users
 }
 
-export async function createUser(user: User): Promise<void> {
+export async function createUser(token: Token, user: User): Promise<void> {
   const config: AxiosRequestConfig = {
     baseURL: API_HOST,
     url: '/api/v1/users',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'bearer ' + getLocalToken().accessToken,
+      'Authorization': 'bearer ' + token.accessToken,
     },
     data: user,
   }
