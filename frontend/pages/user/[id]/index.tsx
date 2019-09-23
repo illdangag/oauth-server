@@ -2,6 +2,8 @@ import { Component, } from 'react'
 import { NextPageContext, } from 'next'
 import Router from 'next/router'
 
+import Layout from '../../../container/Layout'
+
 import { Token, User, } from '../../../interfaces'
 import { getLocalToken, refreshToken, setLocalToken, clearLocalToken, } from '../../../utils/tokenAPI'
 import { getUser, } from '../../../utils/userAPI'
@@ -77,7 +79,9 @@ class UserUpdate extends Component<Props, State> {
 
   render() {
     return (
-      <div>{this.state.username}</div>
+      <Layout title='USER EDIT | OAUTH' active='user'>
+        {this.state.username}
+      </Layout>
     )
   }
 }

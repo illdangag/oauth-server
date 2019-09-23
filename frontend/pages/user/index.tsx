@@ -48,17 +48,11 @@ class UserPage extends Component<Props, State> {
           })
         } catch {
           clearLocalToken()
-          Router.push('/')
-            .catch(() => {
-              // empty block
-            })
+          await Router.push('/')
         }
       } else {
         clearLocalToken()
-        Router.push('/')
-          .catch(() => {
-            // empty block
-          })
+        await Router.push('/')
       }
     }
   }
