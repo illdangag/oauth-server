@@ -2,20 +2,19 @@
   position: relative;
 
   margin: 6px 10px;
-  padding: 0px 32px;
+  padding: 4px 4px;
   height: 22px;
 
-  line-height: 28px;
-  & .checkbox {
-    position: absolute;
-    top: 0px;
-    left: 0px;
+  line-height: 22px;
+
+  &:hover {
+    background: #f1f3f5;
   }
 
   & .edit {
     position: absolute;
-    top: 2px;
-    right: 0px;
+    top: 6px;
+    right: 4px;
 
     cursor: pointer;
   }
