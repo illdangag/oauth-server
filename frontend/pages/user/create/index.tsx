@@ -8,7 +8,7 @@ import Input from '../../../components/Input'
 import Switch from '../../../components/Switch'
 import Alert from '../../../components/Alert'
 
-import { checkToken, clearLocalToken, refreshToken, getLocalToken, setLocalToken, } from '../../../utils/tokenAPI';
+import { checkToken, clearLocalToken, refreshToken, getLocalToken, setLocalToken, } from '../../../utils/tokenAPI'
 import { createUser, } from '../../../utils/userAPI'
 import Router from 'next/router'
 import Link from 'next/link'
@@ -258,7 +258,7 @@ class UserCreate extends Component<Props, State> {
           <Alert title={errorTitle} message={errorMessage} buttons={[{
             text: 'CLOSE',
             onClick: this.onClickErrorAlertClose,
-          }]}/>
+          },]}/>
         }
       </Layout>
     )
