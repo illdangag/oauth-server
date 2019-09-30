@@ -16,7 +16,7 @@ export type User = {
   accountNonLocked: boolean,
   credentialsNonExpired: boolean,
   enabled: boolean,
-  authorities: string[],
+  authorities?: string[],
 }
 
 export type Token = {

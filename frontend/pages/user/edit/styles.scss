@@ -13,17 +13,24 @@
     height: 38px;
 
     & .back {
-      display: inline-block;
-      position: absolute;
-      top: 10px;
-
-      height: 100%;
+      // display: inline-block;
+      // position: absolute;
+      // top: 10px;
+      line-height: 38px;
+      vertical-align: middle;
 
       & > a {
         display: inline-block;
+        position: relative;
 
         height: 18px;
       }
+    }
+
+    & .username {
+
+      line-height: 38px;
+      vertical-align: middle;
     }
 
     & .save {

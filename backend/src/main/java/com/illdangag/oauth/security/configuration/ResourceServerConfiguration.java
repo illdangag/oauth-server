@@ -27,11 +27,16 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                     .antMatchers("/clients/**").hasAnyAuthority("ADMIN")
                     .antMatchers("/users/**").hasAnyAuthority("ADMIN");
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.applyPermitDefaultValues();
+//        config.applyPermitDefaultValues();
+        config.setAllowCredentials(true);
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        config.addAllowedOrigin("*");
 
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/v1/**", config);
+
         CorsFilter filter = new CorsFilter(source);
         http.addFilter(filter);
     }

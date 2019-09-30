@@ -67,5 +67,18 @@ export async function getUser(token: Token, username: string): Promise<User> {
   }
 
   return user
+}
 
+export async function updateUser(token: Token, user: User): Promise<void> {
+  const config: AxiosRequestConfig = {
+    baseURL: API_HOST,
+    url: '/api/v1/users',
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + token.accessToken,
+    },
+    data: user,
+  }
+  await axios.request(config)
 }
