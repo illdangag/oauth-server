@@ -208,49 +208,61 @@ class UserCreate extends Component<Props, State> {
             <div className={styles.item}>
               <p className={styles.title}>Username</p>
               <p className={styles.discription}>discription</p>
-              <p className={styles.input}>
-                <Input fullWidth={true} icon='userEdit' value={username} onChange={this.onChangeUsername}></Input>
-              </p>
+              <div className={styles.content}>
+                <p className={styles.input}>
+                  <Input fullWidth={true} icon='userEdit' value={username} onChange={this.onChangeUsername}></Input>
+                </p>
+              </div>
             </div>
             <div className={styles.item}>
               <p className={styles.title}>Password</p>
               <p className={styles.discription}>discription</p>
-              <div className={styles.input}>
-                <p className={styles.password}>
-                  <Input fullWidth={true} icon='lock' type='password' value={password} onChange={this.onChangePassword}></Input>
-                </p>
-                <p className={styles.confirmPassword}>
-                  <Input fullWidth={true} icon='lock' type='password' value={confirmPassword} onChange={this.onChangeConfirmPassword}></Input>
-                </p>
+              <div className={styles.content}>
+                <div className={styles.input}>
+                  <p className={styles.password}>
+                    <Input fullWidth={true} icon='lock' type='password' value={password} onChange={this.onChangePassword}></Input>
+                  </p>
+                  <p className={styles.confirmPassword}>
+                    <Input fullWidth={true} icon='lock' type='password' value={confirmPassword} onChange={this.onChangeConfirmPassword}></Input>
+                  </p>
+                </div>
               </div>
             </div>
             <div className={styles.item}>
               <p className={styles.title}>Enabled</p>
               <p className={styles.discription}>discription</p>
-              <p className={styles.input}>
-                <Switch id='enabled' checked={enabled} onChange={this.onChangeEabled}/>
-              </p>
+              <div className={styles.content}>
+                <p className={styles.input}>
+                  <Switch id='enabled' checked={enabled} onChange={this.onChangeEabled}/>
+                </p>
+              </div>
             </div>
             <div className={styles.item}>
               <p className={styles.title}>Account Non-Expired</p>
               <p className={styles.discription}>discription</p>
-              <p className={styles.input}>
-                <Switch id='accountNonExpired' checked={accountNonExpired} onChange={this.onChangeAccountNonExpired}/>
-              </p>
+              <div className={styles.content}>
+                <p className={styles.input}>
+                  <Switch id='accountNonExpired' checked={accountNonExpired} onChange={this.onChangeAccountNonExpired}/>
+                </p>
+              </div>
             </div>
             <div className={styles.item}>
               <p className={styles.title}>Account Non-Locked</p>
               <p className={styles.discription}>discription</p>
-              <p className={styles.input}>
-                <Switch id='accountNonLocked'checked={accountNonLocked} onChange={this.onChangeAccountNonLocked}/>
-              </p>
+              <div className={styles.content}>
+                <p className={styles.input}>
+                  <Switch id='accountNonLocked'checked={accountNonLocked} onChange={this.onChangeAccountNonLocked}/>
+                </p>
+              </div>
             </div>
             <div className={styles.item}>
               <p className={styles.title}>Credentials Non-Expired</p>
               <p className={styles.discription}>discription</p>
-              <p className={styles.input}>
-                <Switch id='credentialsNonLocked' checked={credentialsNonExpired} onChange={this.onChangeCredentialsNonExpired}/>
-              </p>
+              <div className={styles.content}>
+                <p className={styles.input}>
+                  <Switch id='credentialsNonLocked' checked={credentialsNonExpired} onChange={this.onChangeCredentialsNonExpired}/>
+                </p>
+              </div>
             </div>
           </div>
         </div>

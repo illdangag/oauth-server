@@ -64,7 +64,6 @@ class UserUpdate extends Component<Props, State> {
         try {
           await this.getUserInfo(newToken, username)
         } catch {
-          // TODO: 토큰 오류인지 사용자가 없는 오류인지 구분하여 처리
           clearLocalToken()
           await Router.push('/')
         }
@@ -194,9 +193,7 @@ class UserUpdate extends Component<Props, State> {
         <div className={styles.editUser}>
           <div className={styles.header}>
             <span className={styles.back}>
-              <Link href='/user'>
-                <a><FaAngleLeft/></a>
-              </Link>
+              <Link href='/user'><a><FaAngleLeft/></a></Link>
             </span>
             <span className={styles.username}>{username}</span>
             <span className={styles.save}><Button onClick={this.onClickSave} disabled={saveDisabled}>SAVE</Button></span>
@@ -205,30 +202,38 @@ class UserUpdate extends Component<Props, State> {
             <div className={styles.item}>
               <p className={styles.title}>Enabled</p>
               <p className={styles.discription}>discription</p>
-              <p className={styles.input}>
-                <Switch id='enabled' checked={enabled} onChange={this.onChangeEabled}/>
-              </p>
+              <div className={styles.content}>
+                <p className={styles.input}>
+                  <Switch id='enabled' checked={enabled} onChange={this.onChangeEabled}/>
+                </p>
+              </div>
             </div>
             <div className={styles.item}>
               <p className={styles.title}>Account Non-Expired</p>
               <p className={styles.discription}>discription</p>
-              <p className={styles.input}>
-                <Switch id='accountNonExpired' checked={accountNonExpired} onChange={this.onChangeAccountNonExpired}/>
-              </p>
+              <div className={styles.content}>
+                <p className={styles.input}>
+                  <Switch id='accountNonExpired' checked={accountNonExpired} onChange={this.onChangeAccountNonExpired}/>
+                </p>
+              </div>
             </div>
             <div className={styles.item}>
               <p className={styles.title}>Account Non-Locked</p>
               <p className={styles.discription}>discription</p>
-              <p className={styles.input}>
-                <Switch id='accountNonLocked'checked={accountNonLocked} onChange={this.onChangeAccountNonLocked}/>
-              </p>
+              <div className={styles.content}>
+                <p className={styles.input}>
+                  <Switch id='accountNonLocked'checked={accountNonLocked} onChange={this.onChangeAccountNonLocked}/>
+                </p>
+              </div>
             </div>
             <div className={styles.item}>
               <p className={styles.title}>Credentials Non-Expired</p>
               <p className={styles.discription}>discription</p>
-              <p className={styles.input}>
-                <Switch id='credentialsNonLocked' checked={credentialsNonExpired} onChange={this.onChangeCredentialsNonExpired}/>
-              </p>
+              <div className={styles.content}>
+                <p className={styles.input}>
+                  <Switch id='credentialsNonLocked' checked={credentialsNonExpired} onChange={this.onChangeCredentialsNonExpired}/>
+                </p>
+              </div>
             </div>
           </div>
         </div>
