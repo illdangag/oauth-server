@@ -128,7 +128,7 @@ class SamplePage extends React.Component<Props, State> {
           </div>
         </div>
         {this.state.isShowAlert && 
-          <Alert title='TITLE' message='content message' buttons={[{text: 'CLOSE', onClick: this.onClickAlertClose}]}/>
+          <Alert title='TITLE' message='content message' buttons={[{ text: 'CLOSE', onClick: this.onClickAlertClose, },]}/>
         }
       </Layout>
     )

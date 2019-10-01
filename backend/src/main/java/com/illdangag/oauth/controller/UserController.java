@@ -111,6 +111,9 @@ public class UserController {
             responseEntity = new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
         } catch (NotFoundException e) {
             ErrorResponse errorResponse = new ErrorResponse(ErrorType.USER_READ_NOT_EXIST_USER);
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse(ErrorType.UNKNOWN_ERROR);
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
 

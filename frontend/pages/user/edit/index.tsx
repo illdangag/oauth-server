@@ -7,12 +7,12 @@ import styles from './styles.scss'
 import Layout from '../../../container/Layout'
 import Button from '../../../components/Button'
 import Switch from '../../../components/Switch'
+import Alert from '../../../components/Alert'
 import { FaAngleLeft, } from 'react-icons/fa'
 
 import { Token, User, } from '../../../interfaces'
 import { getLocalToken, refreshToken, setLocalToken, clearLocalToken, } from '../../../utils/tokenAPI'
 import { getUser, updateUser, } from '../../../utils/userAPI'
-
 
 interface Props {
   username: string,
@@ -24,6 +24,10 @@ interface State {
   accountNonExpired: boolean,
   accountNonLocked: boolean,
   credentialsNonExpired: boolean,
+  saveDisabled: boolean,
+  isShowErrorAlert: boolean,
+  errorTitle: string,
+  errorMessage: string,
 }
 
 class UserUpdate extends Component<Props, State> {
@@ -39,6 +43,10 @@ class UserUpdate extends Component<Props, State> {
       accountNonExpired: false,
       accountNonLocked: false,
       credentialsNonExpired: false,
+      saveDisabled: false,
+      isShowErrorAlert: false,
+      errorTitle: '',
+      errorMessage: '',
     }
   }
 
@@ -60,6 +68,11 @@ class UserUpdate extends Component<Props, State> {
           clearLocalToken()
           await Router.push('/')
         }
+      } else if (error.response && error.response.status === 404) {
+        Router.push('/user')
+          .catch(() => {
+            // empty block
+          })
       } else {
         clearLocalToken()
         await Router.push('/')
@@ -120,6 +133,12 @@ class UserUpdate extends Component<Props, State> {
 
   onClickSave = () => {
     const { username, enabled, accountNonExpired, accountNonLocked, credentialsNonExpired, } = this.state
+
+    this.setState({
+      ...this.state,
+      saveDisabled: true,
+    })
+    
     const user: User = {
       username,
       enabled,
@@ -128,17 +147,48 @@ class UserUpdate extends Component<Props, State> {
       credentialsNonExpired,
     }
 
-    try {
-      const token: Token = getLocalToken()
-      updateUser(token, user)
-    } catch (error) {
-      
-    }
+    const token: Token = getLocalToken()
+    updateUser(token, user)
+      .then(() => {
+        Router.push('/user')
+          .catch(() => {
+            // empty block
+          })
+      })
+      .catch((error) => {
+        const statusCode: number = error.response ? error.response.status : -1
+        if (statusCode === 404) { // not found
+          this.setState({
+            ...this.state,
+            errorTitle: 'Not Found User',
+            errorMessage: 'Username is not exist.',
+            isShowErrorAlert: true,
+          })
+        } else { // Unknown
+          this.setState({
+            ...this.state,
+            errorTitle: 'Unknown Error',
+            errorMessage: 'An unknown error has occurred.',
+            isShowErrorAlert: true,
+          })
+        }
+      })
+  }
+
+  onClickErrorAlertClose = (): void => {
+    this.setState({
+      ...this.state,
+      isShowErrorAlert: false,
+    })
+    Router.push('/user')
+      .catch(() => {
+        // empty block
+      })
   }
 
   render() {
     const { username, enabled, accountNonExpired, accountNonLocked, credentialsNonExpired,
-      } = this.state
+      saveDisabled, errorTitle, errorMessage, isShowErrorAlert, } = this.state
     return (
       <Layout title='USER EDIT | OAUTH' active='user'>
         <div className={styles.editUser}>
@@ -149,7 +199,7 @@ class UserUpdate extends Component<Props, State> {
               </Link>
             </span>
             <span className={styles.username}>{username}</span>
-            <span className={styles.save}><Button onClick={this.onClickSave}>SAVE</Button></span>
+            <span className={styles.save}><Button onClick={this.onClickSave} disabled={saveDisabled}>SAVE</Button></span>
           </div>
           <div className={styles.items}>
             <div className={styles.item}>
@@ -182,6 +232,12 @@ class UserUpdate extends Component<Props, State> {
             </div>
           </div>
         </div>
+        {isShowErrorAlert && 
+          <Alert title={errorTitle} message={errorMessage} buttons={[{
+            text: 'CLOSE',
+            onClick: this.onClickErrorAlertClose,
+          },]}/>
+        }
       </Layout>
     )
   }

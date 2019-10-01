@@ -8,7 +8,7 @@ import { getUsers, } from '../../utils/userAPI'
 import styles from './styles.scss'
 
 import Layout from '../../container/Layout'
-import ItemList, { ItemInfo, ItemDeleteMouseEvent, ItemEditMouseEvent, } from '../../container/ItemList'
+import ItemList, { ItemInfo, ItemEditMouseEvent, } from '../../container/ItemList'
 
 interface Props {
 
@@ -63,8 +63,9 @@ class UserPage extends Component<Props, State> {
       })
   }
 
-  onClickDelete = (event: ItemDeleteMouseEvent): void => {
-    console.log(event)
+  onClickDelete = (): void => {
+    // event: ItemDeleteMouseEvent
+    // empty block
   }
 
   onClickEdit = (event: ItemEditMouseEvent): void => {
