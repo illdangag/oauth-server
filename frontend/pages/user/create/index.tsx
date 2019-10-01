@@ -3,10 +3,10 @@ import styles from './styles.scss'
 
 import Layout from '../../../container/Layout'
 import Button from '../../../components/Button'
-import LeftIcon from '../../../components/Icon/LeftIcon'
 import Input from '../../../components/Input'
 import Switch from '../../../components/Switch'
 import Alert from '../../../components/Alert'
+import { FaAngleLeft, } from 'react-icons/fa'
 
 import { checkToken, clearLocalToken, refreshToken, getLocalToken, setLocalToken, } from '../../../utils/tokenAPI'
 import { createUser, } from '../../../utils/userAPI'
@@ -199,7 +199,7 @@ class UserCreate extends Component<Props, State> {
           <div className={styles.header}>
             <span className={styles.back}>
               <Link href='/user'>
-                <a><LeftIcon size='small'/></a>
+                <a><FaAngleLeft/></a>
               </Link>
             </span>
             <span className={styles.save}><Button disabled={saveDisabled} onClick={this.onClickSave}>SAVE</Button></span>

@@ -2,7 +2,7 @@ import { FunctionComponent, ChangeEventHandler, MouseEventHandler, } from 'react
 import styles from './item.scss'
 
 import Checkbox from '../../components/Checkbox'
-import EditIcon from '../../components/Icon/EditIcon'
+import { FaEdit, } from 'react-icons/fa'
 
 type Props = {
   id: string,
@@ -30,9 +30,9 @@ const Item: FunctionComponent<Props> = ({
       </span>
       {name}
       <span className={styles.edit} onClick={onClickEdit}>
-        <EditIcon size='small'/>
+        <FaEdit/>
       </span>
-      </div>
+    </div>
   )
 }
 

@@ -2,10 +2,7 @@ import React, { FunctionComponent, useState, ChangeEvent, ChangeEventHandler, Ke
 import styles from './styles.scss'
 import cx from 'classnames/bind'
 
-import UserAuthIcon from '../Icon/UserAuthIcon'
-import UserEditIcon from '../Icon/UserEditIcon'
-import LockIcon from '../Icon/LockIcon'
-import FindIcon from '../Icon/FindIcon'
+import { FaUserLock, FaUserCog, FaLock, FaSearch, } from 'react-icons/fa'
 
 type Props = {
   type?: 'text' | 'password',
@@ -50,13 +47,13 @@ const Input: FunctionComponent<Props> = ({
 
   const getIcon = () => {
     if (icon === 'userAuth') {
-      return <UserAuthIcon size='small' disabled={disabled}/>
+      return <FaUserLock/>
     } else if (icon === 'userEdit') {
-      return <UserEditIcon size='small' disabled={disabled}/>
+      return <FaUserCog/>
     } else if (icon === 'lock') {
-      return <LockIcon size='small' disabled={disabled}/>
+      return <FaLock/>
     } else if (icon === 'find') {
-      return <FindIcon size='small' disabled={disabled}/>
+      return <FaSearch/>
     }
   }
 

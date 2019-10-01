@@ -6,8 +6,8 @@ import styles from './styles.scss'
 
 import Layout from '../../../container/Layout'
 import Button from '../../../components/Button'
-import LeftIcon from '../../../components/Icon/LeftIcon'
 import Switch from '../../../components/Switch'
+import { FaAngleLeft, } from 'react-icons/fa'
 
 import { Token, User, } from '../../../interfaces'
 import { getLocalToken, refreshToken, setLocalToken, clearLocalToken, } from '../../../utils/tokenAPI'
@@ -145,7 +145,7 @@ class UserUpdate extends Component<Props, State> {
           <div className={styles.header}>
             <span className={styles.back}>
               <Link href='/user'>
-                <a><LeftIcon size='small'/></a>
+                <a><FaAngleLeft/></a>
               </Link>
             </span>
             <span className={styles.username}>{username}</span>

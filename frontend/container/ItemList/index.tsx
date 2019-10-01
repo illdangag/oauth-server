@@ -6,8 +6,8 @@ import Input from '../../components/Input'
 import Checkbox from '../../components/Checkbox'
 import Item from './item'
 
-import PlusIcon from '../../components/Icon/PlusIcon'
-import TrashIcon from '../../components/Icon/TrashIcon'
+import { FaPlus, FaTrashAlt, } from 'react-icons/fa'
+
 export interface ItemInfo {
   id: string,
   name: string,
@@ -173,10 +173,10 @@ class ItemList extends Component<Props, State> {
           </span>
           <span className={styles.icons}>
             <button className={styles.iconButton} onClick={onClickCreate}>
-              <PlusIcon size='small'/>
+              <FaPlus/>
             </button>
             <button className={styles.iconButton} onClick={this.onClickDelete}>
-              <TrashIcon size='small'/>
+              <FaTrashAlt/>
             </button>
           </span>
         </div>
