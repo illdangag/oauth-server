@@ -5,7 +5,7 @@ import Router from 'next/router'
 import { createToken, getLocalToken, setLocalToken, } from '../../utils/tokenAPI'
 import { Token, } from '../../interfaces'
 
-import styles from './styles.scss'
+import styles from './index.scss'
 
 import Button from '../../components/Button'
 import Input from '../../components/Input'

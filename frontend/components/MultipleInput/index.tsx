@@ -1,5 +1,5 @@
 import React, { Component, KeyboardEvent, ChangeEvent, MouseEvent, } from 'react'
-import styles from './styles.scss'
+import styles from './index.scss'
 
 import { set, remove, } from 'immutable'
 

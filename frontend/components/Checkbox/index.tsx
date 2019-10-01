@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ChangeEventHandler, } from 'react'
-import styles from './styles.scss'
+import styles from './index.scss'
 
 type Props = {
   label?: string,

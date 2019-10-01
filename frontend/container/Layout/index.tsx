@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Router from 'next/router'
 
-import styles from './styles.scss'
+import styles from './index.scss'
 import cx from 'classnames/bind'
 
 import { clearLocalToken, } from '../../utils/tokenAPI'
@@ -40,7 +40,7 @@ const Layout: FunctionComponent<Props> = ({
             <Link href='/user'><a>USER</a></Link>
           </span>
           <span className={cx(styles.link, { [styles.active]: active === 'client', })}>
-            <Link href='/sample'><a>CLIENT</a></Link>
+            <Link href='/client'><a>CLIENT</a></Link>
           </span>
         </div>
         <span className={styles.logout}>

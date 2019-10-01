@@ -5,7 +5,7 @@ import { User, Token, } from '../../interfaces'
 import { getLocalToken, refreshToken, setLocalToken, clearLocalToken, } from '../../utils/tokenAPI'
 import { getUsers, } from '../../utils/userAPI'
 
-import styles from './styles.scss'
+import styles from './index.scss'
 
 import Layout from '../../container/Layout'
 import ItemList, { ItemInfo, ItemEditMouseEvent, } from '../../container/ItemList'

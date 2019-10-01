@@ -1,5 +1,7 @@
 import { Component, ChangeEvent, } from 'react'
-import styles from './styles.scss'
+import styles from '../user.scss'
+import Router from 'next/router'
+import Link from 'next/link'
 
 import Layout from '../../../container/Layout'
 import Button from '../../../components/Button'
@@ -8,11 +10,9 @@ import Switch from '../../../components/Switch'
 import Alert from '../../../components/Alert'
 import { FaAngleLeft, } from 'react-icons/fa'
 
+import { User, Token, } from '../../../interfaces'
 import { checkToken, clearLocalToken, refreshToken, getLocalToken, setLocalToken, } from '../../../utils/tokenAPI'
 import { createUser, } from '../../../utils/userAPI'
-import Router from 'next/router'
-import Link from 'next/link'
-import { User, Token, } from '../../../interfaces'
 
 interface Props {
 
@@ -54,9 +54,6 @@ class UserCreate extends Component<Props, State> {
     try {
       const token: Token = getLocalToken()
       await checkToken(token)
-      this.setState({
-        ...this.state,
-      })
     } catch {
       try {
         const token: Token = getLocalToken()
@@ -195,7 +192,7 @@ class UserCreate extends Component<Props, State> {
       saveDisabled, isShowErrorAlert, errorTitle, errorMessage, } = this.state
     return(
       <Layout title='USER CREATE | OAUTH' active='user'>
-        <div className={styles.createUser}>
+        <div className={styles.user}>
           <div className={styles.header}>
             <span className={styles.back}>
               <Link href='/user'>

@@ -4,21 +4,6 @@
 //
 // import User from 'path/to/interfaces';
 
-export type UserSample = {
-  id: number,
-  name: string,
-}
-
-export type User = {
-  username: string,
-  password?: string,
-  accountNonExpired: boolean,
-  accountNonLocked: boolean,
-  credentialsNonExpired: boolean,
-  enabled: boolean,
-  authorities?: string[],
-}
-
 export type Token = {
   accessToken: string,
   refreshToken: string,
@@ -37,4 +22,26 @@ export type AccessTokenInfo = {
   authorities: string[],
   jti: string,
   clientId: string,
+}
+
+export type User = {
+  username: string,
+  password?: string,
+  accountNonExpired: boolean,
+  accountNonLocked: boolean,
+  credentialsNonExpired: boolean,
+  enabled: boolean,
+  authorities?: string[],
+}
+
+export type Client = {
+  clientId: string,
+  resourceIds: string[],
+  scope: string[],
+  grantTypes: string[],
+  redirectUri: string[],
+  authorities: string[],
+  accessTokenValiditySeconds: number,
+  refreshTokenValiditySeconds: number,
+  autoApprove: boolean,
 }

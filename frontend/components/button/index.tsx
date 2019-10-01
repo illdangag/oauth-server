@@ -1,5 +1,5 @@
 import React, { FunctionComponent, MouseEventHandler, } from 'react'
-import styles from './styles.scss'
+import styles from './index.scss'
 import cx from 'classnames/bind'
 
 type Props = {

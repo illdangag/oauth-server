@@ -86,7 +86,6 @@ public class UserController {
             }
         }
 
-
         return new ResponseEntity<>(userResponseList, HttpStatus.OK);
     }
 

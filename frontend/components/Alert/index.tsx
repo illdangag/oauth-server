@@ -1,5 +1,5 @@
 import { FunctionComponent, MouseEventHandler, } from 'react'
-import styles from './styles.scss'
+import styles from './index.scss'
 
 import Button from '../../components/Button'
 

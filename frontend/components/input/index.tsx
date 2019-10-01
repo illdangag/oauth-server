@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, ChangeEvent, ChangeEventHandler, KeyboardEvent, KeyboardEventHandler, } from 'react'
-import styles from './styles.scss'
+import styles from './index.scss'
 import cx from 'classnames/bind'
 
 import { FaUserLock, FaUserCog, FaLock, FaSearch, } from 'react-icons/fa'

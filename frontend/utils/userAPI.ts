@@ -1,6 +1,6 @@
 import { API_HOST, } from './config'
-import axios, { AxiosRequestConfig, AxiosResponse, } from 'axios'
 import { User, Token, } from '../interfaces'
+import axios, { AxiosRequestConfig, AxiosResponse, } from 'axios'
 
 export async function getUsers(token: Token): Promise<User[]> {
   const config: AxiosRequestConfig = {

@@ -11,6 +11,7 @@ import com.illdangag.oauth.service.exception.InvalidPropertyException;
 import com.illdangag.oauth.service.exception.NotFoundException;
 import com.illdangag.oauth.service.exception.PropertyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,9 @@ public class ClientController {
 
     @Autowired
     private ClientService clientService;
+
+    @Value("${oauth.admin.clientId}")
+    private String adminClientId;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody ClientRequest clientRequest) {
@@ -62,12 +66,15 @@ public class ClientController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity read() {
+    public ResponseEntity readList(@RequestParam(required = false, defaultValue = "false") String includedAdmin) {
         List<Client> clientList = this.clientService.read();
         List<ClientResponse> clientResponseList = new ArrayList<>();
 
         for (Client client : clientList) {
-            clientResponseList.add(new ClientResponse(client));
+            if (!client.getClientId().equals(adminClientId) ||
+                    includedAdmin.equalsIgnoreCase("true")) {
+                clientResponseList.add(new ClientResponse(client));
+            }
         }
 
         return new ResponseEntity<>(clientResponseList, HttpStatus.OK);

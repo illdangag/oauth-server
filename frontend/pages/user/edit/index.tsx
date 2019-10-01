@@ -2,7 +2,7 @@ import { Component, ChangeEvent, } from 'react'
 import { NextPageContext, } from 'next'
 import Router from 'next/router'
 import Link from 'next/link'
-import styles from './styles.scss'
+import styles from '../user.scss'
 
 import Layout from '../../../container/Layout'
 import Button from '../../../components/Button'
@@ -190,7 +190,7 @@ class UserUpdate extends Component<Props, State> {
       saveDisabled, errorTitle, errorMessage, isShowErrorAlert, } = this.state
     return (
       <Layout title='USER EDIT | OAUTH' active='user'>
-        <div className={styles.editUser}>
+        <div className={styles.user}>
           <div className={styles.header}>
             <span className={styles.back}>
               <Link href='/user'><a><FaAngleLeft/></a></Link>
