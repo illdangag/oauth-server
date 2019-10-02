@@ -27,6 +27,7 @@ interface State {
 }
 
 class LoginPage extends Component<Dispatchable<Props>, State> {
+  private usernameElement: HTMLInputElement | null = null
   private passwordElement: HTMLInputElement | null = null
 
   constructor(props: Dispatchable<Props>) {
@@ -123,6 +124,10 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
           ...this.state,
           disabled: false,
         })
+        
+        if (this.usernameElement !== null) {
+          this.usernameElement.select()
+        }
       })
   }
 
@@ -145,6 +150,12 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
                   disabled={this.state.disabled}
                   onChange={this.onChangeUsername}
                   onKeyup={this.onKeyupUsername}
+                  inputRef={(instance) => {
+                    if (this.usernameElement === null && instance !== null) {
+                      this.usernameElement = instance
+                      this.usernameElement.focus()
+                    }
+                  }}
               />
             </div>
             <div className={styles.password}>
