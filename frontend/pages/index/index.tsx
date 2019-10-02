@@ -32,8 +32,8 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
   constructor(props: Dispatchable<Props>) {
     super(props)
     this.state = {
-      username: 'oauthAdmin',
-      password: 'password',
+      username: '',
+      password: '',
       disabled: false,
       isLogin: true,
     }
@@ -131,7 +131,7 @@ class LoginPage extends Component<Dispatchable<Props>, State> {
     return (
       <>
         <Head>
-          <title>Login</title>
+          <title>LOGIN | OAUTH</title>
           <meta charSet='utf-8' />
           <meta name='viewport' content='initial-scale=1.0, width=device-width' />
         </Head>
