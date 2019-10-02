@@ -33,3 +33,17 @@ export async function getClients(token: Token): Promise<Client[]> {
 
   return clients
 }
+
+export async function createClient(token: Token, client: Client): Promise<void> {
+  const config: AxiosRequestConfig = {
+    baseURL: API_HOST,
+    url: '/api/v1/clients',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + token.accessToken,
+    },
+    data: client,
+  }
+  await axios.request(config)
+}

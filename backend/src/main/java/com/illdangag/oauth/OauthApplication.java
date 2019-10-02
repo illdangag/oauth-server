@@ -48,7 +48,7 @@ public class OauthApplication implements CommandLineRunner {
 		if (this.clientService.readByClientId(this.adminClientId) == null) {
 			Client client = new Client(this.adminClientId, this.adminClientSecret);
 
-			client.setAuthorities("CLIENT");
+			client.setAuthorities("ADMIN");
 			client.setScope("all");
 			client.setGrantTypes("password", "client_credentials", "refresh_token");
 

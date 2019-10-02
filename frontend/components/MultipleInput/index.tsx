@@ -1,5 +1,6 @@
 import React, { Component, KeyboardEvent, ChangeEvent, MouseEvent, } from 'react'
 import styles from './index.scss'
+import cx from 'classnames/bind'
 
 import { set, remove, } from 'immutable'
 
@@ -14,6 +15,7 @@ export interface MultipleInputChangeEvent {
 interface Props {
   values: string[],
   onChange?: MultipleInputChangeEventHandler,
+  fullWidth?: boolean,
 }
 
 interface State {
@@ -22,6 +24,11 @@ interface State {
 
 class MultipleInput extends Component<Props, State> {
   private input: HTMLInputElement | null
+
+  static defalutProps = {
+    values: [],
+    fullWidth: false,
+  }
 
   constructor(props: Props) {
     super(props)
@@ -91,8 +98,9 @@ class MultipleInput extends Component<Props, State> {
   }
 
   render() {
+    const { fullWidth, } = this.props
     return (
-      <div className={styles.wrapper}>
+      <div className={cx(styles.wrapper, { [styles.fullWidth]: fullWidth, })}>
         <input
           className={styles.input}
           ref={input => { this.input = input }}

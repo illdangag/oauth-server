@@ -2,14 +2,14 @@ import React, { FunctionComponent, useState, ChangeEvent, ChangeEventHandler, Ke
 import styles from './index.scss'
 import cx from 'classnames/bind'
 
-import { FaUserLock, FaUserCog, FaLock, FaSearch, } from 'react-icons/fa'
+import { FaUserLock, FaUserCog, FaLock, FaSearch, FaRegClock, } from 'react-icons/fa'
 
 type Props = {
-  type?: 'text' | 'password',
-  value?: string,
+  type?: 'text' | 'password' | 'number',
+  value?: string | number,
   disabled?: boolean,
   fullWidth?: boolean,
-  icon?: 'userAuth' | 'userEdit' | 'lock' | 'find',
+  icon?: 'userAuth' | 'userEdit' | 'lock' | 'find' | 'clock',
   onChange?: ChangeEventHandler,
   onKeyup?: KeyboardEventHandler,
   inputRef?: ((instance: HTMLInputElement | null) => void) | null | undefined,
@@ -54,6 +54,8 @@ const Input: FunctionComponent<Props> = ({
       return <FaLock/>
     } else if (icon === 'find') {
       return <FaSearch/>
+    } else if (icon === 'clock') {
+      return <FaRegClock/>
     }
   }
 

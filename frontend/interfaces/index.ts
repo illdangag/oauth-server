@@ -36,6 +36,7 @@ export type User = {
 
 export type Client = {
   clientId: string,
+  clientSecret?: string,
   resourceIds: string[],
   scope: string[],
   grantTypes: string[],
