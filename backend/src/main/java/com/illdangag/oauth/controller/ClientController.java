@@ -95,6 +95,9 @@ public class ClientController {
             responseEntity = new ResponseEntity<>(new ClientResponse(client), HttpStatus.OK);
         } catch (NotFoundException e) {
             ErrorResponse errorResponse = new ErrorResponse(ErrorType.CLIENT_READ_NOT_EXIST_CLIENT);
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse(ErrorType.UNKNOWN_ERROR);
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
 
@@ -113,13 +116,6 @@ public class ClientController {
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
 
-        if (clientSecret == null || clientSecret.isEmpty()) {
-            ErrorType errorType = ErrorType.CLIENT_UPDATE_INVALID_PROPERTY;
-            String errorMessage = errorType.getMessage() + " - client secret";
-            ErrorResponse errorResponse = new ErrorResponse(errorType.getCode(), errorMessage);
-            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-        }
-
         Client dbClient = null;
         try {
             dbClient = this.clientService.readByClientId(clientId);
@@ -127,7 +123,10 @@ public class ClientController {
             ErrorResponse errorResponse = new ErrorResponse(ErrorType.CLIENT_UPDATE_NOT_EXIST_CLIENT);
             return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
         }
-        dbClient.setClientSecret(this.passwordEncoder.encode(clientSecret));
+
+        if (clientRequest.getClientSecret() != null) {
+            dbClient.setClientSecret(this.passwordEncoder.encode(clientSecret));
+        }
 
         if (clientRequest.getResourceIds() != null) {
             dbClient.setResourceIds(clientRequest.getResourceIds());

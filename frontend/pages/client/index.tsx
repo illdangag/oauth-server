@@ -69,11 +69,10 @@ class ClientPage extends Component<Props, State> {
 
   onClickEdit = (event: ItemEditMouseEvent): void => {
     const clientId: string = event.item.id
-    console.log(clientId)
-    // Router.push('/user/edit?username=' + username)
-    //   .catch(() => {
-    //     // empty block
-    //   })
+    Router.push('/client/edit?clientid=' + clientId)
+      .catch(() => {
+        // empty block
+      })
   }
 
   render() {

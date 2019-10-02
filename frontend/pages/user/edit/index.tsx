@@ -68,10 +68,7 @@ class UserUpdate extends Component<Props, State> {
           await Router.push('/')
         }
       } else if (error.response && error.response.status === 404) {
-        Router.push('/user')
-          .catch(() => {
-            // empty block
-          })
+        await Router.push('/user')
       } else {
         clearLocalToken()
         await Router.push('/')
@@ -146,32 +143,40 @@ class UserUpdate extends Component<Props, State> {
       credentialsNonExpired,
     }
 
-    const token: Token = getLocalToken()
-    updateUser(token, user)
-      .then(() => {
-        Router.push('/user')
-          .catch(() => {
-            // empty block
-          })
-      })
-      .catch((error) => {
-        const statusCode: number = error.response ? error.response.status : -1
-        if (statusCode === 404) { // not found
-          this.setState({
-            ...this.state,
-            errorTitle: 'Not Found User',
-            errorMessage: 'Username is not exist.',
-            isShowErrorAlert: true,
-          })
-        } else { // Unknown
-          this.setState({
-            ...this.state,
-            errorTitle: 'Unknown Error',
-            errorMessage: 'An unknown error has occurred.',
-            isShowErrorAlert: true,
-          })
-        }
-      })
+    try {
+      const token: Token = getLocalToken()
+      updateUser(token, user)
+        .then(() => {
+          Router.push('/user')
+            .catch(() => {
+              // empty block
+            })
+        })
+        .catch((error) => {
+          const statusCode: number = error.response ? error.response.status : -1
+          if (statusCode === 404) { // not found
+            this.setState({
+              ...this.state,
+              errorTitle: 'Not Found User',
+              errorMessage: 'Username is not exist.',
+              isShowErrorAlert: true,
+            })
+          } else { // Unknown
+            this.setState({
+              ...this.state,
+              errorTitle: 'Unknown Error',
+              errorMessage: 'An unknown error has occurred.',
+              isShowErrorAlert: true,
+            })
+          }
+        })
+    } catch {
+      clearLocalToken()
+      Router.push('/')
+        .catch(() => {
+          //
+        })
+    }
   }
 
   onClickErrorAlertClose = (): void => {
@@ -195,7 +200,7 @@ class UserUpdate extends Component<Props, State> {
             <span className={styles.back}>
               <Link href='/user'><a><FaAngleLeft/></a></Link>
             </span>
-            <span className={styles.username}>{username}</span>
+            <span>{username}</span>
             <span className={styles.save}><Button onClick={this.onClickSave} disabled={saveDisabled}>SAVE</Button></span>
           </div>
           <div className={styles.items}>

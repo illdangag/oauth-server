@@ -56,6 +56,18 @@
         
         & .input {
           margin: 0px 0px 0px 0px;
+
+          & .clientSecret {
+            display: inline-block;
+            margin-right: 10px;
+
+            width: calc(100% - 60px);
+          }
+
+          & .edit {
+            display: inline-block;
+            width: 50px;
+          }
         }
       }
     }

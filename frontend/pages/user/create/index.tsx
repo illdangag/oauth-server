@@ -152,32 +152,41 @@ class UserCreate extends Component<Props, State> {
       authorities: ['USER',],
     }
     
-    const token: Token = getLocalToken()
-    createUser(token, user)
-      .then(() => {
-        Router.push('/user')
-          .catch(() => {
-            // empty block
-          })
-      })
-      .catch((error) => {
-        const statusCode: number = error.response ? error.response.status : -1
-        if (statusCode === 409) { // Duplicate
-          this.setState({
-            ...this.state,
-            errorTitle: 'Duplicate User',
-            errorMessage: 'Username is a duplicate.',
-            isShowErrorAlert: true,
-          })
-        } else { // Unknown
-          this.setState({
-            ...this.state,
-            errorTitle: 'Unknown Error',
-            errorMessage: 'An unknown error has occurred.',
-            isShowErrorAlert: true,
-          })
-        }
-      })
+    try {
+      const token: Token = getLocalToken()
+      createUser(token, user)
+        .then(() => {
+          Router.push('/user')
+            .catch(() => {
+              // empty block
+            })
+        })
+        .catch((error) => {
+          const statusCode: number = error.response ? error.response.status : -1
+          if (statusCode === 409) { // Duplicate
+            this.setState({
+              ...this.state,
+              errorTitle: 'Duplicate User',
+              errorMessage: 'Username is a duplicate.',
+              isShowErrorAlert: true,
+            })
+          } else { // Unknown
+            this.setState({
+              ...this.state,
+              errorTitle: 'Unknown Error',
+              errorMessage: 'An unknown error has occurred.',
+              isShowErrorAlert: true,
+            })
+          }
+        })
+    } catch {
+      // local token error
+      clearLocalToken()
+      Router.push('/')
+        .catch(() => {
+          //
+        })
+    }
   }
 
   onClickErrorAlertClose = (): void => {

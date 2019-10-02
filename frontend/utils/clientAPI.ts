@@ -47,3 +47,44 @@ export async function createClient(token: Token, client: Client): Promise<void> 
   }
   await axios.request(config)
 }
+
+export async function getClient(token: Token, clientId: string): Promise<Client> {
+  const config: AxiosRequestConfig = {
+    baseURL: API_HOST,
+    url: '/api/v1/clients/' + clientId,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + token.accessToken,
+    },
+  }
+  const response: AxiosResponse = await axios.request(config)
+
+  const client: Client = {
+    clientId: response.data.clientId,
+    resourceIds: response.data.resourceIds,
+    scope: response.data.scope,
+    grantTypes: response.data.grantTypes,
+    redirectUri: response.data.redirectUri,
+    authorities: response.data.authorities,
+    accessTokenValiditySeconds: response.data.accessTokenValiditySeconds,
+    refreshTokenValiditySeconds: response.data.refreshTokenValiditySeconds,
+    autoApprove: response.data.autoApprove,
+  }
+
+  return client
+}
+
+export async function updateClient(token: Token, client: Client): Promise<void> {
+  const config: AxiosRequestConfig = {
+    baseURL: API_HOST,
+    url: '/api/v1/clients',
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + token.accessToken,
+    },
+    data: client,
+  }
+  await axios.request(config)
+}
