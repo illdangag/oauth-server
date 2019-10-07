@@ -56,18 +56,20 @@ class ItemList extends Component<Props, State> {
   }
 
   static getDerivedStateFromProps(nextProps: Props, prevState: State) {
-    const checkedItems: boolean[] = []
-    
     if (nextProps.items !== prevState.items) {
-      for (let index = 0; index < nextProps.items.length; index++) {
-        checkedItems.push(false)
-      }
+      nextProps.items.map((value) => {
+        const nextPropsId = value.id
+        const preveStateItems: ItemInfo[] = prevState.items.filter((value) => value.id === nextPropsId)
+        if (preveStateItems.length !== 0 && preveStateItems[0].checked !== undefined) {
+          value.checked = preveStateItems[0].checked
+        }
+        return value
+      })
 
       return {
         ...prevState,
         items: nextProps.items,
         sortedItems: ItemList.sortItems(nextProps.items, prevState.searchKeyword),
-        checkedItems,
         checkedAll: prevState.checkedAll,
       }
     } else {

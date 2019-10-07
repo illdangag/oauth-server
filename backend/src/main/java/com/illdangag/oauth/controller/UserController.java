@@ -188,6 +188,12 @@ public class UserController {
         return responseEntity;
     }
 
+    /**
+     * 사용자 삭제
+     *
+     * @param username
+     * @return
+     */
     @RequestMapping(value = "/{username}", method = RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     public ResponseEntity delete(@PathVariable String username) {
         if (username == null || username.equals("")) {

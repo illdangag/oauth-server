@@ -82,3 +82,16 @@ export async function updateUser(token: Token, user: User): Promise<void> {
   }
   await axios.request(config)
 }
+
+export async function deleteUser(token: Token, username: string): Promise<void> {
+  const config: AxiosRequestConfig = {
+    baseURL: API_HOST,
+    url: '/api/v1/users/' + username,
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + token.accessToken,
+    },
+  }
+  await axios.request(config)
+}
