@@ -10,8 +10,6 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'war'
-apply plugin: "com.moowork.node"
 
 group = 'com.illdangag'
 version = '0.0.1-SNAPSHOT'
@@ -33,37 +31,6 @@ dependencies {
 
 	//Spring Data Mongo
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.1.7.RELEASE'
-}
 
-task frontendDelete (type: Delete) {
-	def dirName = "../backend/src/main/resources/static"
-	file(dirName).list().each {
-		f -> delete "${dirName}/${f}"
-	}
-}
-
-task frontendClean (type: Delete, dependsOn: ['frontendDelete']) {
-	def dirName = "../frontend/.next"
-	file(dirName).list().each {
-		f -> delete "${dirName}/${f}"
-	}
-}
-
-task frontendBuild (type: NpmTask, dependsOn: ['frontendClean']) {
-	workingDir = file("../frontend")
-	args = ['run', 'build']
-}
-
-task frontendExport (type: NpmTask, dependsOn: ['frontendBuild']) {
-	workingDir = file("../frontend")
-	args = ['run', 'export']
-}
-
-task frontendCopy (type: Copy, dependsOn: ['frontendExport']) {
-	from '../frontend/out'
-	into '../backend/src/main/resources/static'
-}
-
-task buildAll(dependsOn: ['frontendCopy']) {
-	finalizedBy build
+	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
 }
