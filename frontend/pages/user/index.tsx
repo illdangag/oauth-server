@@ -90,6 +90,10 @@ class UserPage extends Component<Props, State> {
       deleteUsernames.push(item.id)
     }
 
+    if (deleteUsernames.length === 0) {
+      return
+    }
+
     this.setState({
       ...this.state,
       deleteUsernames,

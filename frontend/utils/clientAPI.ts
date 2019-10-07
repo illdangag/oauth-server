@@ -88,3 +88,16 @@ export async function updateClient(token: Token, client: Client): Promise<void> 
   }
   await axios.request(config)
 }
+
+export async function deleteClient(token: Token, clientId: string): Promise<void> {
+  const config: AxiosRequestConfig = {
+    baseURL: API_HOST,
+    url: '/api/v1/clients/' + clientId,
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + token.accessToken,
+    },
+  }
+  await axios.request(config)
+}
