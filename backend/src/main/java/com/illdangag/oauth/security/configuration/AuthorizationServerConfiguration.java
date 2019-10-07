@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -38,7 +39,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private CustomClientDetailsService clientDetailsService;
 
     @Autowired
-    private WebResponseExceptionTranslator oauth2ResponseExceptionTranslator;
+    private WebResponseExceptionTranslator<OAuth2Exception> oauth2ResponseExceptionTranslator;
 
     @Value("${key.alias}")
     private String JWT_ALIAS;
@@ -54,7 +55,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.allowFormAuthenticationForClients(); //For authenticating client using the form parameters instead of basic auth
+        security.allowFormAuthenticationForClients(); // For authenticating client using the form parameters instead of basic auth
         security.tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()");
 

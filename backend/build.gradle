@@ -10,6 +10,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'war'
 
 group = 'com.illdangag'
 version = '0.0.1-SNAPSHOT'
@@ -31,6 +32,4 @@ dependencies {
 
 	//Spring Data Mongo
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.1.7.RELEASE'
-
-	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
 }
