@@ -8,7 +8,7 @@ buildscript {
 }
 
 apply plugin: 'java'
-//apply plugin: 'org.springframework.boot'
+apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
 
@@ -30,6 +30,10 @@ dependencies {
 
     // Spring Data Mongo
     implementation  'org.springframework.boot:spring-boot-starter-data-mongodb:2.5.4'
+
+    // java9 버전 이후로 jaxb 라이브러리 제외로 인하여 추가
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
 
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.4'

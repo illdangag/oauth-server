@@ -3,11 +3,6 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://ybchoi:dudqja12!@cluster0.3lkri.mongodb.net/oauth?retryWrites=true&w=majority
-#      database: oauth
-#      host: mongodb+srv://cluster0.3lkri.mongodb.net
-#      port: 63307
-#      username: ybchoi
-#      password: dudqja12!
 
 # key
 # keytool -genkeypair -alias LHWM5OtDCo -keyalg RSA -dname "CN=Web Server,OU=Unit,O=Organization,L=City,S=State,C=US" -keypass dRuW9QELa5 -keystore server.jks -storepass TYDoDcuEz6

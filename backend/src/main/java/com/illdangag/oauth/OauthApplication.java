@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.mongodb.core.aggregation.BooleanOperators;
-import org.springframework.security.access.method.P;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class OauthApplication implements CommandLineRunner {
@@ -21,6 +20,9 @@ public class OauthApplication implements CommandLineRunner {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Value("${oauth.admin.username}")
     private String adminUsername;
@@ -44,7 +46,7 @@ public class OauthApplication implements CommandLineRunner {
             this.userService.readByUsername(this.adminUsername);
         } catch (NotFoundException exception) {
             User user = new User(this.adminUsername);
-            user.setPassword(this.adminPassword);
+            user.setPassword(passwordEncoder.encode(this.adminPassword));
             user.setAuthorities("ADMIN");
             user.setEnabled(true);
             this.userService.create(user);
