@@ -1,14 +1,14 @@
 buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.7.RELEASE")
-	}
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.5.4")
+    }
 }
 
 apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
+//apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
 
@@ -17,19 +17,20 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
+    // Spring boot
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.4'
 
-	// Spring boot
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.7.RELEASE'
+    // Spring Security Oauth2
+    implementation 'org.springframework.security.oauth:spring-security-oauth2:2.5.1.RELEASE'
+    implementation 'org.springframework.security:spring-security-jwt:1.1.1.RELEASE'
 
-	//Spring Security Oauth2
-	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.4.RELEASE'
-	compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.10.RELEASE'
+    // Spring Data Mongo
+    implementation  'org.springframework.boot:spring-boot-starter-data-mongodb:2.5.4'
 
-	//Spring Data Mongo
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.1.7.RELEASE'
+    // Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.4'
 }
